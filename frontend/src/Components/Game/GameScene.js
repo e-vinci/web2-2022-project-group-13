@@ -78,10 +78,7 @@ class GameScene extends Phaser.Scene {
   createPlatforms() {
     const platforms = this.physics.add.staticGroup();
 
-    platforms
-      .create(400, 568, GROUND_KEY)
-      .setScale(2)
-      .refreshBody();
+    platforms.create(400, 568, GROUND_KEY).setScale(2).refreshBody();
 
     platforms.create(600, 400, GROUND_KEY);
     platforms.create(50, 250, GROUND_KEY);

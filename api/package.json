@@ -7,7 +7,10 @@
     "dev": "nodemon ./bin/www",
     "start": "node ./bin/www",
     "lint": "eslint **/*.js",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "code:fix": "prettier --write . && eslint --fix ."
   },
   "nodemonConfig": {
     "ignore": [
@@ -26,6 +29,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "nodemon": "^2.0.19",
+    "prettier": "^2.7.1",
     "prettier-airbnb-config": "^1.0.0"
   },
   "author": "e-Baron"
