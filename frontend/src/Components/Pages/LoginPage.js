@@ -1,8 +1,7 @@
-// pour Maxime
-// import { setAuthenticatedUser } from '../../utils/auths';
+import { setAuthenticatedUser } from '../../utils/auth';
 import { clearPage, renderPageTitle } from '../../utils/render';
-// import Navbar from '../Navbar/Navbar';
-// import Navigate from '../Router/Navigate';
+import Navbar from '../Navbar/Navbar';
+import Navigate from '../Router/Navigate';
 
 const LoginPage = () => {
   clearPage();
@@ -34,11 +33,9 @@ function renderRegisterForm() {
   form.appendChild(password);
   form.appendChild(submit);
   main.appendChild(form);
-  // pour Maxime
-  // form.addEventListener('submit', onLogin);
+  form.addEventListener('submit', onLogin);
 }
-// pour Maxime
-/* 
+
 async function onLogin(e) {
   e.preventDefault();
 
@@ -56,13 +53,11 @@ async function onLogin(e) {
     },
   };
 
-  const response = await fetch('/api/auths/login', options);
+  const response = await fetch('api/login', options);
 
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
 
   const authenticatedUser = await response.json();
-
-  console.log('Authenticated user : ', authenticatedUser);
 
   setAuthenticatedUser(authenticatedUser);
 
@@ -70,5 +65,5 @@ async function onLogin(e) {
 
   Navigate('/');
 }
-*/
+
 export default LoginPage;
