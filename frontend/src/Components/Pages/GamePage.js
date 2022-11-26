@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import GameScene from '../Game/GameScene';
+import GameScene from '../../../../../../javascript2/Game/GameScene';
 
 let game;
 

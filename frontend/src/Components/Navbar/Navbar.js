@@ -1,5 +1,7 @@
 // eslint-disable-next-line no-unused-vars
-import { Navbar as BootstrapNavbar } from 'bootstrap';
+import { createPopper } from '@popperjs/core';
+// import { Navbar as BootstrapNavbar } from 'bootstrap';
+import logo  from '../../img/LOGO1.png';   
 
 /**
  * Render the Navbar which is styled by using Bootstrap
@@ -7,13 +9,17 @@ import { Navbar as BootstrapNavbar } from 'bootstrap';
  * - the URI associated to a page shall be given in the attribute "data-uri" of the Navbar
  * - the router will show the Page associated to this URI when the user click on a nav-link
  */
+ const Navbar = () => {
+  renderNavbar();
+};
 
-const Navbar = () => {
+function renderNavbar  () {
   const navbarWrapper = document.querySelector('#navbarWrapper');
+
   const navbar = `
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Add your brand here</a>
+          <a href="#"><img class="nav-link" aria-current="page" data-uri="/" src = '${logo}' alt = "logo" width = "100"></a>
           <button
             class="navbar-toggler"
             type="button"
@@ -25,17 +31,14 @@ const Navbar = () => {
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#" data-uri="/">Home</a>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li id="loginItem" class="nav-item">
+              <a class="nav-link" href="#" data-uri="/login">Login</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/game">Game</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/new">New Page</a>
-              </li>                        
+              <li id="registerItem" class="nav-item">
+              <a class="nav-link" href="#" data-uri="/register">Register</a>
+              </li>             
             </ul>
           </div>
         </div>
