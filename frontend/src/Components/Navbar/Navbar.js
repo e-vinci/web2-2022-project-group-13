@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { createPopper } from '@popperjs/core';
 // import { Navbar as BootstrapNavbar } from 'bootstrap';
-import logo  from '../../img/LOGO1.png';   
+import logo from '../../img/LOGO1.png';
 
 /**
  * Render the Navbar which is styled by using Bootstrap
@@ -9,11 +9,11 @@ import logo  from '../../img/LOGO1.png';
  * - the URI associated to a page shall be given in the attribute "data-uri" of the Navbar
  * - the router will show the Page associated to this URI when the user click on a nav-link
  */
- const Navbar = () => {
+const Navbar = () => {
   renderNavbar();
 };
 
-function renderNavbar  () {
+function renderNavbar() {
   const navbarWrapper = document.querySelector('#navbarWrapper');
 
   const navbar = `
@@ -45,6 +45,6 @@ function renderNavbar  () {
       </nav>
   `;
   navbarWrapper.innerHTML = navbar;
-};
+}
 
 export default Navbar;
