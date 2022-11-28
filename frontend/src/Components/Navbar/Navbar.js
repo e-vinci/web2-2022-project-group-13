@@ -2,6 +2,7 @@
 import { createPopper } from '@popperjs/core';
 // import { Navbar as BootstrapNavbar } from 'bootstrap';
 import logo from '../../img/LOGO1.png';
+import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
 
 /**
  * Render the Navbar which is styled by using Bootstrap
@@ -15,8 +16,9 @@ const Navbar = () => {
 
 function renderNavbar() {
   const navbarWrapper = document.querySelector('#navbarWrapper');
+  const authenticatedUser = getAuthenticatedUser();
 
-  const navbar = `
+  const anonymousNavBar = `
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <a href="#"><img class="nav-link" aria-current="page" data-uri="/" src = '${logo}' alt = "logo" width = "100"></a>
@@ -44,7 +46,37 @@ function renderNavbar() {
         </div>
       </nav>
   `;
-  navbarWrapper.innerHTML = navbar;
+
+
+  const authNavBar = `
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a href="#"><img class="nav-link" aria-current="page" data-uri="/" src = '${logo}' alt = "logo" width = "100"></a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li id="logoutItem" class="nav-item">
+              <a class="nav-link" href="/logout" data-uri="/logout">Logout</a>
+              </li> 
+              <li class="nav-item">
+              <a class="nav-link disabled" href="#">${authenticatedUser?.username}</a>
+            </li>            
+            </ul>
+          </div>
+        </div>
+      </nav>
+  `;
+  navbarWrapper.innerHTML = isAuthenticated() ? authNavBar : anonymousNavBar;
 }
 
 export default Navbar;

@@ -1,7 +1,7 @@
-// import { setAuthenticatedUser } from '../../utils/auths';
+import { setAuthenticatedUser } from '../../utils/auths';
 import { clearPage, renderPageTitle } from '../../utils/render';
-// import Navbar from '../Navbar/Navbar';
-// import Navigate from '../Router/Navigate';
+import Navbar from '../Navbar/Navbar';
+import Navigate from '../Router/Navigate';
 
 const RegisterPage = () => {
   clearPage();
@@ -33,10 +33,9 @@ function renderRegisterForm() {
   form.appendChild(password);
   form.appendChild(submit);
   main.appendChild(form);
-  // form.addEventListener('submit', onRegister);
+  form.addEventListener('submit', onRegister);
 }
 
-/*
 async function onRegister(e) {
   e.preventDefault();
 
@@ -60,13 +59,11 @@ async function onRegister(e) {
 
   const authenticatedUser = await response.json();
 
-  console.log('Newly registered & authenticated user : ', authenticatedUser);
-
   setAuthenticatedUser(authenticatedUser);
 
   Navbar();
 
   Navigate('/');
 }
-*/
+
 export default RegisterPage;

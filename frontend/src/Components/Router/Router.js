@@ -1,4 +1,16 @@
-import routes from './routes';
+import HomePage from '../Pages/HomePage';
+import RegisterPage from '../Pages/RegisterPage';
+import LoginPage from '../Pages/LoginPage';
+import CreateQuizPage from '../Pages/CreationQuizPage';
+import Logout from '../Logout/Logout';
+
+const routes = {
+  '/': HomePage,
+  '/login': LoginPage,
+  '/register': RegisterPage,
+  '/createQuiz': CreateQuizPage,
+  '/logout':  Logout
+};
 
 const Router = () => {
   onFrontendLoad();

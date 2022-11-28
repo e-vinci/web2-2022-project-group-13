@@ -1,4 +1,4 @@
-import { setAuthenticatedUser } from '../../utils/auth';
+import { setAuthenticatedUser } from '../../utils/auths';
 import { clearPage, renderPageTitle } from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
 import Navigate from '../Router/Navigate';
@@ -53,7 +53,7 @@ async function onLogin(e) {
     },
   };
 
-  const response = await fetch('api/login', options);
+  const response = await fetch('/api/auths/login', options);
 
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
 
