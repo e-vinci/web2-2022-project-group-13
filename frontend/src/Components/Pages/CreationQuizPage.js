@@ -95,6 +95,7 @@ function renderCreateQuizForm() {
     intituleInput.className = 'form-control';
     intituleInput.id = 'intitule-'.concat(i);
     intituleInput.placeholder = 'Question';
+    intituleInput.value = 's'; // deddddddddddddddddddddddddddddd
     intituleWrapper.appendChild(intituleInput);
     questionWrapper.appendChild(intituleWrapper);
 
@@ -112,6 +113,7 @@ function renderCreateQuizForm() {
     AnswerInput.className = 'form-control';
     AnswerInput.id = 'bonneReponse-'.concat(i);
     AnswerInput.placeholder = 'Bonne réponse';
+    AnswerInput.value = 'br-'.concat(i); // deddddddddddddddddddddddddddddd
     AnswerWrapper.appendChild(AnswerInput);
     row1.appendChild(AnswerWrapper);
 
@@ -126,6 +128,7 @@ function renderCreateQuizForm() {
     BadAnswer1Input.className = 'form-control';
     BadAnswer1Input.id = 'mauvaiseReponse1-'.concat(i);
     BadAnswer1Input.placeholder = 'Mauvaise réponse 1';
+    BadAnswer1Input.value = 'mr1-'.concat(i); // deddddddddddddddddddddddddddddd
     BadAnswer1Wrapper.appendChild(BadAnswer1Input);
     row1.appendChild(BadAnswer1Wrapper);
 
@@ -142,10 +145,11 @@ function renderCreateQuizForm() {
     BadAnswer2Wrapper.appendChild(BadAnswer2Label);
     const BadAnswer2Input = document.createElement('input');
     BadAnswer2Input.type = 'text';
-    BadAnswer2Input.className = 'form-control';
+    BadAnswer2Input.className = 'form-control mauvaiseReponse2';
     BadAnswer2Input.id = 'mauvaiseReponse2-'.concat(i);
     BadAnswer2Input.placeholder = 'Mauvaise réponse 2';
     BadAnswer2Wrapper.appendChild(BadAnswer2Input);
+    BadAnswer2Input.value = 'mr2-'.concat(i); // deddddddddddddddddddddddddddddd
     row2.appendChild(BadAnswer2Wrapper);
 
     const BadAnswer3Wrapper = document.createElement('div');
@@ -159,6 +163,7 @@ function renderCreateQuizForm() {
     BadAnswer3Input.className = 'form-control';
     BadAnswer3Input.id = 'mauvaiseReponse3-'.concat(i);
     BadAnswer3Input.placeholder = 'Mauvaise réponse 3';
+    BadAnswer3Input.value = 'mr3-'.concat(i); // deddddddddddddddddddddddddddddd
     BadAnswer3Wrapper.appendChild(BadAnswer3Input);
     row2.appendChild(BadAnswer3Wrapper);
 
@@ -179,7 +184,7 @@ function renderCreateQuizForm() {
   prevButton.type = 'button';
   prevButton.className = 'btn btn-success';
   prevButton.id = 'prevBtn';
-  prevButton.innerText = 'Previous';
+  prevButton.innerText = 'Précédent';
   prevButton.style = 'margin-right: 10px;';
   prevButton.addEventListener('click', () => {
     nextPrev(-1);
@@ -188,20 +193,28 @@ function renderCreateQuizForm() {
   nextButton.type = 'button';
   nextButton.className = 'btn btn-success';
   nextButton.id = 'nextBtn';
-  nextButton.innerText = 'Next';
+  nextButton.innerText = 'Suivant';
   nextButton.addEventListener('click', () => {
     nextPrev(1);
   });
+  const submitButton = document.createElement('input');
+  submitButton.type = 'submit';
+  submitButton.className = 'btn btn-success';
+  submitButton.id = 'submitBtn';
+  submitButton.innerText = 'Publier';
+  submitButton.addEventListener('click', onSubmit);
+  submitButton.addEventListener('click', onSubmit);
   buttons.appendChild(prevButton);
   buttons.appendChild(nextButton);
+  buttons.appendChild(submitButton);
   buttonsWrapper.appendChild(buttons);
   form.appendChild(buttonsWrapper);
 
   form.appendChild(stepsWrapper);
 
-  form.addEventListener('submit', onSubmit);
   wrapper.appendChild(form);
   main.appendChild(wrapper);
+  // form.addEventListener('submit', onSubmit);
 }
 
 function showTab(n) {
@@ -213,9 +226,11 @@ function showTab(n) {
     document.getElementById('prevBtn').style.display = 'inline';
   }
   if (n === x.length - 1) {
-    document.getElementById('nextBtn').innerHTML = 'Submit';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('submitBtn').style.display = 'inline';
   } else {
-    document.getElementById('nextBtn').innerHTML = 'Next';
+    document.getElementById('submitBtn').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'inline';
   }
   fixStepIndicator(n);
 }
@@ -240,7 +255,7 @@ function validateForm() {
   x = document.getElementsByClassName('tab');
   y = x[currentTab].getElementsByTagName('input');
   for (i = 0; i < y.length; i++) {
-    if (y[i].value == '') {
+    if (y[i].value === '') {
       y[i].className += ' invalid';
       valid = false;
     }
@@ -262,6 +277,43 @@ function fixStepIndicator(n) {
 
 async function onSubmit(e) {
   e.preventDefault();
+  const quizName = document.getElementById('quizName').value;
+  if (quizName === '') {
+    document.getElementById('quizName').className += ' invalid';
+  } else if (validateForm()) {
+    const difficulty = document.getElementById('difficulty').value;
+    const questionsList = document.getElementsByClassName('tab');
+    const quiz = {
+      quizName,
+      difficulty,
+      questions: [],
+    };
+
+    for (let index = 1; index <= questionsList.length; index++) {
+      const question = {
+        number: index,
+        question: document.getElementById('intitule-'.concat(index)).value,
+        goodAnswer: document.getElementById('bonneReponse-'.concat(index)).value,
+        badAnswer1: document.getElementById('mauvaiseReponse1-'.concat(index)).value,
+        badAnswer2: document.getElementById('mauvaiseReponse2-'.concat(index)).value,
+        badAnswer3: document.getElementById('mauvaiseReponse3-'.concat(index)).value,
+      };
+      quiz.questions.push(question);
+    }
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(quiz),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const response = await fetch('/api/quiz/addQuiz', options);
+
+    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+    const newQuiz = response.json();
+  }
 }
 
 export default CreationQuizPage;

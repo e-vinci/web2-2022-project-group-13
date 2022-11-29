@@ -4,7 +4,7 @@
 GET http://localhost:3000/pizzas
 
 ### Read all pizzas with File variable
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:3000/quiz
 GET {{baseUrl}}/pizzas
 
 ### Read all pizzas sorted by title (ascending)
@@ -17,12 +17,38 @@ GET {{baseUrl}}/pizzas/?order=-title
 GET {{baseUrl}}/pizzas/2
 
 ### Create a pizza
-POST {{baseUrl}}/pizzas
+POST {{baseUrl}}/addQuiz
 Content-Type: application/json
 
 {
-    "title":"Magic Green",
-    "content":"Epinards, Brocolis, Olives vertes, Basilic"
+    "quizName":"Magic Green",
+    "difficulty":"moyen",
+    "questions":[
+        {
+        "number" : 1,
+        "question" : "Oui ?",
+        "goodAnswer" : "BR",
+        "badAnswer1" : "MR1",
+        "badAnswer2" : "MR2",
+        "badAnswer3" : "MR3"
+        },
+        {
+        "number" : 2,
+        "question" : "Oui ?",
+        "goodAnswer" : "BR",
+        "badAnswer1" : "MR1",
+        "badAnswer2" : "MR2",
+        "badAnswer3" : "MR3"
+        },
+        {
+        "number" : 3,
+        "question" : "Oui ?",
+        "goodAnswer" : "BR",
+        "badAnswer1" : "MR1",
+        "badAnswer2" : "MR2",
+        "badAnswer3" : "MR3"
+        }
+    ]
 }
 
 ### Delete pizza identified by 2

@@ -4,6 +4,7 @@ const logger = require('morgan');
 const cookieSession = require('cookie-session');
 
 const authsRouter = require('./routes/auths');
+const quizzesRouter = require('./routes/quizzes');
 
 const app = express();
 
@@ -26,5 +27,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/auths', authsRouter);
+app.use('/quiz', quizzesRouter);
 
 module.exports = app;
