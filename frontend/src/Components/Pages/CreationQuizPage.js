@@ -1,14 +1,18 @@
 /* eslint-disable */
 
-// import Navigate from '../Router/Navigate';
+import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
+import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
 
 var currentTab = 0;
 
 const CreationQuizPage = () => {
-  clearPage();
-  renderCreateQuizForm();
-  showTab(currentTab);
+  if (isAuthenticated()) {
+    clearPage();
+    renderCreateQuizForm();
+    showTab(currentTab);
+  } else
+    Navigate('/login');
 };
 
 function renderCreateQuizForm() {
@@ -95,7 +99,6 @@ function renderCreateQuizForm() {
     intituleInput.className = 'form-control';
     intituleInput.id = 'intitule-'.concat(i);
     intituleInput.placeholder = 'Question';
-    intituleInput.value = 's'; // deddddddddddddddddddddddddddddd
     intituleWrapper.appendChild(intituleInput);
     questionWrapper.appendChild(intituleWrapper);
 
@@ -113,7 +116,6 @@ function renderCreateQuizForm() {
     AnswerInput.className = 'form-control';
     AnswerInput.id = 'bonneReponse-'.concat(i);
     AnswerInput.placeholder = 'Bonne réponse';
-    AnswerInput.value = 'br-'.concat(i); // deddddddddddddddddddddddddddddd
     AnswerWrapper.appendChild(AnswerInput);
     row1.appendChild(AnswerWrapper);
 
@@ -128,7 +130,6 @@ function renderCreateQuizForm() {
     BadAnswer1Input.className = 'form-control';
     BadAnswer1Input.id = 'mauvaiseReponse1-'.concat(i);
     BadAnswer1Input.placeholder = 'Mauvaise réponse 1';
-    BadAnswer1Input.value = 'mr1-'.concat(i); // deddddddddddddddddddddddddddddd
     BadAnswer1Wrapper.appendChild(BadAnswer1Input);
     row1.appendChild(BadAnswer1Wrapper);
 
@@ -149,7 +150,6 @@ function renderCreateQuizForm() {
     BadAnswer2Input.id = 'mauvaiseReponse2-'.concat(i);
     BadAnswer2Input.placeholder = 'Mauvaise réponse 2';
     BadAnswer2Wrapper.appendChild(BadAnswer2Input);
-    BadAnswer2Input.value = 'mr2-'.concat(i); // deddddddddddddddddddddddddddddd
     row2.appendChild(BadAnswer2Wrapper);
 
     const BadAnswer3Wrapper = document.createElement('div');
@@ -163,7 +163,6 @@ function renderCreateQuizForm() {
     BadAnswer3Input.className = 'form-control';
     BadAnswer3Input.id = 'mauvaiseReponse3-'.concat(i);
     BadAnswer3Input.placeholder = 'Mauvaise réponse 3';
-    BadAnswer3Input.value = 'mr3-'.concat(i); // deddddddddddddddddddddddddddddd
     BadAnswer3Wrapper.appendChild(BadAnswer3Input);
     row2.appendChild(BadAnswer3Wrapper);
 
@@ -214,9 +213,10 @@ function renderCreateQuizForm() {
 
   wrapper.appendChild(form);
   main.appendChild(wrapper);
-  // form.addEventListener('submit', onSubmit);
 }
 
+// code pris du site https://www.w3schools.com/howto/howto_js_form_steps.asp
+// début
 function showTab(n) {
   let x = document.getElementsByClassName('tab');
   x[n].style.display = 'block';
@@ -274,6 +274,7 @@ function fixStepIndicator(n) {
   }
   x[n].className += ' active';
 }
+// fin
 
 async function onSubmit(e) {
   e.preventDefault();
@@ -284,9 +285,10 @@ async function onSubmit(e) {
     const difficulty = document.getElementById('difficulty').value;
     const questionsList = document.getElementsByClassName('tab');
     const quiz = {
+      creatorUsername : getAuthenticatedUser.username,
       quizName,
       difficulty,
-      questions: [],
+      questions: []
     };
 
     for (let index = 1; index <= questionsList.length; index++) {
@@ -296,7 +298,7 @@ async function onSubmit(e) {
         goodAnswer: document.getElementById('bonneReponse-'.concat(index)).value,
         badAnswer1: document.getElementById('mauvaiseReponse1-'.concat(index)).value,
         badAnswer2: document.getElementById('mauvaiseReponse2-'.concat(index)).value,
-        badAnswer3: document.getElementById('mauvaiseReponse3-'.concat(index)).value,
+        badAnswer3: document.getElementById('mauvaiseReponse3-'.concat(index)).value
       };
       quiz.questions.push(question);
     }
@@ -313,6 +315,7 @@ async function onSubmit(e) {
 
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     const newQuiz = response.json();
+    Navigate('/');
   }
 }
 
