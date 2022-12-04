@@ -1,7 +1,16 @@
 const express = require('express');
-const { addOneQuiz } = require('../models/quiz');
+const 
+{ addOneQuiz,
+  searchQuiz,
+  readAllQuizzes,
+} = require('../models/quiz');
 
 const router = express.Router();
+
+router.get('/', (req, res) => {
+  const allPizzasPotentiallyOrdered = readAllQuizzes();
+  return res.json(allPizzasPotentiallyOrdered);
+});
 
 router.post('/addQuiz', async (req, res) => {
   const quizName = req?.body?.quizName?.length !== 0 ? req.body.quizName : undefined;
@@ -17,4 +26,8 @@ router.post('/addQuiz', async (req, res) => {
   return res.json(newQuiz);
 });
 
+router.get('/search', (req, res) => {
+  const titleSearch = req.query['quiz-name'];
+  return res.json(searchQuiz(titleSearch));
+});
 module.exports = router;

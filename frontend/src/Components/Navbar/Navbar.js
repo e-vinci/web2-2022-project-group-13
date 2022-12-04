@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { createPopper } from '@popperjs/core';
 // import { Navbar as BootstrapNavbar } from 'bootstrap';
-import logo from '../../img/LOGO1.png';
+import logo from '../../img/QuizLogo.png';
 import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
 
 /**
@@ -19,9 +19,9 @@ function renderNavbar() {
   const authenticatedUser = getAuthenticatedUser();
 
   const anonymousNavBar = `
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a href="#"><img class="nav-link" aria-current="page" data-uri="/" src = '${logo}' alt = "logo" width = "100"></a>
+          <a href="#"><img class="nav-link" aria-current="page" data-uri="/" src = '${logo}' alt = "logo" width = "70"></a>
           <button
             class="navbar-toggler"
             type="button"

@@ -23,6 +23,7 @@
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
     "debug": "~2.6.9",
+    "escape-html": "^1.0.3",
     "eslint-plugin-import": "^2.26.0",
     "express": "~4.16.1",
     "jsonwebtoken": "^8.5.1",
