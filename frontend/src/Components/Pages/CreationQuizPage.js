@@ -296,9 +296,11 @@ async function onSubmit(e) {
         number: index,
         question: document.getElementById('intitule-'.concat(index)).value,
         goodAnswer: document.getElementById('bonneReponse-'.concat(index)).value,
-        badAnswer1: document.getElementById('mauvaiseReponse1-'.concat(index)).value,
-        badAnswer2: document.getElementById('mauvaiseReponse2-'.concat(index)).value,
-        badAnswer3: document.getElementById('mauvaiseReponse3-'.concat(index)).value
+        falseAnswers : [
+          document.getElementById('mauvaiseReponse1-'.concat(index)).value,
+          document.getElementById('mauvaiseReponse2-'.concat(index)).value,
+          document.getElementById('mauvaiseReponse3-'.concat(index)).value
+        ]
       };
       quiz.questions.push(question);
     }
