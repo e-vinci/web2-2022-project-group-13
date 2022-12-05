@@ -1,6 +1,5 @@
 import anime from 'animejs/lib/anime.es';
 import { clearPage } from '../../utils/render';
-import Navbar from '../Navbar/Navbar';
 import Navigate from '../Router/Navigate';
 
 let quizzes;
@@ -27,6 +26,40 @@ function animationHome(){
     rotate: '1turn',
     duration: 2000  
   });
+}
+function renderSearch(quiz){
+  const menuTableAsString = getMenuTableAsString(quiz);
+  const main = document.querySelector('main');
+
+  const titleHome = document.createElement('h2');
+  titleHome.textContent = "Search";
+
+  const form = document.createElement('form');
+  form.className = 'p-5 justify-content-center';
+  const quizName = document.createElement('input');
+  const divInputs = document.createElement('div');
+  const divCenter = document.createElement('div');
+  const submitButton = document.createElement('button');
+  form.style = 'margin: auto; max-width:400px height:500px'
+  divInputs.className = 'input-group'
+  divInputs.id = 'refQuiz';
+  submitButton.type = 'submit';
+  submitButton.className = 'btn purple';
+  submitButton.textContent = 'Go';
+  quizName.type = 'text';  
+  quizName.id = "quizName";
+  quizName.name = "quiz-name";
+  quizName.placeholder = 'Search';
+  quizName.required = true;
+  
+  // dom add 
+  main.appendChild(titleHome);
+  divInputs.appendChild(quizName);
+  divInputs.appendChild(submitButton);
+  divCenter.appendChild(divInputs);
+  form.appendChild(divCenter)
+  main.appendChild(form);
+  main.innerHTML += menuTableAsString;
 }
 function renderQuizzesFromString(Allquiz) {
   const menuTableAsString = getMenuTableAsString(Allquiz);
@@ -56,6 +89,7 @@ function renderQuizzesFromString(Allquiz) {
   // form search quizName
 
   const form = document.createElement('form');
+  
   form.className = 'p-5 justify-content-center';
   const quizName = document.createElement('input');
   const divInputs = document.createElement('div');
@@ -69,7 +103,7 @@ function renderQuizzesFromString(Allquiz) {
   submitButton.textContent = 'Go';
   quizName.type = 'text';  
   quizName.id = "quizName";
-  quizName.name = "quizName";
+  quizName.name = "quiz-name";
   quizName.placeholder = 'Search';
   quizName.required = true;
   
@@ -91,21 +125,22 @@ async function searchBar(e) {
     let response = await fetch(`/api/quiz/search?quiz-name=${quizName}`);
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
-    
-    Navbar();
-    clearPage();
-    
+
     if (quizzes.length === 0){
-      Navigate('/');
+      clearPage();
       response = await fetch('/api/quiz');
       if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
       quizzes = await response.json();
-  
-      renderQuizzesFromString(quizzes);
+      Navigate('/');
+
+      renderSearch(quizzes);
     }
     else{
-      Navigate(`/quiz/search?quiz-name=${quizName}`);
-      renderQuizzesFromString(quizzes);
+      clearPage();
+
+      renderSearch(quizzes);
+      
+ 
     }
   
   
