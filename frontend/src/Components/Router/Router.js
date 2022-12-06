@@ -2,6 +2,7 @@ import HomePage from '../Pages/HomePage';
 import RegisterPage from '../Pages/RegisterPage';
 import LoginPage from '../Pages/LoginPage';
 import CreateQuizPage from '../Pages/CreationQuizPage';
+import QuizPage from '../Pages/QuizPage';
 import Logout from '../Logout/Logout';
 
 const routes = {
@@ -9,6 +10,7 @@ const routes = {
   '/login': LoginPage,
   '/register': RegisterPage,
   '/createQuiz': CreateQuizPage,
+  '/quizPage': QuizPage,
   '/logout': Logout,
 };
 
