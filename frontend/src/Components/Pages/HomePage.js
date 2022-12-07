@@ -15,80 +15,14 @@ const HomePage = async () => {
     const form = document.querySelector('form');
     form.addEventListener('submit', searchBar);
     animationHome();
+    animationQuizHoverHome()
     goToQuizButton();
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
   }
 };
-function animationHome(){
-  anime({
-    targets: '.title-home',
 
-    rotate: '1turn',
-    duration: 2000  
-  });
-
-  const animation = anime.timeline({
-    duration: 5000
-  });
-  
-  animation.add({
-    targets: '#fuse',
-    strokeDashoffset: (target) => -target.getTotalLength(),
-    duration: 5000,
-  
-    begin: (ani) => {
-      const {target} = ani.animatables[0];
-      const length = target.getTotalLength();
-      target.setAttribute('stroke-dasharray', length);
-    },
-    easing: 'linear',
-  });
-  
-  const motionPath = document.querySelector('#motion-path');
-  const path = anime.path(motionPath);
-  animation.add({
-    targets: '#spark',
-    translateX: path('x'),
-    translateY: path('y'),
-    rotate: path('angle'),
-    duration: 5000,
-    easing: 'linear',
-  }, '-=5000');
-  
-  animation.add({
-    targets: '#ember',
-    transform: Array(21).fill('scale(2.1)').map((scale, index) => index % 2 === 0 ? 'scale(1.4)': scale),
-    duration: 5000,
-    easing: 'easeInOutSine',
-    direction: 'alternate',
-  }, '-=5000');
-  
-  animation.add({
-    targets: '#sparkles',
-    transform: Array(21).fill('scale(1)').map((scale, index) => index % 2 === 0 ? 'scale(0)': scale),
-    duration: 5000,
-    easing: 'easeInOutSine',
-    direction: 'alternate',
-  }, '-=5000');
-  
-  animation.add({
-    targets: '#spark',
-    scale: 4.5,
-    opacity: 0,
-    duration: 250,
-    easing: 'easeInOutSine',
-  });
-  animation.add({
-    targets: '#bomb',
-    scale: 1.5,
-    opacity: 0,
-    duration: 300,
-    delay: 50,
-    easing: 'easeInOutSine',
-  }, '-=250');
-}
 function renderSearch(quiz){
   const menuTableAsString = getMenuTableAsString(quiz);
   const main = document.querySelector('main');
@@ -136,7 +70,7 @@ function renderQuizzesFromString(Allquiz) {
   
   const divHome = document.createElement('div');
   const sectionHome = document.createElement('section');
-  sectionHome.className = 'headline';
+  sectionHome.className = 'container-fluid headline';
   divHome.className = 'container-fluid banner'
   const titleHome = document.createElement('h2');
   const descriptionHome = document.createElement('h3');
@@ -146,8 +80,8 @@ function renderQuizzesFromString(Allquiz) {
   buttonToQuiz.className = 'btn purple';
   buttonToQuiz.textContent = 'Start';
   titleHome.textContent = "Time to Quiz !";
-  titleHome.className = "title-home"
-  descriptionHome.textContent = "Have fun and learn.";
+  titleHome.className = "title-home" 
+  descriptionHome.textContent = "Have fun, learn and create your own quiz by registering.";
   sectionHome.appendChild(titleHome);
   sectionHome.innerHTML += bomb;
   sectionHome.appendChild(descriptionHome);
@@ -237,7 +171,7 @@ function getAllTableLinesAsString(allQuiz) {
   let quizzesTableLines = '';
   
   allQuiz?.forEach((quiz) => {
-    quizzesTableLines += `<div>
+    quizzesTableLines += `<div class= "quizContainer">
       <p>${quiz.quizName}</p>
     </div>`;
   });
@@ -257,7 +191,7 @@ function bombDisplay(){
         </path>
         <g>
        
-        <g transform="translate(-4.2 58)">
+        <g transform="translate(-4.7 58)">
             <path
             id="MyPath"
             fill="none"
@@ -349,4 +283,107 @@ function bombDisplay(){
   `
   return bombHtml;
 }
+
+function animateButton(el, targetsX, scaleX, elasticityX) {
+  anime.remove(el);
+  anime({
+    targets: el,
+    scale: targetsX,
+
+    duration: scaleX,
+   
+    elasticity: elasticityX
+  });
+}
+
+function enterButton(el) {
+  animateButton(el, 1.2, 800, 400)
+};
+
+function leaveButton(el) {
+  animateButton(el, 1.0, 600, 300)
+};
+function animationQuizHoverHome(){
+  const quizzesContainer = document.getElementsByClassName('quizContainer');
+  for (let i = 0; i < quizzesContainer.length; i+=1) {
+    quizzesContainer[i].addEventListener('mouseenter', (e) => {
+      enterButton(e.target);
+    }, false);
+    
+    quizzesContainer[i].addEventListener('mouseleave', (e) => {
+      leaveButton(e.target)
+    }, false);  
+  }
+
+}
+
+function animationHome(){
+  anime({
+    targets: '.title-home',
+
+    rotate: '1turn',
+    duration: 2000  
+  });
+
+  const animation = anime.timeline({
+    duration: 5000
+  });
+  
+  animation.add({
+    targets: '#fuse',
+    strokeDashoffset: (target) => -target.getTotalLength(),
+    duration: 5000,
+  
+    begin: (ani) => {
+      const {target} = ani.animatables[0];
+      const length = target.getTotalLength();
+      target.setAttribute('stroke-dasharray', length);
+    },
+    easing: 'linear',
+  });
+  
+  const motionPath = document.querySelector('#motion-path');
+  const path = anime.path(motionPath);
+  animation.add({
+    targets: '#spark',
+    translateX: path('x'),
+    translateY: path('y'),
+    rotate: path('angle'),
+    duration: 5000,
+    easing: 'linear',
+  }, '-=5000');
+  
+  animation.add({
+    targets: '#ember',
+    transform: Array(21).fill('scale(2.1)').map((scale, index) => index % 2 === 0 ? 'scale(1.4)': scale),
+    duration: 5000,
+    easing: 'easeInOutSine',
+    direction: 'alternate',
+  }, '-=5000');
+  
+  animation.add({
+    targets: '#sparkles',
+    transform: Array(21).fill('scale(1)').map((scale, index) => index % 2 === 0 ? 'scale(0)': scale),
+    duration: 5000,
+    easing: 'easeInOutSine',
+    direction: 'alternate',
+  }, '-=5000');
+  
+  animation.add({
+    targets: '#spark',
+    scale: 4.5,
+    opacity: 0,
+    duration: 250,
+    easing: 'easeInOutSine',
+  });
+  animation.add({
+    targets: '#bomb',
+    scale: 1.5,
+    opacity: 0,
+    duration: 300,
+    delay: 50,
+    easing: 'easeInOutSine',
+  }, '-=250');
+}
+
 export default HomePage;

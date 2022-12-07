@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { createPopper } from '@popperjs/core';
 // import { Navbar as BootstrapNavbar } from 'bootstrap';
-import logo from '../../img/QuizLogo.png';
+import logo from '../../img/logo.png';
 import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
 
 /**

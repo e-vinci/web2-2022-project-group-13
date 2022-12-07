@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
 .tab {
   display: none;
 }
@@ -58,13 +60,13 @@ input.invalid {
   line-height: 25px;
 }
 
-.purple{
+.purple{                                  
   width: 100px;
   background-color: #E2A4FE;
-  border:1px  solid #E2A4FE;
+  border:1px solid #E2A4FE;
 }
 .purple:hover{
-  border:1px  solid #E2A4FE;
+  border:1px solid #E2A4FE;
 }
 
 
@@ -106,6 +108,8 @@ input.invalid {
   align-self: flex-end; 
   align-self: auto;
   justify-content: left;
+  font-family: 'Muli';
+  font-size: 50px;
 }
 /************************END HOME*****************************/
 
