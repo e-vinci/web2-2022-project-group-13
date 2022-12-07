@@ -1,7 +1,5 @@
 import anime from 'animejs/lib/anime.es';
 import { clearPage } from '../../utils/render';
-// eslint-disable-next-line no-unused-vars
-import Navigate from '../Router/Navigate';
 
 let quizzes;
 const HomePage = async () => {
@@ -22,11 +20,12 @@ const HomePage = async () => {
   }
 };
 
-// eslint-disable-next-line no-unused-vars
 
 function goToQuizButton(){
   const buttonToQuiz = document.getElementById('refToQuiz');
-  buttonToQuiz.onclick = function(){document.getElementById('refQuiz').scrollIntoView()};
+  buttonToQuiz.addEventListener('click', () => {
+    document.getElementById('quizName').scrollIntoView()
+  });
 }
 function renderQuizzesFromString(Allquiz) {
   const bomb = bombDisplay();
@@ -57,16 +56,20 @@ function renderQuizzesFromString(Allquiz) {
 
   // form search quizName
   const quizName = document.createElement('input');
+
   const divInputs = document.createElement('div');
   const divCenter = document.createElement('div');
   const submitButton = document.createElement('button');
-
-  divInputs.className = 'input-group'
+  divCenter.className = 'form-row'
+  divInputs.className = 'input-group mx-auto mb-3'
+  divInputs.style = 'width: 50%; padding : 50px';
   divInputs.id = 'refQuiz';
+  submitButton.id = 'buttonSearch'
   submitButton.type = 'submit';
   submitButton.className = 'btn purple';
   submitButton.textContent = 'Go';
   quizName.type = 'text';  
+  quizName.className = 'form-control';
   quizName.id = "quizName";
   quizName.name = "quiz-name";
   quizName.placeholder = 'Search';
@@ -77,13 +80,23 @@ function renderQuizzesFromString(Allquiz) {
   divInputs.appendChild(submitButton);
   divCenter.appendChild(divInputs);
   main.appendChild(divHome);
-  main.appendChild(quizName)
+  main.appendChild(divCenter);
+
   main.innerHTML += menuTableAsString;
   
   const inputQuiz = main.querySelector("#quizName");
   inputQuiz.addEventListener("keypress", async (e) => {
-  if(e.key === "Enter") await searchBar();
+    if(e.key === "Enter"){
+      await searchBar(); 
+      document.getElementById('quizName').scrollIntoView();
+    }
   });
+  const buttonSearch = main.querySelector("#buttonSearch");
+  buttonSearch.addEventListener("click", async (e) => {
+    e.preventDefault();
+    await searchBar(); 
+    document.getElementById('quizName').scrollIntoView();
+    });
 }
 
 async function searchBar() {
@@ -220,7 +233,6 @@ function bombDisplay(){
                         cy="0"
                         r="30">
                     </circle>
-            
                     <rect
                         x="-12"
                         y="-37"
@@ -248,7 +260,7 @@ function animateButton(el, targetsX, scaleX, elasticityX) {
 }
 
 function enterButton(el) {
-  animateButton(el, 1.2, 800, 400)
+  animateButton(el, 1.1, 800, 400)
 };
 
 function leaveButton(el) {
