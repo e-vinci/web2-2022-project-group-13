@@ -13,7 +13,7 @@ const HomePage = async () => {
 
     animationHome();
     animationQuizHoverHome()
-    goToQuizButton();
+    
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -97,6 +97,7 @@ function renderQuizzesFromString(Allquiz) {
     await searchBar(); 
     document.getElementById('quizName').scrollIntoView();
     });
+  goToQuizButton();
 }
 
 async function searchBar() {
