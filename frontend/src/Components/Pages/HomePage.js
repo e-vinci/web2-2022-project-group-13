@@ -1,6 +1,6 @@
-/* eslint-disable func-names */
 import anime from 'animejs/lib/anime.es';
 import { clearPage } from '../../utils/render';
+// eslint-disable-next-line no-unused-vars
 import Navigate from '../Router/Navigate';
 
 let quizzes;
@@ -12,8 +12,7 @@ const HomePage = async () => {
     quizzes = await response.json();
     
     renderQuizzesFromString(quizzes);
-    const form = document.querySelector('form');
-    form.addEventListener('submit', searchBar);
+
     animationHome();
     animationQuizHoverHome()
     goToQuizButton();
@@ -23,40 +22,8 @@ const HomePage = async () => {
   }
 };
 
-function renderSearch(quiz){
-  const menuTableAsString = getMenuTableAsString(quiz);
-  const main = document.querySelector('main');
+// eslint-disable-next-line no-unused-vars
 
-  const titleHome = document.createElement('h2');
-  titleHome.textContent = "Search";
-
-  const form = document.createElement('form');
-  form.className = 'p-5 justify-content-center';
-  const quizName = document.createElement('input');
-  const divInputs = document.createElement('div');
-  const divCenter = document.createElement('div');
-  const submitButton = document.createElement('button');
-  form.style = 'margin: auto; max-width:400px height:500px'
-  divInputs.className = 'input-group'
-  divInputs.id = 'refQuiz';
-  submitButton.type = 'submit';
-  submitButton.className = 'btn purple';
-  submitButton.textContent = 'Go';
-  quizName.type = 'text';  
-  quizName.id = "quizName";
-  quizName.name = "quiz-name";
-  quizName.placeholder = 'Search';
-  quizName.required = true;
-  
-  // dom add 
-  main.appendChild(titleHome);
-  divInputs.appendChild(quizName);
-  divInputs.appendChild(submitButton);
-  divCenter.appendChild(divInputs);
-  form.appendChild(divCenter)
-  main.appendChild(form);
-  main.innerHTML += menuTableAsString;
-}
 function goToQuizButton(){
   const buttonToQuiz = document.getElementById('refToQuiz');
   buttonToQuiz.onclick = function(){document.getElementById('refQuiz').scrollIntoView()};
@@ -89,15 +56,11 @@ function renderQuizzesFromString(Allquiz) {
   divHome.appendChild(sectionHome);
 
   // form search quizName
-
-  const form = document.createElement('form');
-  
-  form.className = 'p-5 justify-content-center';
   const quizName = document.createElement('input');
   const divInputs = document.createElement('div');
   const divCenter = document.createElement('div');
   const submitButton = document.createElement('button');
-  form.style = 'margin: auto; max-width:400px'
+
   divInputs.className = 'input-group'
   divInputs.id = 'refQuiz';
   submitButton.type = 'submit';
@@ -108,46 +71,34 @@ function renderQuizzesFromString(Allquiz) {
   quizName.name = "quiz-name";
   quizName.placeholder = 'Search';
   quizName.required = true;
-  
-  // dom add 
 
+  // dom add 
   divInputs.appendChild(quizName);
   divInputs.appendChild(submitButton);
   divCenter.appendChild(divInputs);
-  form.appendChild(divCenter)
   main.appendChild(divHome);
-  main.appendChild(form);
-
+  main.appendChild(quizName)
   main.innerHTML += menuTableAsString;
+  
+  const inputQuiz = main.querySelector("#quizName");
+  inputQuiz.addEventListener("keypress", async (e) => {
+  if(e.key === "Enter") await searchBar();
+  });
 }
 
-async function searchBar(e) {
-  e.preventDefault();
+async function searchBar() {
   try {
     const quizName = document.querySelector('#quizName').value;
-    let response = await fetch(`/api/quiz/search?quiz-name=${quizName}`);
+    const response = await fetch(`/api/quiz/search?quiz-name=${quizName}`);
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
 
-    if (quizzes.length === 0){
-      clearPage();
-      response = await fetch('/api/quiz');
-      if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-      quizzes = await response.json();
-      Navigate('/');
-
-      renderSearch(quizzes);
-    }
-    else{
-      clearPage();
-
-      renderSearch(quizzes);
+    clearPage();
+    
+    renderQuizzesFromString(quizzes);
+    
       
  
-    }
-  
-  
-    
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -385,5 +336,6 @@ function animationHome(){
     easing: 'easeInOutSine',
   }, '-=250');
 }
+
 
 export default HomePage;

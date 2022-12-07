@@ -25,7 +25,7 @@ const defaultQuizzes = [
     id : 2,
     quizName : "Videos Games",
     questions : [],
-    isVerified : false
+    isVerified : true
   }
 ];
 
