@@ -8,23 +8,21 @@ const HomePage = async () => {
     const response = await fetch('/api/quiz');
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
-    
+
     renderQuizzesFromString(quizzes);
 
     animationHome();
-    animationQuizHoverHome()
-    
+    animationQuizHoverHome();
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
   }
 };
 
-
-function goToQuizButton(){
+function goToQuizButton() {
   const buttonToQuiz = document.getElementById('refToQuiz');
   buttonToQuiz.addEventListener('click', () => {
-    document.getElementById('quizName').scrollIntoView()
+    document.getElementById('quizName').scrollIntoView();
   });
 }
 function renderQuizzesFromString(Allquiz) {
@@ -33,21 +31,21 @@ function renderQuizzesFromString(Allquiz) {
   const main = document.querySelector('main');
 
   // home
-  
+
   const divHome = document.createElement('div');
   const sectionHome = document.createElement('section');
   sectionHome.className = 'container-fluid headline';
-  divHome.className = 'container-fluid banner'
+  divHome.className = 'container-fluid banner';
   const titleHome = document.createElement('h2');
   const descriptionHome = document.createElement('h3');
   const buttonToQuiz = document.createElement('a');
 
-  buttonToQuiz.id = "refToQuiz"
+  buttonToQuiz.id = 'refToQuiz';
   buttonToQuiz.className = 'btn purple';
   buttonToQuiz.textContent = 'Start';
-  titleHome.textContent = "Time to Quiz !";
-  titleHome.className = "title-home" 
-  descriptionHome.textContent = "Have fun, learn and create your own quiz by registering.";
+  titleHome.textContent = 'Time to Quiz !';
+  titleHome.className = 'title-home';
+  descriptionHome.textContent = 'Have fun, learn and create your own quiz by registering.';
   sectionHome.appendChild(titleHome);
   sectionHome.innerHTML += bomb;
   sectionHome.appendChild(descriptionHome);
@@ -60,22 +58,22 @@ function renderQuizzesFromString(Allquiz) {
   const divInputs = document.createElement('div');
   const divCenter = document.createElement('div');
   const submitButton = document.createElement('button');
-  divCenter.className = 'form-row'
-  divInputs.className = 'input-group mx-auto mb-3'
+  divCenter.className = 'form-row';
+  divInputs.className = 'input-group mx-auto mb-3';
   divInputs.style = 'width: 50%; padding : 50px';
   divInputs.id = 'refQuiz';
-  submitButton.id = 'buttonSearch'
+  submitButton.id = 'buttonSearch';
   submitButton.type = 'submit';
   submitButton.className = 'btn purple';
   submitButton.textContent = 'Go';
-  quizName.type = 'text';  
+  quizName.type = 'text';
   quizName.className = 'form-control';
-  quizName.id = "quizName";
-  quizName.name = "quiz-name";
+  quizName.id = 'quizName';
+  quizName.name = 'quiz-name';
   quizName.placeholder = 'Search';
   quizName.required = true;
 
-  // dom add 
+  // dom add
   divInputs.appendChild(quizName);
   divInputs.appendChild(submitButton);
   divCenter.appendChild(divInputs);
@@ -83,20 +81,20 @@ function renderQuizzesFromString(Allquiz) {
   main.appendChild(divCenter);
 
   main.innerHTML += menuTableAsString;
-  
-  const inputQuiz = main.querySelector("#quizName");
-  inputQuiz.addEventListener("keypress", async (e) => {
-    if(e.key === "Enter"){
-      await searchBar(); 
+
+  const inputQuiz = main.querySelector('#quizName');
+  inputQuiz.addEventListener('keypress', async (e) => {
+    if (e.key === 'Enter') {
+      await searchBar();
       document.getElementById('quizName').scrollIntoView();
     }
   });
-  const buttonSearch = main.querySelector("#buttonSearch");
-  buttonSearch.addEventListener("click", async (e) => {
+  const buttonSearch = main.querySelector('#buttonSearch');
+  buttonSearch.addEventListener('click', async (e) => {
     e.preventDefault();
-    await searchBar(); 
+    await searchBar();
     document.getElementById('quizName').scrollIntoView();
-    });
+  });
   goToQuizButton();
 }
 
@@ -108,11 +106,8 @@ async function searchBar() {
     quizzes = await response.json();
 
     clearPage();
-    
+
     renderQuizzesFromString(quizzes);
-    
-      
- 
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -134,7 +129,7 @@ function addLinesToTableHeadersAndGet(tableLines) {
 
 function getAllTableLinesAsString(allQuiz) {
   let quizzesTableLines = '';
-  
+
   allQuiz?.forEach((quiz) => {
     quizzesTableLines += `<div class= "quizContainer">
       <p>${quiz.quizName}</p>
@@ -144,9 +139,8 @@ function getAllTableLinesAsString(allQuiz) {
   return quizzesTableLines;
 }
 
-function bombDisplay(){
-  const bombHtml = 
-  `
+function bombDisplay() {
+  const bombHtml = `
   <svg viewBox="-1 -1 40 120" width="110" height="110">
         <path
             id="motion-path"
@@ -244,7 +238,7 @@ function bombDisplay(){
             </g>
         </g>
     </svg>
-  `
+  `;
   return bombHtml;
 }
 
@@ -255,84 +249,104 @@ function animateButton(el, targetsX, scaleX, elasticityX) {
     scale: targetsX,
 
     duration: scaleX,
-   
-    elasticity: elasticityX
+
+    elasticity: elasticityX,
   });
 }
 
 function enterButton(el) {
-  animateButton(el, 1.1, 800, 400)
-};
-
-function leaveButton(el) {
-  animateButton(el, 1.0, 600, 300)
-};
-function animationQuizHoverHome(){
-  const quizzesContainer = document.getElementsByClassName('quizContainer');
-  for (let i = 0; i < quizzesContainer.length; i+=1) {
-    quizzesContainer[i].addEventListener('mouseenter', (e) => {
-      enterButton(e.target);
-    }, false);
-    
-    quizzesContainer[i].addEventListener('mouseleave', (e) => {
-      leaveButton(e.target)
-    }, false);  
-  }
-
+  animateButton(el, 1.1, 800, 400);
 }
 
-function animationHome(){
+function leaveButton(el) {
+  animateButton(el, 1.0, 600, 300);
+}
+function animationQuizHoverHome() {
+  const quizzesContainer = document.getElementsByClassName('quizContainer');
+  for (let i = 0; i < quizzesContainer.length; i += 1) {
+    quizzesContainer[i].addEventListener(
+      'mouseenter',
+      (e) => {
+        enterButton(e.target);
+      },
+      false,
+    );
+
+    quizzesContainer[i].addEventListener(
+      'mouseleave',
+      (e) => {
+        leaveButton(e.target);
+      },
+      false,
+    );
+  }
+}
+
+function animationHome() {
   anime({
     targets: '.title-home',
 
     rotate: '1turn',
-    duration: 2000  
+    duration: 2000,
   });
 
   const animation = anime.timeline({
-    duration: 5000
+    duration: 5000,
   });
-  
+
   animation.add({
     targets: '#fuse',
     strokeDashoffset: (target) => -target.getTotalLength(),
     duration: 5000,
-  
+
     begin: (ani) => {
-      const {target} = ani.animatables[0];
+      const { target } = ani.animatables[0];
       const length = target.getTotalLength();
       target.setAttribute('stroke-dasharray', length);
     },
     easing: 'linear',
   });
-  
+
   const motionPath = document.querySelector('#motion-path');
   const path = anime.path(motionPath);
-  animation.add({
-    targets: '#spark',
-    translateX: path('x'),
-    translateY: path('y'),
-    rotate: path('angle'),
-    duration: 5000,
-    easing: 'linear',
-  }, '-=5000');
-  
-  animation.add({
-    targets: '#ember',
-    transform: Array(21).fill('scale(2.1)').map((scale, index) => index % 2 === 0 ? 'scale(1.4)': scale),
-    duration: 5000,
-    easing: 'easeInOutSine',
-    direction: 'alternate',
-  }, '-=5000');
-  
-  animation.add({
-    targets: '#sparkles',
-    transform: Array(21).fill('scale(1)').map((scale, index) => index % 2 === 0 ? 'scale(0)': scale),
-    duration: 5000,
-    easing: 'easeInOutSine',
-    direction: 'alternate',
-  }, '-=5000');
-  
+  animation.add(
+    {
+      targets: '#spark',
+      translateX: path('x'),
+      translateY: path('y'),
+      rotate: path('angle'),
+      duration: 5000,
+      easing: 'linear',
+    },
+    '-=5000',
+  );
+
+  animation.add(
+    {
+      targets: '#ember',
+      transform: Array(21)
+        .fill('scale(2.1)')
+        .map((scale, index) => (index % 2 === 0 ? 'scale(1.4)' : scale)),
+      duration: 5000,
+      easing: 'easeInOutSine',
+      direction: 'alternate',
+    },
+    '-=5000',
+  );
+
+  animation.add(
+    {
+      targets: '#sparkles',
+      transform: Array(21)
+        .fill('scale(1)')
+        .map((scale, index) => (index % 2 === 0 ? 'scale(0)' : scale)),
+      duration: 5000,
+      easing: 'easeInOutSine',
+      direction: 'alternate',
+    },
+    '-=5000',
+  );
+
   animation.add({
     targets: '#spark',
     scale: 4.5,
@@ -340,15 +354,17 @@ function animationHome(){
     duration: 250,
     easing: 'easeInOutSine',
   });
-  animation.add({
-    targets: '#bomb',
-    scale: 1.5,
-    opacity: 0,
-    duration: 300,
-    delay: 50,
-    easing: 'easeInOutSine',
-  }, '-=250');
+  animation.add(
+    {
+      targets: '#bomb',
+      scale: 1.5,
+      opacity: 0,
+      duration: 300,
+      delay: 50,
+      easing: 'easeInOutSine',
+    },
+    '-=250',
+  );
 }
-
 
 export default HomePage;
