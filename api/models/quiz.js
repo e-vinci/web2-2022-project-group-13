@@ -29,6 +29,15 @@ function readAllQuizzes() {
   const quizzesVerified = [...quizzes].filter(quiz => quiz.isVerified === true);
   return quizzesVerified.reverse();
 }
+
+function readOneQuiz(id){
+  const idQuiz = parseInt(id,10);
+  const quizzes = parse(jsonDbPath, defaultQuizzes);
+  const quizVerified = [...quizzes].filter(quiz => quiz.isVerified === true && quiz.id === idQuiz);
+  if (quizVerified.length === 0) return undefined;
+  return quizVerified;
+}
+
 function searchQuiz(title) {
   const QuizFilterBegins = escape(title);
   let QuizzesNameBeginWith = null;
@@ -57,10 +66,27 @@ function deleteQuiz(id){
     serialize(jsonDbPath, quizList);
 }
 
+function getQuiz(id){
+  const quizList = parse(jsonDbPath, []);
+  const foundIndex = quizList.filter(quiz => parseInt(quiz.id, 10) === parseInt(id, 10));
+  return foundIndex;
+}
+
+function validateQuiz(id){
+  const quizList = parse(jsonDbPath, []);
+  const foundIndex = quizList.findIndex(quiz => parseInt(quiz.id, 10) === parseInt(id, 10));
+  // foundIndex.isVerified = true;
+  quizList[foundIndex].isVerified = true;
+  serialize(jsonDbPath, quizList);
+}
+
 module.exports = {
   addOneQuiz,
   searchQuiz,
   readAllQuizzes,
+  readOneQuiz,
   readUnverifiedQuizzes,
   deleteQuiz,
+  getQuiz,
+  validateQuiz,
 };

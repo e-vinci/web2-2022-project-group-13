@@ -1,5 +1,6 @@
 import anime from 'animejs/lib/anime.es';
 import { clearPage } from '../../utils/render';
+import RedirectQuiz from '../Router/Redirect'; 
 
 let quizzes;
 const HomePage = async () => {
@@ -9,6 +10,8 @@ const HomePage = async () => {
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
     renderHomePage(quizzes);
+    attachOnClickEventsToRenderQuiz(quizzes);
+
 
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -137,13 +140,26 @@ function getAllTableLinesAsString(allQuiz) {
   let quizzesTableLines = '';
 
   allQuiz?.forEach((quiz) => {
-    quizzesTableLines += `<div class= "quizContainer">
+    quizzesTableLines += `<div class= "quizContainer" id="quiz_${quiz.id}">
       <p>${quiz.quizName}</p>
     </div>`;
   });
 
   return quizzesTableLines;
 }
+
+function attachOnClickEventsToRenderQuiz(allQuiz){
+
+  allQuiz?.forEach((quiz) => {
+    const idQuiz = 'quiz_'.concat(quiz.id);
+    const currentQuiz = document.getElementById(idQuiz);
+
+    currentQuiz.addEventListener('click', () => {
+        RedirectQuiz(quiz.id);
+      });
+  })
+}
+
 
 // bomb code inspired by Gabriele Corti : https://codepen.io/borntofrappe/pen/LwZRON
 function bombDisplay() {
