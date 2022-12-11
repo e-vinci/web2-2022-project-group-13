@@ -5,6 +5,7 @@ const cookieSession = require('cookie-session');
 
 const authsRouter = require('./routes/auths');
 const quizzesRouter = require('./routes/quizzes');
+const adminRouter = require('./routes/admin');
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use(cookieParser());
 
 app.use('/auths', authsRouter);
 app.use('/quiz', quizzesRouter);
+app.use('/admin', adminRouter);
 
 module.exports = app;

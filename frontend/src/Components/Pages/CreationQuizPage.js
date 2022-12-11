@@ -1,19 +1,78 @@
-/* eslint-disable */
-
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
 import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
 
-var currentTab = 0;
+let currentTab = 0;
 
 const CreationQuizPage = () => {
   if (isAuthenticated()) {
     clearPage();
     renderCreateQuizForm();
     showTab(currentTab);
-  } else
-    Navigate('/login');
+  } else Navigate('/login');
 };
+
+// code pris du site https://www.w3schools.com/howto/howto_js_form_steps.asp
+// début
+function showTab(n) {
+  const x = document.getElementsByClassName('tab');
+  x[n].style.display = 'block';
+  if (n === 0) {
+    document.getElementById('prevBtn').style.display = 'none';
+  } else {
+    document.getElementById('prevBtn').style.display = 'inline';
+  }
+  if (n === x.length - 1) {
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('submitBtn').style.display = 'inline';
+  } else {
+    document.getElementById('submitBtn').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'inline';
+  }
+  fixStepIndicator(n);
+}
+
+const validateForm = () => {
+  const x = document.getElementsByClassName('tab');
+  const y = x[currentTab].getElementsByTagName('input');
+  let valid = true;
+
+  // eslint-disable-next-line
+  for (let i = 0; i < y.length; i++) {
+    if (y[i].value === '') {
+      y[i].className += ' invalid';
+      valid = false;
+    }
+  }
+  if (valid) {
+    document.getElementsByClassName('step')[currentTab].className += ' finish';
+  }
+  return valid;
+};
+
+const nextPrev = (n) => {
+  const x = document.getElementsByClassName('tab');
+  if (n === 1 && !validateForm()) return false;
+  x[currentTab].style.display = 'none';
+  currentTab += n;
+  if (currentTab >= x.length) {
+    document.getElementById('formulaire').submit();
+    return false;
+  }
+  showTab(currentTab);
+  return true;
+};
+
+function fixStepIndicator(n) {
+  const x = document.getElementsByClassName('step');
+
+  // eslint-disable-next-line
+  for (let i = 0; i < x.length; i++) {
+    x[i].className = x[i].className.replace(' active', '');
+  }
+  x[n].className += ' active';
+}
+// fin
 
 function renderCreateQuizForm() {
   const main = document.querySelector('main');
@@ -169,6 +228,11 @@ function renderCreateQuizForm() {
     questionWrapper.appendChild(row2);
 
     form.appendChild(questionWrapper);
+    form.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+      }
+    });
 
     const step = document.createElement('span');
     step.className = 'step';
@@ -215,67 +279,6 @@ function renderCreateQuizForm() {
   main.appendChild(wrapper);
 }
 
-// code pris du site https://www.w3schools.com/howto/howto_js_form_steps.asp
-// début
-function showTab(n) {
-  let x = document.getElementsByClassName('tab');
-  x[n].style.display = 'block';
-  if (n === 0) {
-    document.getElementById('prevBtn').style.display = 'none';
-  } else {
-    document.getElementById('prevBtn').style.display = 'inline';
-  }
-  if (n === x.length - 1) {
-    document.getElementById('nextBtn').style.display = 'none';
-    document.getElementById('submitBtn').style.display = 'inline';
-  } else {
-    document.getElementById('submitBtn').style.display = 'none';
-    document.getElementById('nextBtn').style.display = 'inline';
-  }
-  fixStepIndicator(n);
-}
-
-function nextPrev(n) {
-  let x = document.getElementsByClassName('tab');
-  if (n === 1 && !validateForm()) return false;
-  x[currentTab].style.display = 'none';
-  currentTab = currentTab + n;
-  if (currentTab >= x.length) {
-    document.getElementById('formulaire').submit();
-    return false;
-  }
-  showTab(currentTab);
-}
-
-function validateForm() {
-  var x,
-    y,
-    i,
-    valid = true;
-  x = document.getElementsByClassName('tab');
-  y = x[currentTab].getElementsByTagName('input');
-  for (i = 0; i < y.length; i++) {
-    if (y[i].value === '') {
-      y[i].className += ' invalid';
-      valid = false;
-    }
-  }
-  if (valid) {
-    document.getElementsByClassName('step')[currentTab].className += ' finish';
-  }
-  return valid;
-}
-
-function fixStepIndicator(n) {
-  var i,
-    x = document.getElementsByClassName('step');
-  for (i = 0; i < x.length; i++) {
-    x[i].className = x[i].className.replace(' active', '');
-  }
-  x[n].className += ' active';
-}
-// fin
-
 async function onSubmit(e) {
   e.preventDefault();
   const quizName = document.getElementById('quizName').value;
@@ -285,22 +288,23 @@ async function onSubmit(e) {
     const difficulty = document.getElementById('difficulty').value;
     const questionsList = document.getElementsByClassName('tab');
     const quiz = {
-      creatorUsername : getAuthenticatedUser.username,
+      creatorUsername: getAuthenticatedUser.username,
       quizName,
       difficulty,
-      questions: []
+      questions: [],
     };
 
+    // eslint-disable-next-line
     for (let index = 1; index <= questionsList.length; index++) {
       const question = {
         number: index,
         question: document.getElementById('intitule-'.concat(index)).value,
         goodAnswer: document.getElementById('bonneReponse-'.concat(index)).value,
-        falseAnswers : [
+        falseAnswers: [
           document.getElementById('mauvaiseReponse1-'.concat(index)).value,
           document.getElementById('mauvaiseReponse2-'.concat(index)).value,
-          document.getElementById('mauvaiseReponse3-'.concat(index)).value
-        ]
+          document.getElementById('mauvaiseReponse3-'.concat(index)).value,
+        ],
       };
       quiz.questions.push(question);
     }
@@ -316,7 +320,7 @@ async function onSubmit(e) {
     const response = await fetch('/api/quiz/addQuiz', options);
 
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-    const newQuiz = response.json();
+    // const newQuiz = response.json();
     Navigate('/');
   }
 }
