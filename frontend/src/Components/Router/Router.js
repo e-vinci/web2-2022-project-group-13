@@ -3,6 +3,7 @@ import RegisterPage from '../Pages/RegisterPage';
 import LoginPage from '../Pages/LoginPage';
 import CreateQuizPage from '../Pages/CreationQuizPage';
 import QuizPage from '../Pages/QuizPage';
+import AdminPage from '../Pages/AdminPage';
 import Logout from '../Logout/Logout';
 
 const routes = {
@@ -11,6 +12,7 @@ const routes = {
   '/register': RegisterPage,
   '/createQuiz': CreateQuizPage,
   '/quizPage': QuizPage,
+  '/admin': AdminPage,
   '/logout': Logout,
 };
 
