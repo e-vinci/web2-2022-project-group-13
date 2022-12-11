@@ -1,15 +1,15 @@
 /* eslint-disable no-plusplus */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-console */
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
+
+let idCurrentQuiz;
 
 const QuizPage = async (id) => {
   clearPage();
   
   if (!id) Navigate('/');
 
+  idCurrentQuiz = id;
   const response = await fetch('/api/quiz/'.concat(id));
 
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
@@ -20,7 +20,6 @@ const QuizPage = async (id) => {
 };
 
 function renderQuizPage(quiz) {
-  console.log(quiz);
   const main = document.querySelector('main');
   const divQuiz = document.createElement('div');
   divQuiz.className = 'container-fluid text-center p-4 bg-secondary bg-opacity-25 ';
@@ -38,12 +37,10 @@ function renderQuizPage(quiz) {
   main.appendChild(divQuiz);
 
   start.addEventListener('click', () => {
-    console.log('start');
     renderQuestions(quiz);
   });
 }
 
-// eslint-disable-next-line no-unused-vars
 function renderQuestions(quiz) {
   const score = 0;
   const arrayQuestions = quiz.questions;
@@ -74,6 +71,7 @@ function renderOneQuestion(questions, indexArray, score) {
   const numberQuestion = document.createElement('h4');
   numberQuestion.innerText = 'Question n°'.concat(indexArray + 1);
   const showScore = document.createElement('h4');
+  showScore.id = 'score';
   showScore.innerText = 'Score : '.concat(currentScore.toString()).concat('/10');
 
   const divTitle = document.createElement('div');
@@ -84,6 +82,10 @@ function renderOneQuestion(questions, indexArray, score) {
 
   const answers = document.createElement('div');
   answers.className = 'container text-center mt-5';
+
+  const divAnswerMsg = document.createElement('div');
+  divAnswerMsg.className = 'row justify-content-around';
+  divAnswerMsg.id = 'AnswerMsg';
 
   const divAnswers1 = document.createElement('div');
   divAnswers1.className = 'row justify-content-around';
@@ -126,6 +128,7 @@ function renderOneQuestion(questions, indexArray, score) {
   nextButton.innerText = 'Next';
   divNext.appendChild(nextButton);
 
+  answers.appendChild(divAnswerMsg);
   answers.appendChild(divAnswers1);
   answers.appendChild(divAnswers2);
   answers.appendChild(divNext);
@@ -143,7 +146,6 @@ function renderOneQuestion(questions, indexArray, score) {
   answer4.addEventListener('click', disableFunction);
 
   nextButton.addEventListener('click', () => {
-    console.log(currentIndex);
     if (currentIndex === 9) {
       renderScore(currentScore);
     } else {
@@ -153,34 +155,48 @@ function renderOneQuestion(questions, indexArray, score) {
   });
 
   function disableFunction(e) {
-    console.log(e);
+
+    const divMsgAnswer = document.getElementById('AnswerMsg');
+    const msg = document.createElement('h2');
+
     if (e.target.innerHTML === questions[indexArray].goodAnswer) {
       currentScore++;
-      console.log('bien joué');
+      msg.innerText = 'Bien joué !';
+
+      const newScore = document.getElementById('score');
+      newScore.innerText = 'Score : '.concat(currentScore.toString()).concat('/10');
+
     } else {
-      console.log('dommage');
+      msg.innerText = 'Dommage';
     }
-    disableButtons(e.target.toString());
+    divMsgAnswer.appendChild(msg);
+    disableButtons(e.target.innerHTML,questions[indexArray].goodAnswer);
   }
 
-  function disableButtons(answer) {
+  function disableButtons(givenAnswer,goodAnswer) {
+
     const tableAnswers = ['answer1', 'answer2', 'answer3', 'answer4'];
+
     for (let i = 0; i < tableAnswers.length; i++) {
+
       const answerToDisable = document.getElementById(tableAnswers[i]);
       answerToDisable.removeEventListener('click', disableFunction);
-      // eslint-disable-next-line no-continue
-      if (tableAnswers[i] === answer) continue;
       answerToDisable.className = answerToDisable.className.concat('disabled');
+
+      if (answerToDisable.innerHTML === givenAnswer && answerToDisable.innerHTML !== goodAnswer) {
+        answerToDisable.className = answerToDisable.className.replace('btn-primary','btn-danger');
+      }
+      if (answerToDisable.innerHTML === goodAnswer)  {
+        answerToDisable.className = answerToDisable.className.replace('btn-primary','btn-success');
+      }
     }
     const nextEnable = document.getElementById('nextButton');
     nextEnable.className = nextEnable.className.replace('disabled', '');
   }
 }
 
-// eslint-disable-next-line no-unused-vars
 function renderScore(score) {
   clearPage();
-  console.log(score);
   const finalScore = score.toString();
 
   const main = document.querySelector('main');
@@ -192,7 +208,8 @@ function renderScore(score) {
   divScoreMsg.className = 'p-5 mt-5 border border-dark rounded-4';
   const scoreMsg = document.createElement('h1');
   scoreMsg.innerText =
-    score === 10 ? 'Parfait' : score >= 7 ? 'Bien' : score >= 3 ? 'Tu peux mieux faire' : 'Bruh';
+    // eslint-disable-next-line no-nested-ternary
+    score === 10 ? 'Parfait' : score >= 7 ? 'Bien' : score >= 3 ? 'Tu peux mieux faire' : 'Aie aie aie';
 
   const divScore = document.createElement('div');
   divScore.className = 'p-3 m-3 border border-dark rounded-4';
@@ -219,7 +236,7 @@ function renderScore(score) {
   main.appendChild(div1);
 
   button1.addEventListener('click', () => {
-    console.log('sike');
+    QuizPage(idCurrentQuiz);
   });
 
   button2.addEventListener('click', () => {
