@@ -3,6 +3,7 @@ const
 { addOneQuiz,
   searchQuiz,
   readAllQuizzes,
+  readOneQuiz,
 } = require('../models/quiz');
 
 const router = express.Router();
@@ -10,6 +11,11 @@ const router = express.Router();
 router.get('/', (req, res) => {
   const allPizzasPotentiallyOrdered = readAllQuizzes();
   return res.json(allPizzasPotentiallyOrdered);
+});
+
+router.get('/:id', (req, res) => {
+  const quizFound = readOneQuiz(req.params.id);
+  return res.json(quizFound);
 });
 
 router.post('/addQuiz', async (req, res) => {

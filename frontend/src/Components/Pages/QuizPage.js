@@ -5,10 +5,12 @@
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
 
-const QuizPage = async () => {
+const QuizPage = async (id) => {
   clearPage();
+  
+  if (!id) Navigate('/');
 
-  const response = await fetch('/api/quiz');
+  const response = await fetch('/api/quiz/'.concat(id));
 
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
 
