@@ -90,6 +90,20 @@ function deleteQuiz(id){
     serialize(jsonDbPath, quizList);
 }
 
+function getQuiz(id){
+  const quizList = parse(jsonDbPath, []);
+  const foundIndex = quizList.filter(quiz => parseInt(quiz.id, 10) === parseInt(id, 10));
+  return foundIndex;
+}
+
+function validateQuiz(id){
+  const quizList = parse(jsonDbPath, []);
+  const foundIndex = quizList.findIndex(quiz => parseInt(quiz.id, 10) === parseInt(id, 10));
+  // foundIndex.isVerified = true;
+  quizList[foundIndex].isVerified = true;
+  serialize(jsonDbPath, quizList);
+}
+
 module.exports = {
   addOneQuiz,
   searchQuiz,
@@ -97,4 +111,6 @@ module.exports = {
   readOneQuiz,
   readUnverifiedQuizzes,
   deleteQuiz,
+  getQuiz,
+  validateQuiz,
 };
