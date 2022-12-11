@@ -44,7 +44,7 @@ function renderAdminUI(quizDefault) {
   const wrapper = document.createElement('div');
   wrapper.style = 'padding: 25px 10%; background-color: lightgrey;';
   // wrapper.className = 'vh-100';
-  wrapper.classList.add('container-fluid', 'w-100');
+  wrapper.classList.add('container-fluid', 'vh-100');
 
   const row = document.createElement('div');
   row.classList.add('row');
@@ -52,7 +52,7 @@ function renderAdminUI(quizDefault) {
   const leftTab = document.createElement('div');
   leftTab.classList.add('col-2', 'p-0');
   const rightTab = document.createElement('div');
-  rightTab.classList.add('col-10', 'list-group', 'rightTab');
+  rightTab.classList.add('col-10', 'list-group', 'rightTab', 'list-group-flush');
 
   const btnGroup = document.createElement('div');
   btnGroup.classList.add('btn-group-toggle', 'btn-group-vertical', 'w-100', 'text-center');
@@ -99,7 +99,7 @@ function renderQuizList(quizList) {
   quizList.forEach((element) => {
     // element.isVerified = false;
     const quizLink = document.createElement('a');
-    // quizLink.className = "btn btn-primary"
+    quizLink.classList.add('list-group-item', 'list-group-item-action');
     quizLink.href = '';
     const pointer = parseInt(element.id);
     const btnRemove = document.createElement('button');
@@ -126,7 +126,7 @@ function renderQuizList(quizList) {
     });
     const quizElement = document.createElement('div');
     const quizElementTitle = document.createElement('p');
-    quizElement.classList.add('card', 'list-group-item', 'd-flex', 'flex-row');
+    quizElement.classList.add('d-flex', 'flex-row');
     quizElementTitle.textContent = element.quizName;
     quizElementTitle.classList.add('w-75', 'text-center', 'm-auto');
 
