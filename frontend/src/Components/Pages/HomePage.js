@@ -8,12 +8,7 @@ const HomePage = async () => {
     const response = await fetch('/api/quiz');
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
-    
-    renderQuizzesFromString(quizzes);
-
-    animationHome();
-    animationQuizHoverHome()
-    
+    renderHomePage(quizzes);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -27,7 +22,7 @@ function goToQuizButton(){
     document.getElementById('quizName').scrollIntoView()
   });
 }
-function renderQuizzesFromString(Allquiz) {
+function renderHomePage(Allquiz) {
   const bomb = bombDisplay();
   const menuTableAsString = getMenuTableAsString(Allquiz);
   const main = document.querySelector('main');
@@ -98,6 +93,8 @@ function renderQuizzesFromString(Allquiz) {
     document.getElementById('quizName').scrollIntoView();
     });
   goToQuizButton();
+  animationQuizHoverHome()
+  animationHome();
 }
 
 async function searchBar() {
@@ -106,13 +103,8 @@ async function searchBar() {
     const response = await fetch(`/api/quiz/search?quiz-name=${quizName}`);
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
-
     clearPage();
-    
-    renderQuizzesFromString(quizzes);
-    
-      
- 
+    renderHomePage(quizzes);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
