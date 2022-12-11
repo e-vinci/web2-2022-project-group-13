@@ -6,7 +6,7 @@ let idCurrentQuiz;
 
 const QuizPage = async (id) => {
   clearPage();
-  
+
   if (!id) Navigate('/');
 
   idCurrentQuiz = id;

@@ -1,10 +1,5 @@
 const express = require('express');
-const 
-{ addOneQuiz,
-  searchQuiz,
-  readAllQuizzes,
-  readOneQuiz,
-} = require('../models/quiz');
+const { addOneQuiz, searchQuiz, readAllQuizzes, readOneQuiz } = require('../models/quiz');
 
 const router = express.Router();
 

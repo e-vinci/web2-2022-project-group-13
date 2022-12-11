@@ -7,6 +7,18 @@ GET {{baseUrl}}/quiz
 ### Read quiz identified by 2
 GET {{baseUrl}}/quiz/2
 
+<<<<<<< HEAD:api/REST Client/pizzas.http
+### Read all pizzas sorted by title (ascending)
+GET {{baseUrl}}/pizzas/?order=+title
+
+### Read all pizzas sorted by title (descending)
+GET {{baseUrl}}/pizzas/?order=-title
+
+### Read pizza identified by 2
+GET {{baseUrl}}/pizzas/2
+
+=======
+>>>>>>> 35c6703b1d1492640fd9290ac4388927c6bcd3b1:api/REST Client/quizzes.http
 ### Create a quiz
 POST {{baseUrl}}/addQuiz
 Content-Type: application/json
@@ -39,7 +51,8 @@ Content-Type: application/json
         "badAnswer2" : "MR2",
         "badAnswer3" : "MR3"
         }
-    ]
+    ],
+    "isVerified": true
 }
 
 ### Delete quiz identified by 2
@@ -52,9 +65,6 @@ Content-Type: application/json
 {
     "title":"Magic Green 2"
 }
-
-
-
 
 ######### ERROR OPERATION  ###########
 
