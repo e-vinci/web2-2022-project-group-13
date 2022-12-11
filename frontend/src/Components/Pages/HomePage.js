@@ -9,6 +9,7 @@ const HomePage = async () => {
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
     renderHomePage(quizzes);
+
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -26,7 +27,7 @@ function renderHomePage(Allquiz) {
   const menuTableAsString = getMenuTableAsString(Allquiz);
   const main = document.querySelector('main');
 
-  // home
+  // home 
 
   const divHome = document.createElement('div');
   const sectionHome = document.createElement('section');
@@ -34,11 +35,13 @@ function renderHomePage(Allquiz) {
   divHome.className = 'container-fluid banner';
   const titleHome = document.createElement('h2');
   const descriptionHome = document.createElement('h3');
-  const buttonToQuiz = document.createElement('a');
 
+  // button href to quiz display
+  const buttonToQuiz = document.createElement('a');
   buttonToQuiz.id = 'refToQuiz';
   buttonToQuiz.className = 'btn purple';
   buttonToQuiz.textContent = 'Start';
+
   titleHome.textContent = 'Time to Quiz !';
   titleHome.className = 'title-home';
   descriptionHome.textContent = 'Have fun, learn and create your own quiz by registering.';
@@ -48,7 +51,7 @@ function renderHomePage(Allquiz) {
   sectionHome.appendChild(buttonToQuiz);
   divHome.appendChild(sectionHome);
 
-  // form search quizName
+  // creation input for search
   const quizName = document.createElement('input');
 
   const divInputs = document.createElement('div');
@@ -70,6 +73,7 @@ function renderHomePage(Allquiz) {
   quizName.required = true;
 
   // dom add
+  
   divInputs.appendChild(quizName);
   divInputs.appendChild(submitButton);
   divCenter.appendChild(divInputs);
@@ -77,6 +81,8 @@ function renderHomePage(Allquiz) {
   main.appendChild(divCenter);
 
   main.innerHTML += menuTableAsString;
+
+  // event listening for search
 
   const inputQuiz = main.querySelector('#quizName');
   inputQuiz.addEventListener('keypress', async (e) => {
@@ -91,9 +97,13 @@ function renderHomePage(Allquiz) {
     await searchBar();
     document.getElementById('quizName').scrollIntoView();
   });
+
+  // animations and buttons 
+
   goToQuizButton();
   animationQuizHoverHome()
   animationHome();
+  textBoomAnimation();
 }
 
 async function searchBar() {
@@ -135,7 +145,12 @@ function getAllTableLinesAsString(allQuiz) {
   return quizzesTableLines;
 }
 
+// bomb code inspired by Gabriele Corti : https://codepen.io/borntofrappe/pen/LwZRON
 function bombDisplay() {
+  const buttonToQuiz = document.createElement('a');
+  buttonToQuiz.id = 'refToQuiz';
+  buttonToQuiz.className = 'btn purple';
+  buttonToQuiz.textContent = 'Start';
   const bombHtml = `
   <svg viewBox="-1 -1 40 120" width="110" height="110">
         <path
@@ -146,13 +161,13 @@ function bombDisplay() {
         </path>
         <g>
        
-        <g transform="translate(-4.7 58)">
+        <g transform="translate(-9 65)">
             <path
-            id="MyPath"
+            id="textBoom"
             fill="none"
             d="M0,0 60,0 0,0 Q0,0 0,0 Q0,0 0,0 Q0,0 0,0 Q60,0" />
             <text>
-            <textPath id="textBoom" href="#MyPath" fill= "#E2A4FE">BOOM</textPath>
+            <textPath href="#textBoom" fill= "#E2A4FE">BOOM!</textPath>
             </text>
         </g>
             <g transform="rotate(20) translate(97 14)">
@@ -238,6 +253,16 @@ function bombDisplay() {
   return bombHtml;
 }
 
+// animation hover by Alex Chan : https://codepen.io/alexchantastic/pen/XgXbgz
+function textBoomAnimation() {
+  
+  anime({
+    targets: 'textPath',
+    translateX: 6000,
+    duration: 3000
+  });
+;
+}
 function animateButton(el, targetsX, scaleX, elasticityX) {
   anime.remove(el);
   anime({

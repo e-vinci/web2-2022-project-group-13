@@ -108,15 +108,13 @@ input.invalid {
 /************************END HOME*****************************/
 
 /********************************BOMB TIMER*************************************/
+/*******************************bomb code inspired by Gabriele Corti : https://codepen.io/borntofrappe/pen/LwZRON ******************************/
 svg {
   display: inline-block;
   width: 200px;
   height: auto;
 }
 
-/* style the input of type range to highlight two dots atop a thin line
-the whole thing is optimized for chrome and should be carefully considered for cross-browser support
-*/
 #timerBomb[type='range'] {
   margin-top: 2.5rem;
   width: 300px;
@@ -160,3 +158,10 @@ the whole thing is optimized for chrome and should be carefully considered for c
   z-index: -5;
 }
 /********************************END BOMB TIMER*************************************/
+
+main{
+  min-height: calc(100vh - 70px - 96px);
+}
+footer{
+  margin-top: 100px;
+}
