@@ -160,3 +160,87 @@ the whole thing is optimized for chrome and should be carefully considered for c
   z-index: -5;
 }
 /********************************END BOMB TIMER*************************************/
+
+/********************************START LOGIN PAGE*************************************/
+
+#formDiv {
+  background-color: rgb(25, 28, 37);
+  min-height: calc(100vh);
+  padding-top: 8%;
+}
+
+#titleForm {
+  padding-top: 1%;
+  padding-bottom: 2%;
+  color: #e2a4fe;
+}
+
+#username {
+  width: 25%;
+  display: block;
+  margin: 0 auto;
+}
+
+#password {
+  width: 25%;
+  display: block;
+  margin: 0 auto;
+  padding-top: 0.5%;
+}
+
+#rememberme {
+  margin-left: 45.7%;
+}
+
+#labelForCheckbox {
+  padding-left: 0.5%;
+  color: #e2a4fe;
+}
+
+#LoginButton {
+  margin-left: 48.2%;
+}
+
+/********************************END LOGIN PAGE*************************************/
+
+/********************************START LOGIN PAGE*************************************/
+
+#formDiv {
+  background-color: rgb(25, 28, 37);
+  min-height: calc(100vh);
+  padding-top: 8%;
+}
+
+#titleForm {
+  padding-top: 1%;
+  padding-bottom: 2%;
+  color: #e2a4fe;
+}
+
+#username {
+  width: 25%;
+  display: block;
+  margin: 0 auto;
+}
+
+#password {
+  width: 25%;
+  display: block;
+  margin: 0 auto;
+  padding-top: 0.5%;
+}
+
+#rememberme {
+  margin-left: 45.7%;
+}
+
+#labelForCheckbox {
+  padding-left: 0.5%;
+  color: #e2a4fe;
+}
+
+#submitButton {
+  margin-left: 48.2%;
+}
+
+/********************************END LOGIN PAGE*************************************/

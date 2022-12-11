@@ -1,6 +1,6 @@
 import anime from 'animejs/lib/anime.es';
 import { clearPage } from '../../utils/render';
-import RedirectQuiz from '../Router/Redirect'; 
+import RedirectQuiz from '../Router/Redirect';
 
 let quizzes;
 const HomePage = async () => {
@@ -11,7 +11,6 @@ const HomePage = async () => {
     quizzes = await response.json();
     renderHomePage(quizzes);
     attachOnClickEventsToRenderQuiz(quizzes);
-
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -95,7 +94,7 @@ function renderHomePage(Allquiz) {
     document.getElementById('quizName').scrollIntoView();
   });
   goToQuizButton();
-  animationQuizHoverHome()
+  animationQuizHoverHome();
   animationHome();
 }
 
@@ -138,16 +137,15 @@ function getAllTableLinesAsString(allQuiz) {
   return quizzesTableLines;
 }
 
-function attachOnClickEventsToRenderQuiz(allQuiz){
-
+function attachOnClickEventsToRenderQuiz(allQuiz) {
   allQuiz?.forEach((quiz) => {
     const idQuiz = 'quiz_'.concat(quiz.id);
     const currentQuiz = document.getElementById(idQuiz);
 
     currentQuiz.addEventListener('click', () => {
-        RedirectQuiz(quiz.id);
-      });
-  })
+      RedirectQuiz(quiz.id);
+    });
+  });
 }
 
 function bombDisplay() {

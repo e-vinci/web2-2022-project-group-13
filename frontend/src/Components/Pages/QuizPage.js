@@ -7,7 +7,7 @@ import Navigate from '../Router/Navigate';
 
 const QuizPage = async (id) => {
   clearPage();
-  
+
   if (!id) Navigate('/');
 
   const response = await fetch('/api/quiz/'.concat(id));
