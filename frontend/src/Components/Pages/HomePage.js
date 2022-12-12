@@ -10,7 +10,6 @@ const HomePage = async () => {
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
     renderHomePage(quizzes);
-    attachOnClickEventsToRenderQuiz(quizzes);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -100,11 +99,11 @@ function renderHomePage(Allquiz) {
   });
 
   // animations and buttons
-
+  
   goToQuizButton();
   animationQuizHoverHome();
   animationHome();
-  textBoomAnimation();
+  attachOnClickEventsToRenderQuiz(quizzes);
 }
 
 async function searchBar() {
@@ -160,10 +159,6 @@ function attachOnClickEventsToRenderQuiz(allQuiz) {
 
 // bomb code inspired by Gabriele Corti : https://codepen.io/borntofrappe/pen/LwZRON
 function bombDisplay() {
-  const buttonToQuiz = document.createElement('a');
-  buttonToQuiz.id = 'refToQuiz';
-  buttonToQuiz.className = 'btn purple';
-  buttonToQuiz.textContent = 'Start';
   const bombHtml = `
   <svg viewBox="-1 -1 40 120" width="110" height="110">
         <path
@@ -262,18 +257,13 @@ function bombDisplay() {
             </g>
         </g>
     </svg>
+
   `;
   return bombHtml;
 }
 
 // animation hover by Alex Chan : https://codepen.io/alexchantastic/pen/XgXbgz
-function textBoomAnimation() {
-  anime({
-    targets: 'textPath',
-    translateX: 6000,
-    duration: 3000,
-  });
-}
+
 function animateButton(el, targetsX, scaleX, elasticityX) {
   anime.remove(el);
   anime({

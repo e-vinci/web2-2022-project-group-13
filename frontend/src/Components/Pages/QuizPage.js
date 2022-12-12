@@ -1,5 +1,6 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-nested-ternary */
+import anime from 'animejs/lib/anime.es';
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
 
@@ -29,6 +30,7 @@ const QuizPage = async (id) => {
 function renderQuizPage(quiz) {
   // render quiz title and start button
   const main = document.querySelector('main');
+ 
 
   const divQuiz = document.createElement('div');
   divQuiz.className = 'container-fluid text-center text-light p-4 bg-dark vh-100';
@@ -52,13 +54,14 @@ function renderQuizPage(quiz) {
   divQuiz.appendChild(titleContainer);
   divQuiz.appendChild(start);
   main.appendChild(divQuiz);
-
   // initialize score and index to browse quiz
   start.addEventListener('click', () => {
     const score = 0;
     const index = 0;
+
     renderQuestions(quiz.questions, index, score);
   });
+  
 }
 
 /**
@@ -69,11 +72,11 @@ function renderQuizPage(quiz) {
  */
 function renderQuestions(questions, indexArray, score) {
   clearPage();
-
   let currentScore = score;
   let currentIndex = indexArray;
-
+  let timeLeft = 10;
   const main = document.querySelector('main');
+  const bombHTML = bombDisplay();
 
   const divQuestion = document.createElement('div');
   divQuestion.className = 'container-fluid text-center text-light p-4 bg-dark vh-100';
@@ -153,6 +156,10 @@ function renderQuestions(questions, indexArray, score) {
   nextButton.innerText = 'Next';
   divNext.appendChild(nextButton);
 
+  const divBomb = document.createElement('div');
+
+  divBomb.innerHTML += bombHTML;
+
   answers.appendChild(divAnswerMsg);
   answers.appendChild(divAnswers1);
   answers.appendChild(divAnswers2);
@@ -163,38 +170,74 @@ function renderQuestions(questions, indexArray, score) {
   divQuestion.appendChild(divQuestionScore);
   divQuestion.appendChild(divTitle);
   divQuestion.appendChild(answers);
+  divQuestion.appendChild(divBomb);
+  
   main.appendChild(divQuestion);
-
-  answer1.addEventListener('click', checkAnswer);
-  answer2.addEventListener('click', checkAnswer);
-  answer3.addEventListener('click', checkAnswer);
-  answer4.addEventListener('click', checkAnswer);
+ 
+  let timerPage;
+  timerPage = setTimeout(countdown, 1000);
+  animationQuiz();
+  answer1.addEventListener('click', (e) =>{
+    checkAnswer(e);
+    
+  });
+  answer2.addEventListener('click', (e) =>{
+    checkAnswer(e);
+  });
+  answer3.addEventListener('click', (e) =>{
+    checkAnswer(e);
+  });
+  answer4.addEventListener('click', (e) =>{
+    checkAnswer(e);
+  });
 
   // if there are still questions, call renderQuestions() for the next question. Otherwise call function renderScore()
+
   nextButton.addEventListener('click', () => {
     if (currentIndex === questions.length - 1) {
       renderScore(currentScore);
     } else {
       currentIndex++;
       renderQuestions(questions, currentIndex, currentScore);
+      
     }
   });
-
+  
+  function countdown() {
+    timeLeft--;
+    console.log(timeLeft);
+    if (timeLeft > 0) {
+      timerPage = setTimeout(countdown, 1000);
+    }
+    else if (timeLeft === 0){
+      if (currentIndex === questions.length - 1) {
+      renderScore(currentScore);
+    } 
+      else {
+        clearTimeout(timerPage);
+        disableButtons(questions[indexArray].goodAnswerL, questions[indexArray].goodAnswer);
+      }
+    }
+    
+    
+  };
+  
   // check the chosen answer
   function checkAnswer(e) {
+    clearTimeout(timerPage);
     const divMsgAnswer = document.getElementById('AnswerMsg');
     const msg = document.createElement('h2');
 
     // if correct answer, increments score and update score message
-    if (e.target.innerHTML === questions[indexArray].goodAnswer) {
-      currentScore++;
-      msg.innerText = 'Good job !';
-
-      const newScore = document.getElementById('score');
-      newScore.innerText = 'Score : '.concat(currentScore.toString()).concat('/10');
-    } else {
+    if (e.target.innerHTML !== questions[indexArray].goodAnswer){
       msg.innerText = 'Too bad';
     }
+    else{
+      currentScore++;
+      msg.innerText = 'Good job !';
+      const newScore = document.getElementById('score');
+      newScore.innerText = 'Score : '.concat(currentScore.toString()).concat('/10');
+    } 
     divMsgAnswer.appendChild(msg);
     disableButtons(e.target.innerHTML, questions[indexArray].goodAnswer);
   }
@@ -218,6 +261,7 @@ function renderQuestions(questions, indexArray, score) {
     const nextEnable = document.getElementById('nextButton');
     nextEnable.className = nextEnable.className.replace('disabled', '');
   }
+  
 }
 
 /**
@@ -286,5 +330,217 @@ function renderScore(score) {
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+function bombDisplay() {
+  const buttonToQuiz = document.createElement('a');
+  buttonToQuiz.id = 'refToQuiz';
+  buttonToQuiz.className = 'btn purple';
+  buttonToQuiz.textContent = 'Start';
+  const bombHtml = `
+  <svg viewBox="-1 -1 40 120" width="110" height="110">
+        <path
+            id="motion-path"
+            fill="none"
+            stroke="none"
+            d="M 0 0 v 5 a 10 10 0 0 1 -20 0 a 18 18 0 0 0 -36 0 v 30">
+        </path>
+        <g>
+            <g transform="rotate(20) translate(97 14)">
+                <path
+                    id="fuse"
+                    fill="none"
+                    stroke="#703811"
+                    stroke-width="2"
+                    d="M 0 0 v 5 a 10 10 0 0 1 -20 0 a 18 18 0 0 0 -36 0 v 30">
+                </path>
+                <!-- translate the #spark group -->
+                <g id="spark">
+                    <!-- scale the #ember path -->
+                    <path
+                        id="ember"
+                        transform="scale(1.75)"
+                        stroke="#F3A37C"
+                        stroke-width="1.25"
+                        d="M -4.5 -1.5 h 3 l 1.5 -3 l 1.5 3 h 3 l -2.5 2.5 l 1.5 3.25 l -3.5 -2 l -3.5 2 l 1.5 -3.25 l -2.5 -2.5z"
+                        fill="#FFF9EE">
+                    </path>
+                    <!-- scale #sparkles group -->
+                    <g
+                        id="sparkles"
+                        transform="scale(0)">
+                        <g
+                            fill="#F3A37C">
+                            <circle
+                                transform="rotate(10) translate(12 0)"
+                                cx="0"
+                                cy="0"
+                                r="2">
+                            </circle>
+                            <circle
+                                transform="rotate(170) translate(12 0)"
+                                cx="0"
+                                cy="0"
+                                r="2">
+                            </circle>
+                            <circle
+                                transform="rotate(90) translate(12 0)"
+                                cx="0"
+                                cy="0"
+                                r="2">
+                            </circle>
+                            <circle
+                                transform="rotate(-60) translate(13 0)"
+                                cx="0"
+                                cy="0"
+                                r="2">
+                            </circle>
+                            <circle
+                                transform="rotate(-120) translate(13 0)"
+                                cx="0"
+                                cy="0"
+                                r="1.75">
+                            </circle>
+                        </g>
+                    </g>
+                </g>
+            </g>
+            <g transform="rotate(20) translate(41 56)"><!-- translate to modify the transform origin and scale the bomb from its center -->
+                <!-- scale the #bomb group -->
+                <g
+                    id="bomb"
+                    fill="#000000">
+                    <circle
+                        cx="0"
+                        cy="0"
+                        r="30">
+                    </circle>
+                    <rect
+                        x="-12"
+                        y="-37"
+                        width="24"
+                        height="10">
+                    </rect>
+                </g>
+            </g>
+        </g>
+    </svg>
+    <input type="range" min="0" max="100" value="0" id = "timerBomb" />
+  `;
+  return bombHtml;
+}
+async function animationQuiz() {
+  const input = document.getElementById('timerBomb');
+
+  // as the timeline progresses update the value of the input
+  const timeline = anime.timeline({
+    // eslint-disable-next-line no-return-assign
+    update: ({progress}) => input.value = progress
+  });
+  
+  // function called following the input event
+  // update the timeline to show the percentage matching the value of the input
+  function handleInput() {
+    const {value} = this;
+    timeline.seek(timeline.duration * value / 100);
+  }
+  
+  input.addEventListener('input', handleInput);
+  
+  /* add the animations to the timeline
+  ! use negative values as second argument of the .add() function to specify overlaps between animations
+  */
+  
+  // animate the fuse to have the stroke-dashoffset properties match in negative the total length of the path
+  // ! negative to have the shape hidden backwards
+  timeline.add({
+    targets: '#fuse',
+    strokeDashoffset: (target) => -target.getTotalLength(),
+    duration: 10000,
+    // ! have the stroke-dasharray match the length of the path to create the actual dashes
+    begin: (ani) => {
+      const {target} = ani.animatables[0];
+      const length = target.getTotalLength();
+      target.setAttribute('stroke-dasharray', length);
+    },
+    easing: 'linear',
+  });
+
+  const animation = anime.timeline({
+    duration: 10000,
+  });
+
+  animation.add({
+    targets: '#fuse',
+    strokeDashoffset: (target) => -target.getTotalLength(),
+    duration: 10000,
+
+    begin: (ani) => {
+      const { target } = ani.animatables[0];
+      const length = target.getTotalLength();
+      target.setAttribute('stroke-dasharray', length);
+    },
+    easing: 'linear',
+  });
+
+
+  const motionPath = document.querySelector('#motion-path');
+  const path = anime.path(motionPath);
+  animation.add(
+    {
+      targets: '#spark',
+      translateX: path('x'),
+      translateY: path('y'),
+      rotate: path('angle'),
+      duration: 10000,
+      easing: 'linear',
+    },
+    '-=10000',
+  );
+
+  animation.add(
+    {
+      targets: '#ember',
+      transform: Array(21)
+        .fill('scale(2.1)')
+        .map((scale, index) => (index % 2 === 0 ? 'scale(1.4)' : scale)),
+      duration: 10000,
+      easing: 'easeInOutSine',
+      direction: 'alternate',
+    },
+    '-=10000',
+  );
+
+  animation.add(
+    {
+      targets: '#sparkles',
+      transform: Array(21)
+        .fill('scale(1)')
+        .map((scale, index) => (index % 2 === 0 ? 'scale(0)' : scale)),
+      duration: 10000,
+      easing: 'easeInOutSine',
+      direction: 'alternate',
+    },
+    '-=10000',
+  );
+
+  animation.add({
+    targets: '#spark',
+    scale: 4.5,
+    opacity: 0,
+    duration: 250,
+    easing: 'easeInOutSine',
+  });
+  animation.add(
+    {
+      targets: '#bomb',
+      scale: 1.5,
+      opacity: 0,
+      duration: 300,
+      delay: 50,
+      easing: 'easeInOutSine',
+    },
+    '-=250',
+  );
+}
+
 
 export default QuizPage;

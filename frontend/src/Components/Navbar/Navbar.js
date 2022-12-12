@@ -50,7 +50,7 @@ function renderNavbar() {
   const authNavBar = `
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a href="#"><img class="nav-link" aria-current="page" data-uri="/" src = '${logo}' alt = "logo" width = "100"></a>
+          <a href="#" id = "LOGO"><img class="nav-link" aria-current="page" data-uri="/" src = '${logo}' alt = "logo" width = "100"></a>
           <button
             class="navbar-toggler"
             type="button"
