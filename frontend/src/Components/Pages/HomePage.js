@@ -11,8 +11,6 @@ const HomePage = async () => {
     quizzes = await response.json();
     renderHomePage(quizzes);
     attachOnClickEventsToRenderQuiz(quizzes);
-
-
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -30,7 +28,7 @@ function renderHomePage(Allquiz) {
   const menuTableAsString = getMenuTableAsString(Allquiz);
   const main = document.querySelector('main');
 
-  // home 
+  // home
 
   const divHome = document.createElement('div');
   const sectionHome = document.createElement('section');
@@ -76,7 +74,7 @@ function renderHomePage(Allquiz) {
   quizName.required = true;
 
   // dom add
-  
+
   divInputs.appendChild(quizName);
   divInputs.appendChild(submitButton);
   divCenter.appendChild(divInputs);
@@ -101,7 +99,7 @@ function renderHomePage(Allquiz) {
     document.getElementById('quizName').scrollIntoView();
   });
 
-  // animations and buttons 
+  // animations and buttons
 
   goToQuizButton();
   animationQuizHoverHome();
@@ -158,7 +156,6 @@ function attachOnClickEventsToRenderQuiz(allQuiz) {
     });
   });
 }
-
 
 // bomb code inspired by Gabriele Corti : https://codepen.io/borntofrappe/pen/LwZRON
 function bombDisplay() {
@@ -270,13 +267,11 @@ function bombDisplay() {
 
 // animation hover by Alex Chan : https://codepen.io/alexchantastic/pen/XgXbgz
 function textBoomAnimation() {
-  
   anime({
     targets: 'textPath',
     translateX: 6000,
-    duration: 3000
+    duration: 3000,
   });
-;
 }
 function animateButton(el, targetsX, scaleX, elasticityX) {
   anime.remove(el);

@@ -30,6 +30,12 @@ function renderRegisterForm() {
   password.required = true;
   password.placeholder = 'Password';
   password.className = 'form-control mb-3';
+  const confirmPassword = document.createElement('input');
+  confirmPassword.type = 'password';
+  confirmPassword.id = 'confirmPassword';
+  confirmPassword.required = true;
+  confirmPassword.placeholder = 'Confirm your password';
+  confirmPassword.className = 'form-control mb-3';
   const submit = document.createElement('input');
   submit.id = 'submitButton';
   submit.value = 'Register';
@@ -52,14 +58,20 @@ function renderRegisterForm() {
   checkLabel.className = 'form-check-label';
   checkLabel.textContent = 'Remember me';
 
+  const errorMessage = document.createElement('p');
+  errorMessage.id = 'errorMessage';
+  errorMessage.innerHTML = '';
+
   formCheckWrapper.appendChild(rememberme);
   formCheckWrapper.appendChild(checkLabel);
 
   form.appendChild(title);
   form.appendChild(username);
   form.appendChild(password);
+  form.appendChild(confirmPassword);
   form.appendChild(formCheckWrapper);
   form.appendChild(submit);
+  form.appendChild(errorMessage);
   formDiv.appendChild(form);
   main.appendChild(formDiv);
   form.addEventListener('submit', onRegister);
@@ -74,6 +86,13 @@ async function onRegister(e) {
 
   const username = document.querySelector('#username').value;
   const password = document.querySelector('#password').value;
+  const confirmPassword = document.querySelector('#confirmPassword').value;
+  const errorMessage = document.querySelector('#errorMessage');
+
+  if (password !== confirmPassword) {
+    errorMessage.innerHTML = 'Confirmation password does not match';
+    throw new Error(`Confirmation error`);
+  }
 
   const options = {
     method: 'POST',
@@ -86,11 +105,21 @@ async function onRegister(e) {
     },
   };
 
-  const response = await fetch('/api/auths/register', options);
+  let authenticatedUser = null;
+  let response = null;
+  try {
+    response = await fetch('/api/auths/register', options);
+    authenticatedUser = await response.json();
+  } catch (error) {
+    if (response.status === 400) {
+      errorMessage.innerHTML = 'A field is missing';
+    } else if (response.status === 409) {
+      errorMessage.innerHTML = 'This username is already taken';
+    }
+    throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+  }
 
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-
-  const authenticatedUser = await response.json();
 
   setAuthenticatedUser(authenticatedUser);
 

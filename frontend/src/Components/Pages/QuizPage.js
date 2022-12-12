@@ -7,7 +7,7 @@ let idCurrentQuiz;
 
 const QuizPage = async (id) => {
   clearPage();
-  
+
   if (!id) Navigate('/');
 
   idCurrentQuiz = id;
@@ -18,15 +18,14 @@ const QuizPage = async (id) => {
   const quiz = await response.json();
 
   renderQuizPage(quiz[0]);
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
 };
 
 /**
  * render quiz page
- * @param {Object} quiz 
+ * @param {Object} quiz
  */
 function renderQuizPage(quiz) {
-
   // render quiz title and start button
   const main = document.querySelector('main');
 
@@ -35,7 +34,7 @@ function renderQuizPage(quiz) {
 
   const titleContainer = document.createElement('div');
   titleContainer.className = 'p-5 mt-5';
-  
+
   const title = document.createElement('h1');
   title.innerText = 'Quiz : '.concat(quiz.quizName);
 
@@ -57,15 +56,15 @@ function renderQuizPage(quiz) {
   start.addEventListener('click', () => {
     const score = 0;
     const index = 0;
-    renderQuestions(quiz.questions,index,score);
+    renderQuestions(quiz.questions, index, score);
   });
 }
 
 /**
  * render each question from questions
- * @param {Array} questions 
- * @param {Number} indexArray 
- * @param {Number} score 
+ * @param {Array} questions
+ * @param {Number} indexArray
+ * @param {Number} score
  */
 function renderQuestions(questions, indexArray, score) {
   clearPage();
@@ -172,7 +171,7 @@ function renderQuestions(questions, indexArray, score) {
 
   // if there are still questions, call renderQuestions() for the next question. Otherwise call function renderScore()
   nextButton.addEventListener('click', () => {
-    if (currentIndex === questions.length-1) {
+    if (currentIndex === questions.length - 1) {
       renderScore(currentScore);
     } else {
       currentIndex++;
@@ -222,10 +221,9 @@ function renderQuestions(questions, indexArray, score) {
 
 /**
  * render score
- * @param {Number} score 
+ * @param {Number} score
  */
 function renderScore(score) {
-
   clearPage();
 
   const main = document.querySelector('main');
@@ -240,7 +238,13 @@ function renderScore(score) {
   const scoreMsg = document.createElement('h1');
   scoreMsg.innerText =
     // eslint-disable-next-line no-nested-ternary
-    score === 10 ? 'Perfect' : score >= 7 ? 'Good' : score >= 3 ? 'You can do better than that ' : 'Oof';
+    score === 10
+      ? 'Perfect'
+      : score >= 7
+      ? 'Good'
+      : score >= 3
+      ? 'You can do better than that '
+      : 'Oof';
 
   // show score
   const divScore = document.createElement('div');
@@ -256,7 +260,7 @@ function renderScore(score) {
   button1.className = 'btn btn-primary col-2 m-3 ';
   button2.className = 'btn btn-primary col-2 m-3 ';
   button1.innerText = 'Retry';
-  button2.innerText = "Return to HomePage";
+  button2.innerText = 'Return to HomePage';
 
   divScoreMsg.appendChild(scoreMsg);
   divScore.appendChild(finalScoreMsg);

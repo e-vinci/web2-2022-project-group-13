@@ -53,6 +53,10 @@ function renderLoginForm() {
   checkLabel.className = 'form-check-label';
   checkLabel.textContent = 'Remember me';
 
+  const errorMessage = document.createElement('p');
+  errorMessage.id = 'errorMessage';
+  errorMessage.innerHTML = '';
+
   formCheckWrapper.appendChild(rememberme);
   formCheckWrapper.appendChild(checkLabel);
 
@@ -61,6 +65,7 @@ function renderLoginForm() {
   form.appendChild(password);
   form.appendChild(formCheckWrapper);
   form.appendChild(submit);
+  form.appendChild(errorMessage);
   formDiv.appendChild(form);
   main.appendChild(formDiv);
   form.addEventListener('submit', onLogin);
@@ -87,11 +92,20 @@ async function onLogin(e) {
     },
   };
 
-  const response = await fetch('/api/auths/login', options);
+  let authenticatedUser = null;
+  let response = null;
+  try {
+    response = await fetch('/api/auths/login', options);
 
-  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-
-  const authenticatedUser = await response.json();
+    authenticatedUser = await response.json();
+  } catch (error) {
+    if (response.status === 400) {
+      document.querySelector('#errorMessage').innerHTML = 'A field is missing';
+    } else if (response.status === 401) {
+      document.querySelector('#errorMessage').innerHTML = 'No user found or wrong password';
+    }
+    throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+  }
 
   setAuthenticatedUser(authenticatedUser);
 

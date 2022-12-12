@@ -171,7 +171,7 @@ svg {
 
 #formDiv {
   background-color: rgb(25, 28, 37);
-  min-height: calc(100vh);
+  height: 100vh;
   padding-top: 8%;
 }
 
@@ -179,6 +179,7 @@ svg {
   padding-top: 1%;
   padding-bottom: 2%;
   color: #e2a4fe;
+  font-size: 50px;
 }
 
 #username {
@@ -194,6 +195,13 @@ svg {
   padding-top: 0.5%;
 }
 
+#confirmPassword {
+  width: 25%;
+  display: block;
+  margin: 0 auto;
+  padding-top: 0.5%;
+}
+
 #rememberme {
   margin-left: 45.7%;
 }
@@ -203,15 +211,29 @@ svg {
   color: #e2a4fe;
 }
 
-#LoginButton {
-  margin-left: 48.2%;
+#submitButton {
+  display: block;
+  margin: auto;
+  background-color: #be57ee;
+  border-color: #be57ee;
 }
 
+#errorMessage {
+  color: #ed4337;
+  text-align: center;
+  padding-top: 3%;
+}
+
+#warningIcon {
+  color: #ed4337;
+  height: 10px;
+  width: 10px;
+}
 /********************************END LOGIN PAGE*************************************/
 
-main{
+main {
   min-height: calc(100vh - 70px - 96px);
 }
-footer{
+footer {
   margin-top: 25px;
 }
