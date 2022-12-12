@@ -106,13 +106,14 @@ function readOneQuiz(id) {
   return quizVerified;
 }
 
-function searchQuiz(title) {
+async function searchQuiz(title) {
   const QuizFilterBegins = escape(title);
   let QuizzesNameBeginWith = null;
-  const quizzes = parse(jsonDbPath, []);
+  const quizzes = parse(jsonDbPath, defaultQuizzes);
+
   if (QuizFilterBegins) {
     QuizzesNameBeginWith = [...quizzes].filter(
-      (quiz) => quiz.quizName.includes(QuizFilterBegins) && quiz.isVerified === true,
+      (quiz) => (quiz.quizName.toLowerCase()).includes(QuizFilterBegins.toLowerCase()) && quiz.isVerified === true,
     );
   }
   const allQuizzesSearch = QuizzesNameBeginWith.reverse();
@@ -126,7 +127,7 @@ function readUnverifiedQuizzes() {
 }
 
 function deleteQuiz(id) {
-  const quizList = parse(jsonDbPath, []);
+  const quizList = parse(jsonDbPath, defaultQuizzes);
   const foundIndex = quizList.findIndex((quiz) => parseInt(quiz.id, 10) === parseInt(id, 10));
   // if(foundIndex<0){
   //     return res.sendStatus(404);
