@@ -180,7 +180,7 @@ function bombDisplay() {
             fill="none"
             d="M0,0 60,0 0,0 Q0,0 0,0 Q0,0 0,0 Q0,0 0,0 Q60,0" />
             <text>
-            <textPath href="#textBoom" fill= "#E2A4FE">BOOM!</textPath>
+            <textPath href="#textBoom" fill= "#FA9961">BOOM!</textPath>
             </text>
         </g>
             <g transform="rotate(20) translate(97 14)">
