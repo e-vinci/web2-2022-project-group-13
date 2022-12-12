@@ -69,18 +69,18 @@ function renderQuizPage(quiz) {
   main.appendChild(banner);
 
   // deactive start button, initialize score and index to browse quiz
-  const onClick = () => {
-    start.removeEventListener('click', onClick);
+  const onClickStart = () => {
+    start.removeEventListener('click', onClickStart);
     const score = 0;
     const index = 0;
-    const delay = 1250;
+    const delay = 1500;
     animationTransition1();
     setTimeout(() => {
       renderQuestions(quiz.questions, index, score);
     }, delay);
   };
 
-  start.addEventListener('click', onClick);
+  start.addEventListener('click', onClickStart);
   animationQuizPage();
 }
 
@@ -199,11 +199,17 @@ function renderQuestions(questions, indexArray, score) {
 
   // if there are still questions, call renderQuestions() for the next question. Otherwise call function renderScore()
   nextButton.addEventListener('click', () => {
+    animationNextLeft();
+    const delay = 800;
     if (currentIndex === questions.length - 1) {
-      renderScore(currentScore);
+      setTimeout(() => {
+        renderScore(currentScore);
+      }, delay)
     } else {
       currentIndex++;
-      renderQuestions(questions, currentIndex, currentScore);
+      setTimeout(() => {
+        renderQuestions(questions, currentIndex, currentScore);
+      }, delay);
     }
   });
 
@@ -218,11 +224,12 @@ function renderQuestions(questions, indexArray, score) {
 
   if (currentIndex === 0) {
     animationTransition2();
+  } else {
+    animationNextRight();
   }
 
   // check the chosen answer
   function checkAnswer(e) {
-
     let isCorrectAnswer;
     const messageAnswer = document.getElementById('message');
 
@@ -270,8 +277,11 @@ function renderScore(score) {
 
   const main = document.querySelector('main');
 
+  const banner = document.createElement('div');
+  banner.className = 'banner';
+
   const div1 = document.createElement('div');
-  div1.className = 'container-fluid banner text-center text-light p-4 vh-100';
+  div1.className = 'container-fluid text-center text-light p-4 vh-100';
 
   const divScoreMsg = document.createElement('div');
   divScoreMsg.className = 'p-5 mt-5 border border-dark rounded-4';
@@ -310,7 +320,8 @@ function renderScore(score) {
   div1.appendChild(divScoreMsg);
   div1.appendChild(divScore);
   div1.appendChild(divButtons);
-  main.appendChild(div1);
+  banner.appendChild(div1);
+  main.appendChild(banner);
 
   // Retry the quiz
   button1.addEventListener('click', () => {
@@ -321,6 +332,8 @@ function renderScore(score) {
   button2.addEventListener('click', () => {
     Navigate('/');
   });
+
+  animationMessageAnswer(score);
 }
 
 // code taken from the site https://www.w3schools.com/js/js_random.asp
@@ -337,7 +350,7 @@ function animationQuizPage() {
     translateY: [100, 0],
     duration: 750,
     easing: 'easeOutExpo',
-    delay: (el, i) => 50 * i
+    delay: (el, i) => 50 * i,
   });
 }
 
@@ -346,7 +359,7 @@ function animationTransition1() {
 
   anime({
     targets: div,
-    opacity: { value: 0, duration: 1000 },
+    opacity: { value: 0, duration: 1500 },
     easing: 'linear',
   });
 }
@@ -354,39 +367,55 @@ function animationTransition1() {
 function animationTransition2() {
   const div = document.getElementById('divQuestion');
 
-  const tl = anime.timeline();
-
-  tl.add({
+  anime({
     targets: div,
-    opacity: { value: 0 },
-    easing: 'steps(1)',
-  });
-
-  tl.add({
-    targets: div,
-    opacity: { value: 1, duration: 750 },
-    easing: 'easeInOutExpo',
+    opacity: [
+      { value: 0, duration: 0 },
+      { value: 1, duration: 500 },
+    ],
+    easing: 'linear',
   });
 }
 
-function animationMessageAnswer(isCorrect){
+function animationMessageAnswer(isCorrect) {
   const msg = document.getElementById('message');
 
-  if (isCorrect){
+  if (isCorrect) {
     anime({
-    targets: msg,
-    scale: [0,1.5],
-    easing: 'easeInOutExpo'
+      targets: msg,
+      scale: [0, 1.5],
+      easing: 'easeInOutExpo',
     });
   } else {
     anime({
       targets: msg,
-      opacity: [0,1],
-      translateY: [-100,0],
+      opacity: [0, 1],
+      translateY: [-100, 0],
       easing: 'linear',
     });
   }
-  
+}
+
+function animationNextLeft(){
+
+  const div = document.getElementById('divQuestion');
+
+  anime({
+    targets: div,
+    translateX: [0,-2000],
+    easing: 'easeInOutExpo'
+  });
+}
+
+function animationNextRight(){
+
+  const div = document.getElementById('divQuestion');
+
+  anime({
+    targets: div,
+    translateX: [2000,0],
+    easing: 'easeInOutExpo'
+  });
 }
 
 export default QuizPage;
