@@ -8,7 +8,7 @@ const Navbar = () => {
     const footerHtml = `
     <div class="text-center p-3 text-light">
     © 2022 Copyright:
-    <p class="text-light">created by : Younes Benbouchta / Quoc An Duong / Kyle Nguyen / Maxime Vlaminck / Ke man Yi nghi</p>
+    <p class="text-light">created by : Younes Benbouchta / Quoc An Duong / Kyle Nguyen / Maxime Vlaminck / Ke Man Yi Nghi</p>
     </div>
     `
     footer.innerHTML = footerHtml;
