@@ -43,7 +43,7 @@ input.invalid {
 }
 
 .headline {
-  color: #e2a4fe;
+  color: #FA9961;
   text-align: center;
   width: 60%;
   position: absolute;
@@ -66,11 +66,11 @@ input.invalid {
 
 .purple {
   width: 100px;
-  background-color: #e2a4fe;
-  border: 1px solid #e2a4fe;
+  background-color: #FA9961;
+  border: 1px solid #FA9961;
 }
 .purple:hover {
-  border: 1px solid #e2a4fe;
+  border: 1px solid #FA9961;
 }
 
 /************************DISPLAY QUIZ*****************************/
@@ -177,14 +177,14 @@ svg {
 
 #formDiv {
   background-color: rgb(25, 28, 37);
-  min-height: 82.25vh;
+  min-height: 90vh;
   padding-top: 8%;
 }
 
 #titleForm {
   padding-top: 1%;
   padding-bottom: 2%;
-  color: #e2a4fe;
+  color: #FA9961;
   font-size: 50px;
 }
 
@@ -208,20 +208,30 @@ svg {
   padding-top: 0.5%;
 }
 
+#checkBoxWrapper{
+  text-align: center;
+}
+
 #rememberme {
-  margin-left: 45.7%;
+  position: absolute;
 }
 
 #labelForCheckbox {
   padding-left: 0.5%;
-  color: #e2a4fe;
+  color: #FA9961;
 }
 
 #submitButton {
   display: block;
   margin: auto;
-  background-color: #be57ee;
-  border-color: #be57ee;
+  background-color: #FA9961;
+  border-color: #FA9961;
+  color: #191C25;
+}
+
+#submitButton:hover {
+  background-color: #191C25;
+  color: #FA9961;
 }
 
 #errorMessage {
@@ -239,3 +249,25 @@ main {
 .quizContainer{
   cursor: pointer;
 }
+/********************************ANIMATION QUIZ TITLE****************************************/
+
+.titleQuiz {
+  position: relative;
+  font-size: 3.3em;
+}
+
+.titleQuiz .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.2em;
+  padding-right: 0.05em;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+}
+
+.titleQuiz .letter {
+  display: inline-block;
+  line-height: 1em;
+}
+
+/********************************END ANIMATION QUIZ TITLE****************************************/

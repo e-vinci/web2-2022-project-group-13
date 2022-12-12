@@ -9,41 +9,60 @@ const RegisterPage = () => {
 };
 
 function renderRegisterForm() {
+  // Get main
   const main = document.querySelector('main');
+
+  // Create form
   const form = document.createElement('form');
   form.className = 'p-5';
+
+  // Create global div
   const formDiv = document.createElement('div');
   formDiv.id = 'formDiv';
+
+  // Create title
   const title = document.createElement('h1');
   title.innerHTML = 'Register';
   title.id = 'titleForm';
   title.className = 'text-center';
+
+  // Create input for username
   const username = document.createElement('input');
   username.type = 'text';
   username.id = 'username';
   username.placeholder = 'Username';
   username.required = true;
   username.className = 'form-control mb-3';
+
+  // Create input for password
   const password = document.createElement('input');
   password.type = 'password';
   password.id = 'password';
   password.required = true;
   password.placeholder = 'Password';
   password.className = 'form-control mb-3';
+
+  // Create input for confirm password
   const confirmPassword = document.createElement('input');
   confirmPassword.type = 'password';
   confirmPassword.id = 'confirmPassword';
   confirmPassword.required = true;
   confirmPassword.placeholder = 'Confirm your password';
   confirmPassword.className = 'form-control mb-3';
+
+  // Create input for submit button
   const submit = document.createElement('input');
   submit.id = 'submitButton';
   submit.value = 'Register';
   submit.type = 'submit';
   submit.className = 'btn btn-primary';
+
+  // Create div wrapper for checkbox + his label
   const formCheckWrapper = document.createElement('div');
   formCheckWrapper.className = 'mb-3 form-check';
+  formCheckWrapper.id = 'checkBoxWrapper';
 
+  // Create checkbox input
   const rememberme = document.createElement('input');
   rememberme.type = 'checkbox';
   rememberme.className = 'form-check-input';
@@ -52,19 +71,25 @@ function renderRegisterForm() {
   rememberme.checked = remembered;
   rememberme.addEventListener('click', onCheckboxClicked);
 
+
+  // Create label for the checkbox
   const checkLabel = document.createElement('label');
   checkLabel.id = 'labelForCheckbox';
   checkLabel.htmlFor = 'rememberme';
   checkLabel.className = 'form-check-label';
   checkLabel.textContent = 'Remember me';
 
+
+  // Create paragraph for error message 
   const errorMessage = document.createElement('p');
   errorMessage.id = 'errorMessage';
   errorMessage.innerHTML = '';
 
+  // Appenchild remember me + his label to the wrapper
   formCheckWrapper.appendChild(rememberme);
   formCheckWrapper.appendChild(checkLabel);
 
+  // Appenchild all field from the form to the form
   form.appendChild(title);
   form.appendChild(username);
   form.appendChild(password);
@@ -72,7 +97,11 @@ function renderRegisterForm() {
   form.appendChild(formCheckWrapper);
   form.appendChild(submit);
   form.appendChild(errorMessage);
+
+  // Appenchild form to global div
   formDiv.appendChild(form);
+
+  // Appenchild div to main
   main.appendChild(formDiv);
   form.addEventListener('submit', onRegister);
 }
