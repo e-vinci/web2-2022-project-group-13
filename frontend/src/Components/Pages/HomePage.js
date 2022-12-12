@@ -127,7 +127,7 @@ function getMenuTableAsString(Allquiz) {
 }
 function addLinesToTableHeadersAndGet(tableLines) {
   const menuTable = `
-  <section class="layout">
+  <section class="layout" id="homeLayout">
      ${tableLines}
   </section>
   `;
