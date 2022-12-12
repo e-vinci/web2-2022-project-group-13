@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   return res.json(allPizzasPotentiallyOrdered);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/id/:id', (req, res) => {
   const quizFound = readOneQuiz(req.params.id);
   return res.json(quizFound);
 });
