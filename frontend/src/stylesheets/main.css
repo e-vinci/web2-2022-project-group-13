@@ -207,8 +207,12 @@ svg {
   padding-top: 0.5%;
 }
 
+#checkBoxWrapper{
+  text-align: center;
+}
+
 #rememberme {
-  margin-left: 45.7%;
+  position: absolute;
 }
 
 #labelForCheckbox {
@@ -222,6 +226,11 @@ svg {
   background-color: #FA9961;
   border-color: #FA9961;
   color: #191C25;
+}
+
+#submitButton:hover {
+  background-color: #191C25;
+  color: #FA9961;
 }
 
 #errorMessage {
