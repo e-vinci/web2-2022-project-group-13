@@ -113,6 +113,11 @@ input.invalid {
   font-family: 'Muli';
   font-size: 50px;
 }
+
+#homeLayout {
+  margin-bottom: 2%;
+}
+
 /************************END HOME*****************************/
 
 /********************************BOMB TIMER*************************************/
@@ -167,11 +172,11 @@ svg {
 }
 /********************************END BOMB TIMER*************************************/
 
-/********************************START LOGIN PAGE*************************************/
+/********************************START LOGIN/REGISTER PAGE*************************************/
 
 #formDiv {
   background-color: rgb(25, 28, 37);
-  height: 100vh;
+  min-height: 82.25vh;
   padding-top: 8%;
 }
 
@@ -224,16 +229,8 @@ svg {
   padding-top: 3%;
 }
 
-#warningIcon {
-  color: #ed4337;
-  height: 10px;
-  width: 10px;
-}
-/********************************END LOGIN PAGE*************************************/
+/********************************END LOGIN/REGISTER PAGE*************************************/
 
 main {
   min-height: calc(100vh - 70px - 96px);
-}
-footer {
-  margin-top: 25px;
 }

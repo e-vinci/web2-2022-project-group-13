@@ -1,4 +1,5 @@
 /* eslint-disable no-plusplus */
+/* eslint-disable no-nested-ternary */
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
 
@@ -237,7 +238,6 @@ function renderScore(score) {
   // show message depending on score
   const scoreMsg = document.createElement('h1');
   scoreMsg.innerText =
-    // eslint-disable-next-line no-nested-ternary
     score === 10
       ? 'Perfect'
       : score >= 7

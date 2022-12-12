@@ -115,6 +115,7 @@ async function searchBar() {
     quizzes = await response.json();
     clearPage();
     renderHomePage(quizzes);
+    attachOnClickEventsToRenderQuiz(quizzes);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -127,7 +128,7 @@ function getMenuTableAsString(Allquiz) {
 }
 function addLinesToTableHeadersAndGet(tableLines) {
   const menuTable = `
-  <section class="layout">
+  <section class="layout" id="homeLayout">
      ${tableLines}
   </section>
   `;
