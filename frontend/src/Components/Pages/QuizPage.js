@@ -172,7 +172,7 @@ function renderQuestions(questions, indexArray, score) {
 
   // if there are still questions, call renderQuestions() for the next question. Otherwise call function renderScore()
   nextButton.addEventListener('click', () => {
-    if (currentIndex === questions.length) {
+    if (currentIndex === questions.length-1) {
       renderScore(currentScore);
     } else {
       currentIndex++;
