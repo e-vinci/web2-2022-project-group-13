@@ -42,13 +42,13 @@ function renderQuizPage(quiz) {
   titleContainer.className = 'p-5 mt-5';
 
   const titleQuiz = document.createElement('h1');
-  titleQuiz.className = 'ml6';
+  titleQuiz.className = 'titleQuiz';
 
   const textWrapper = document.createElement('span');
   textWrapper.className = 'text-wrapper';
 
   const lettersWrapper = document.createElement('span');
-  lettersWrapper.className = 'letters';
+  lettersWrapper.id = 'letters';
   lettersWrapper.innerText = 'Quiz : '.concat(quiz.quizName);
 
   const difficulty = document.createElement('h5');
@@ -65,20 +65,22 @@ function renderQuizPage(quiz) {
   titleContainer.appendChild(difficulty);
   divQuiz.appendChild(titleContainer);
   divQuiz.appendChild(start);
-  banner.appendChild(divQuiz)
+  banner.appendChild(divQuiz);
   main.appendChild(banner);
 
-  // initialize score and index to browse quiz
-  start.addEventListener('click', () => {
+  // deactive start button, initialize score and index to browse quiz
+  const onClick = () => {
+    start.removeEventListener('click', onClick);
     const score = 0;
     const index = 0;
-    const delay = 2*1000;
+    const delay = 1250;
     animationTransition1();
     setTimeout(() => {
       renderQuestions(quiz.questions, index, score);
     }, delay);
-  });
+  };
 
+  start.addEventListener('click', onClick);
   animationQuizPage();
 }
 
@@ -104,18 +106,22 @@ function renderQuestions(questions, indexArray, score) {
   divQuestion.id = 'divQuestion';
 
   const divQuestionScore = document.createElement('div');
-  divQuestionScore.className = 'mt-5 ms-2 d-flex justify-content-between';
+  divQuestionScore.className = 'my-3 mx-5 d-flex justify-content-between';
 
-  // render number of the question and score
+  // render number of the question, message and score
   const numberQuestion = document.createElement('h4');
   numberQuestion.innerText = 'Question n°'.concat(indexArray + 1);
+  const message = document.createElement('h1');
+  message.id = 'message';
+  message.innerText = 'Text';
+  message.style.visibility = 'hidden';
   const showScore = document.createElement('h4');
   showScore.id = 'score';
   showScore.innerText = 'Score : '.concat(currentScore.toString()).concat('/10');
 
   // render title
   const divTitle = document.createElement('div');
-  divTitle.className = 'p-5 bg-secondary border border-dark rounded-4';
+  divTitle.className = 'm-5 p-5 bg-secondary border border-dark rounded-4 justify-content-center';
 
   const title = document.createElement('h2');
   title.innerText = questions[indexArray].question;
@@ -124,23 +130,22 @@ function renderQuestions(questions, indexArray, score) {
   const answers = document.createElement('div');
   answers.className = 'container text-center mt-5';
 
-  const divAnswerMsg = document.createElement('div');
-  divAnswerMsg.className = 'row justify-content-around';
-  divAnswerMsg.id = 'AnswerMsg';
+  const divAnswers = document.createElement('div');
+  divAnswers.id = 'divAnswers';
 
-  const divAnswers1 = document.createElement('div');
-  divAnswers1.className = 'row justify-content-around';
+  const colAnswers1 = document.createElement('div');
+  colAnswers1.className = 'row justify-content-around';
   const answer1 = document.createElement('button');
   const answer2 = document.createElement('button');
-  divAnswers1.appendChild(answer1);
-  divAnswers1.appendChild(answer2);
+  colAnswers1.appendChild(answer1);
+  colAnswers1.appendChild(answer2);
 
-  const divAnswers2 = document.createElement('div');
-  divAnswers2.className = 'row justify-content-around';
+  const colAnswers2 = document.createElement('div');
+  colAnswers2.className = 'row justify-content-around';
   const answer3 = document.createElement('button');
   const answer4 = document.createElement('button');
-  divAnswers2.appendChild(answer3);
-  divAnswers2.appendChild(answer4);
+  colAnswers2.appendChild(answer3);
+  colAnswers2.appendChild(answer4);
 
   answer1.className = 'btn btn-primary col-2 m-3 ';
   answer1.id = 'answer1';
@@ -178,11 +183,12 @@ function renderQuestions(questions, indexArray, score) {
   nextButton.innerText = 'Next';
   divNext.appendChild(nextButton);
 
-  answers.appendChild(divAnswerMsg);
-  answers.appendChild(divAnswers1);
-  answers.appendChild(divAnswers2);
+  divAnswers.appendChild(colAnswers1);
+  divAnswers.appendChild(colAnswers2);
+  answers.appendChild(divAnswers);
   answers.appendChild(divNext);
   divQuestionScore.appendChild(numberQuestion);
+  divQuestionScore.appendChild(message);
   divQuestionScore.appendChild(showScore);
   divTitle.appendChild(title);
   divQuestion.appendChild(divQuestionScore);
@@ -190,11 +196,6 @@ function renderQuestions(questions, indexArray, score) {
   divQuestion.appendChild(answers);
   banner.appendChild(divQuestion);
   main.appendChild(banner);
-
-  answer1.addEventListener('click', checkAnswer);
-  answer2.addEventListener('click', checkAnswer);
-  answer3.addEventListener('click', checkAnswer);
-  answer4.addEventListener('click', checkAnswer);
 
   // if there are still questions, call renderQuestions() for the next question. Otherwise call function renderScore()
   nextButton.addEventListener('click', () => {
@@ -206,33 +207,43 @@ function renderQuestions(questions, indexArray, score) {
     }
   });
 
-  if (currentIndex===0){
+  const tableAnswers = ['answer1', 'answer2', 'answer3', 'answer4'];
+  tableAnswers.forEach((element) => {
+    const answer = document.getElementById(element);
+    answer.addEventListener('click', (e) => {
+      const isCorrectAnswer = checkAnswer(e);
+      animationMessageAnswer(isCorrectAnswer);
+    });
+  });
+
+  if (currentIndex === 0) {
     animationTransition2();
   }
-  
+
   // check the chosen answer
   function checkAnswer(e) {
-    const divMsgAnswer = document.getElementById('AnswerMsg');
-    const msg = document.createElement('h2');
+
+    let isCorrectAnswer;
+    const messageAnswer = document.getElementById('message');
 
     // if correct answer, increments score and update score message
     if (e.target.innerHTML === questions[indexArray].goodAnswer) {
       currentScore++;
-      msg.innerText = 'Good job !';
-
+      messageAnswer.innerText = 'Good job !';
+      isCorrectAnswer = true;
       const newScore = document.getElementById('score');
       newScore.innerText = 'Score : '.concat(currentScore.toString()).concat('/10');
     } else {
-      msg.innerText = 'Too bad';
+      messageAnswer.innerText = 'Too bad';
+      isCorrectAnswer = false;
     }
-    divMsgAnswer.appendChild(msg);
+    messageAnswer.style.visibility = 'visible';
     disableButtons(e.target.innerHTML, questions[indexArray].goodAnswer);
+    return isCorrectAnswer;
   }
 
   // disable buttons after choosing and activate the next button
   function disableButtons(givenAnswer, goodAnswer) {
-    const tableAnswers = ['answer1', 'answer2', 'answer3', 'answer4'];
-
     for (let i = 0; i < tableAnswers.length; i++) {
       const answerToDisable = document.getElementById(tableAnswers[i]);
       answerToDisable.removeEventListener('click', checkAnswer);
@@ -317,48 +328,65 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function animationQuizPage(){
-
-  const title = document.querySelector('.ml6 .letters');
+function animationQuizPage() {
+  const title = document.querySelector('.titleQuiz #letters');
   title.innerHTML = title.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
   anime({
-    targets: '.ml6 .letter',
-    translateY: ["1.1em", 0],
-    translateZ: 0,
+    targets: '.titleQuiz .letter',
+    translateY: [100, 0],
     duration: 750,
     easing: 'easeOutExpo',
     delay: (el, i) => 50 * i
   });
 }
 
-function animationTransition1(){
-  
+function animationTransition1() {
   const div = document.getElementById('divQuiz');
 
   anime({
     targets: div,
-    opacity: {value: 0, duration: 1000},
-    easing: 'linear'
+    opacity: { value: 0, duration: 1000 },
+    easing: 'linear',
   });
 }
 
-function animationTransition2(){
-
+function animationTransition2() {
   const div = document.getElementById('divQuestion');
 
-  const animation = anime.timeline();
-  
-  animation.add({
+  const tl = anime.timeline();
+
+  tl.add({
     targets: div,
-    opacity: {value: 0},
-    easing: 'steps(1)'
-  })
-  animation.add({
-    targets: div,
-    opacity: {value: 1, duration: 750},
-    easing: 'easeInOutExpo'
+    opacity: { value: 0 },
+    easing: 'steps(1)',
   });
+
+  tl.add({
+    targets: div,
+    opacity: { value: 1, duration: 750 },
+    easing: 'easeInOutExpo',
+  });
+}
+
+function animationMessageAnswer(isCorrect){
+  const msg = document.getElementById('message');
+
+  if (isCorrect){
+    anime({
+    targets: msg,
+    scale: [0,1.5],
+    easing: 'easeInOutExpo'
+    });
+  } else {
+    anime({
+      targets: msg,
+      opacity: [0,1],
+      translateY: [-100,0],
+      easing: 'linear',
+    });
+  }
+  
 }
 
 export default QuizPage;

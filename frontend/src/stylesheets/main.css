@@ -237,12 +237,12 @@ main {
 
 /********************************ANIMATION QUIZ TITLE****************************************/
 
-.ml6 {
+.titleQuiz {
   position: relative;
   font-size: 3.3em;
 }
 
-.ml6 .text-wrapper {
+.titleQuiz .text-wrapper {
   position: relative;
   display: inline-block;
   padding-top: 0.2em;
@@ -251,7 +251,7 @@ main {
   overflow: hidden;
 }
 
-.ml6 .letter {
+.titleQuiz .letter {
   display: inline-block;
   line-height: 1em;
 }
