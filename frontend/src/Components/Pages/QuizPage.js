@@ -1,5 +1,6 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-nested-ternary */
+import anime from 'animejs';
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
 
@@ -8,6 +9,7 @@ let idCurrentQuiz;
 
 const QuizPage = async (id) => {
   clearPage();
+  window.scrollTo(0, 0);
 
   if (!id) Navigate('/');
 
@@ -19,7 +21,6 @@ const QuizPage = async (id) => {
   const quiz = await response.json();
 
   renderQuizPage(quiz[0]);
-  window.scrollTo(0, 0);
 };
 
 /**
@@ -30,14 +31,25 @@ function renderQuizPage(quiz) {
   // render quiz title and start button
   const main = document.querySelector('main');
 
+  const banner = document.createElement('div');
+  banner.className = 'banner';
+
   const divQuiz = document.createElement('div');
-  divQuiz.className = 'container-fluid text-center text-light p-4 bg-dark vh-100';
+  divQuiz.id = 'divQuiz';
+  divQuiz.className = 'container-fluid text-center text-light p-4 vh-100';
 
   const titleContainer = document.createElement('div');
   titleContainer.className = 'p-5 mt-5';
 
-  const title = document.createElement('h1');
-  title.innerText = 'Quiz : '.concat(quiz.quizName);
+  const titleQuiz = document.createElement('h1');
+  titleQuiz.className = 'ml6';
+
+  const textWrapper = document.createElement('span');
+  textWrapper.className = 'text-wrapper';
+
+  const lettersWrapper = document.createElement('span');
+  lettersWrapper.className = 'letters';
+  lettersWrapper.innerText = 'Quiz : '.concat(quiz.quizName);
 
   const difficulty = document.createElement('h5');
   difficulty.innerText = 'Difficulty : '.concat(quiz.difficulty);
@@ -47,18 +59,27 @@ function renderQuizPage(quiz) {
   start.id = 'start';
   start.innerText = 'Start';
 
-  titleContainer.appendChild(title);
+  textWrapper.appendChild(lettersWrapper);
+  titleQuiz.appendChild(textWrapper);
+  titleContainer.appendChild(titleQuiz);
   titleContainer.appendChild(difficulty);
   divQuiz.appendChild(titleContainer);
   divQuiz.appendChild(start);
-  main.appendChild(divQuiz);
+  banner.appendChild(divQuiz)
+  main.appendChild(banner);
 
   // initialize score and index to browse quiz
   start.addEventListener('click', () => {
     const score = 0;
     const index = 0;
-    renderQuestions(quiz.questions, index, score);
+    const delay = 2*1000;
+    animationTransition1();
+    setTimeout(() => {
+      renderQuestions(quiz.questions, index, score);
+    }, delay);
   });
+
+  animationQuizPage();
 }
 
 /**
@@ -75,8 +96,12 @@ function renderQuestions(questions, indexArray, score) {
 
   const main = document.querySelector('main');
 
+  const banner = document.createElement('div');
+  banner.className = 'banner';
+
   const divQuestion = document.createElement('div');
-  divQuestion.className = 'container-fluid text-center text-light p-4 bg-dark vh-100';
+  divQuestion.className = 'container-fluid text-center text-light p-4 vh-100';
+  divQuestion.id = 'divQuestion';
 
   const divQuestionScore = document.createElement('div');
   divQuestionScore.className = 'mt-5 ms-2 d-flex justify-content-between';
@@ -163,7 +188,8 @@ function renderQuestions(questions, indexArray, score) {
   divQuestion.appendChild(divQuestionScore);
   divQuestion.appendChild(divTitle);
   divQuestion.appendChild(answers);
-  main.appendChild(divQuestion);
+  banner.appendChild(divQuestion);
+  main.appendChild(banner);
 
   answer1.addEventListener('click', checkAnswer);
   answer2.addEventListener('click', checkAnswer);
@@ -180,6 +206,10 @@ function renderQuestions(questions, indexArray, score) {
     }
   });
 
+  if (currentIndex===0){
+    animationTransition2();
+  }
+  
   // check the chosen answer
   function checkAnswer(e) {
     const divMsgAnswer = document.getElementById('AnswerMsg');
@@ -230,7 +260,7 @@ function renderScore(score) {
   const main = document.querySelector('main');
 
   const div1 = document.createElement('div');
-  div1.className = 'container-fluid text-center text-light p-4 bg-dark vh-100';
+  div1.className = 'container-fluid banner text-center text-light p-4 vh-100';
 
   const divScoreMsg = document.createElement('div');
   divScoreMsg.className = 'p-5 mt-5 border border-dark rounded-4';
@@ -243,7 +273,7 @@ function renderScore(score) {
       : score >= 7
       ? 'Good'
       : score >= 3
-      ? 'You can do better than that '
+      ? 'You can do better than that'
       : 'Oof';
 
   // show score
@@ -285,6 +315,50 @@ function renderScore(score) {
 // code taken from the site https://www.w3schools.com/js/js_random.asp
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function animationQuizPage(){
+
+  const title = document.querySelector('.ml6 .letters');
+  title.innerHTML = title.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+  anime({
+    targets: '.ml6 .letter',
+    translateY: ["1.1em", 0],
+    translateZ: 0,
+    duration: 750,
+    easing: 'easeOutExpo',
+    delay: (el, i) => 50 * i
+  });
+}
+
+function animationTransition1(){
+  
+  const div = document.getElementById('divQuiz');
+
+  anime({
+    targets: div,
+    opacity: {value: 0, duration: 1000},
+    easing: 'linear'
+  });
+}
+
+function animationTransition2(){
+
+  const div = document.getElementById('divQuestion');
+
+  const animation = anime.timeline();
+  
+  animation.add({
+    targets: div,
+    opacity: {value: 0},
+    easing: 'steps(1)'
+  })
+  animation.add({
+    targets: div,
+    opacity: {value: 1, duration: 750},
+    easing: 'easeInOutExpo'
+  });
 }
 
 export default QuizPage;
