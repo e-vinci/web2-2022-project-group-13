@@ -31,7 +31,6 @@ const QuizPage = async (id) => {
 function renderQuizPage(quiz) {
   // render quiz title and start button
   const main = document.querySelector('main');
- 
 
   const banner = document.createElement('div');
   banner.className = 'banner';
@@ -95,9 +94,11 @@ function renderQuizPage(quiz) {
  */
 function renderQuestions(questions, indexArray, score) {
   clearPage();
+
   let currentScore = score;
   let currentIndex = indexArray;
   let timeLeft = 10;
+
   const main = document.querySelector('main');
   const bombHTML = bombDisplay();
 
@@ -187,7 +188,6 @@ function renderQuestions(questions, indexArray, score) {
   divNext.appendChild(nextButton);
 
   const divBomb = document.createElement('div');
-
   divBomb.innerHTML += bombHTML;
 
   divAnswers.appendChild(colAnswers1);
@@ -202,59 +202,34 @@ function renderQuestions(questions, indexArray, score) {
   divQuestion.appendChild(divTitle);
   divQuestion.appendChild(answers);
   divQuestion.appendChild(divBomb);
-  
-  main.appendChild(divQuestion);
- 
-  
   banner.appendChild(divQuestion);
   main.appendChild(banner);
 
-  // if there are still questions, call renderQuestions() for the next question. Otherwise call function renderScore()
-  let timerPage;
-  nextButton.addEventListener('click', () => {
+  // onClickNext for removing nextButton eventListener
+  const onClickNext = () => {
+    nextButton.removeEventListener('click', onClickNext);
     animationNextLeft();
     const delay = 800;
+
+    // if there are still questions, recursive call renderQuestions() for the next question. Otherwise call function renderScore()
+    // functions with setTimeOut for smooth animation
     if (currentIndex === questions.length - 1) {
       setTimeout(() => {
         renderScore(currentScore);
-      }, delay)
+      }, delay);
     } else {
       currentIndex++;
       setTimeout(() => {
         renderQuestions(questions, currentIndex, currentScore);
       }, delay);
-      
     }
-  });
-  
-  function countdown() {
-
-    timeLeft--;
-    if (timeLeft > 0) {
-      timerPage = setTimeout(countdown, 1000);
-    }
-    else if (timeLeft === 0){
-      if (currentIndex === questions.length - 1) {
-      renderScore(currentScore);
-    } 
-      else {
-        
-        disableButtons(questions[indexArray].goodAnswer, questions[indexArray].goodAnswer);
-        const messageAnswer = document.getElementById('message');
-        messageAnswer.innerText = 'Too bad';
-        const isCorrectAnswer = false;
-        messageAnswer.style.visibility = 'visible';
-        animationMessageAnswer(isCorrectAnswer);
-    
-      }
-    }
-    
-    
   };
-  const tableAnswers = ['answer1', 'answer2', 'answer3', 'answer4'];
-  tableAnswers.forEach((element) => {
-    const answer = document.getElementById(element);
-    answer.addEventListener('click', (e) => {
+
+  nextButton.addEventListener('click', onClickNext);
+
+  // addEventListener for each buttons answers
+  arrayButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
       const isCorrectAnswer = checkAnswer(e);
       animationMessageAnswer(isCorrectAnswer);
     });
@@ -265,20 +240,17 @@ function renderQuestions(questions, indexArray, score) {
   } else {
     animationNextRight();
   }
-  
-  timerPage = setTimeout(countdown, 1000);
+
+  // set timer and bomb animation
+  let timerPage = setTimeout(countdown, 1000);
   animationBombQuiz();
+
   // check the chosen answer
   function checkAnswer(e) {
     let isCorrectAnswer;
     const messageAnswer = document.getElementById('message');
-    if (timeLeft === 0){
-  
-      messageAnswer.innerText = 'Too bad';
-      isCorrectAnswer = false;
-    }
-    if (e.target.innerHTML !== questions[indexArray].goodAnswer){
-    
+
+    if (e.target.innerHTML !== questions[indexArray].goodAnswer) {
       messageAnswer.innerText = 'Too bad';
       isCorrectAnswer = false;
     }
@@ -287,35 +259,54 @@ function renderQuestions(questions, indexArray, score) {
       currentScore++;
       messageAnswer.innerText = 'Good job !';
       isCorrectAnswer = true;
+
       const newScore = document.getElementById('score');
       newScore.innerText = 'Score : '.concat(currentScore.toString()).concat('/10');
     }
-    
+
     messageAnswer.style.visibility = 'visible';
     disableButtons(e.target.innerHTML, questions[indexArray].goodAnswer);
-    
     return isCorrectAnswer;
   }
 
-  // disable buttons after choosing and activate the next button
+  // disable buttons after choosing and activate the next button for the next question
   function disableButtons(givenAnswer, goodAnswer) {
     clearTimeout(timerPage);
-    for (let i = 0; i < tableAnswers.length; i++) {
-      const answerToDisable = document.getElementById(tableAnswers[i]);
-      answerToDisable.removeEventListener('click', checkAnswer);
-      answerToDisable.className = answerToDisable.className.concat('disabled');
 
-      if (answerToDisable.innerHTML === givenAnswer && answerToDisable.innerHTML !== goodAnswer) {
-        answerToDisable.className = answerToDisable.className.replace('btn-primary', 'btn-danger');
+    arrayButtons.forEach((button) => {
+      const buttonToDisable = button;
+      buttonToDisable.removeEventListener('click', checkAnswer);
+      buttonToDisable.className = buttonToDisable.className.concat('disabled');
+
+      // if wrong answer chosen, shows only the answer choice in red and the correct answer in green
+      if (buttonToDisable.innerHTML === givenAnswer && buttonToDisable.innerHTML !== goodAnswer) {
+        buttonToDisable.className = buttonToDisable.className.replace('btn-primary', 'btn-danger');
       }
-      if (answerToDisable.innerHTML === goodAnswer) {
-        answerToDisable.className = answerToDisable.className.replace('btn-primary', 'btn-success');
+      // if correct answer chosen, shows only the answer in green
+      if (buttonToDisable.innerHTML === goodAnswer) {
+        buttonToDisable.className = buttonToDisable.className.replace('btn-primary', 'btn-success');
       }
-    }
+    });
+
     const nextEnable = document.getElementById('nextButton');
     nextEnable.className = nextEnable.className.replace('disabled', '');
   }
-  
+
+  function countdown() {
+    // decrements time left if not zero
+    timeLeft--;
+    if (timeLeft > 0) {
+      timerPage = setTimeout(countdown, 1000);
+    }
+    // else disable buttons and shows the right answer
+    else {
+      const messageAnswer = document.getElementById('message');
+      messageAnswer.innerText = 'Too bad';
+      messageAnswer.style.visibility = 'visible';
+      disableButtons(questions[indexArray].goodAnswer, questions[indexArray].goodAnswer);
+      animationMessageAnswer(false);
+    }
+  }
 }
 
 /**
@@ -390,6 +381,7 @@ function renderScore(score) {
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 function bombDisplay() {
   const buttonToQuiz = document.createElement('a');
   buttonToQuiz.id = 'refToQuiz';
@@ -493,22 +485,22 @@ async function animationBombQuiz() {
   // as the timeline progresses update the value of the input
   const timeline = anime.timeline({
     // eslint-disable-next-line no-return-assign
-    update: ({progress}) => input.value = progress
+    update: ({ progress }) => (input.value = progress),
   });
-  
+
   // function called following the input event
   // update the timeline to show the percentage matching the value of the input
   function handleInput() {
-    const {value} = this;
-    timeline.seek(timeline.duration * value / 100);
+    const { value } = this;
+    timeline.seek((timeline.duration * value) / 100);
   }
-  
+
   input.addEventListener('input', handleInput);
-  
+
   /* add the animations to the timeline
   ! use negative values as second argument of the .add() function to specify overlaps between animations
   */
-  
+
   // animate the fuse to have the stroke-dashoffset properties match in negative the total length of the path
   // ! negative to have the shape hidden backwards
   timeline.add({
@@ -517,7 +509,7 @@ async function animationBombQuiz() {
     duration: 10000,
     // ! have the stroke-dasharray match the length of the path to create the actual dashes
     begin: (ani) => {
-      const {target} = ani.animatables[0];
+      const { target } = ani.animatables[0];
       const length = target.getTotalLength();
       target.setAttribute('stroke-dasharray', length);
     },
@@ -540,7 +532,6 @@ async function animationBombQuiz() {
     },
     easing: 'linear',
   });
-
 
   const motionPath = document.querySelector('#motion-path');
   const path = anime.path(motionPath);
@@ -602,7 +593,6 @@ async function animationBombQuiz() {
   );
 }
 
-
 function animationQuizPage() {
   const title = document.querySelector('.titleQuiz #letters');
   title.innerHTML = title.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
@@ -658,25 +648,23 @@ function animationMessageAnswer(isCorrect) {
   }
 }
 
-function animationNextLeft(){
-
+function animationNextLeft() {
   const div = document.getElementById('divQuestion');
 
   anime({
     targets: div,
-    translateX: [0,-2000],
-    easing: 'easeInOutExpo'
+    translateX: [0, -2000],
+    easing: 'easeInOutExpo',
   });
 }
 
-function animationNextRight(){
-
+function animationNextRight() {
   const div = document.getElementById('divQuestion');
 
   anime({
     targets: div,
-    translateX: [2000,0],
-    easing: 'easeInOutExpo'
+    translateX: [2000, 0],
+    easing: 'easeInOutExpo',
   });
 }
 

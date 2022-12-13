@@ -47,7 +47,7 @@ function renderLoginForm() {
   submit.id = 'submitButton';
   submit.value = 'Login';
   submit.type = 'submit';
-  submit.className = 'btn purple';
+  submit.className = 'btn btn-primary';
 
   // Create div for remember me label + checkbox
   const formCheckWrapper = document.createElement('div');
