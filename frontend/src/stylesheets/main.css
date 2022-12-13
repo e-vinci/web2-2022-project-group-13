@@ -251,12 +251,12 @@ main {
 }
 /********************************ANIMATION QUIZ TITLE****************************************/
 
-.titleQuiz {
+.quizh1 {
   position: relative;
   font-size: 3.3em;
 }
 
-.titleQuiz .text-wrapper {
+.quizh1 .text-wrapper {
   position: relative;
   display: inline-block;
   padding-top: 0.2em;
@@ -265,7 +265,7 @@ main {
   overflow: hidden;
 }
 
-.titleQuiz .letter {
+.quizh1 .letter {
   display: inline-block;
   line-height: 1em;
 }

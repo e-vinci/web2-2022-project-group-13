@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import { createPopper } from '@popperjs/core';
 // import { Navbar as BootstrapNavbar } from 'bootstrap';
 import logo from '../../img/logo.png';
 import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
@@ -64,6 +62,9 @@ function renderNavbar() {
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
+              <li id="createQuizItem" class="nav-item">
+              <a class="nav-link" href="/createQuiz" data-uri="/createQuiz">Create a Quiz</a>
+              </li> 
               <li id="logoutItem" class="nav-item">
               <a class="nav-link" href="/logout" data-uri="/logout">Logout</a>
               </li> 

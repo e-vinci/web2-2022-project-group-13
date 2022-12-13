@@ -43,7 +43,7 @@ function renderQuizPage(quiz) {
   titleContainer.className = 'p-5 mt-5';
 
   const titleQuiz = document.createElement('h1');
-  titleQuiz.className = 'titleQuiz';
+  titleQuiz.className = 'quizh1';
 
   const textWrapper = document.createElement('span');
   textWrapper.className = 'text-wrapper';
@@ -247,6 +247,7 @@ function renderQuestions(questions, indexArray, score) {
 
   // check the chosen answer
   function checkAnswer(e) {
+    clearTimeout(timerPage);
     let isCorrectAnswer;
     const messageAnswer = document.getElementById('message');
 
@@ -271,7 +272,6 @@ function renderQuestions(questions, indexArray, score) {
 
   // disable buttons after choosing and activate the next button for the next question
   function disableButtons(givenAnswer, goodAnswer) {
-    clearTimeout(timerPage);
 
     arrayButtons.forEach((button) => {
       const buttonToDisable = button;
@@ -325,11 +325,18 @@ function renderScore(score) {
   div1.className = 'container-fluid text-center text-light p-4 vh-100';
 
   const divScoreMsg = document.createElement('div');
-  divScoreMsg.className = 'p-5 mt-5 border border-dark rounded-4';
+  divScoreMsg.className = 'p-5 mt-5';
 
   // show message depending on score
   const scoreMsg = document.createElement('h1');
-  scoreMsg.innerText =
+  scoreMsg.className = 'quizh1';
+
+  const textWrapper = document.createElement('span');
+  textWrapper.className = 'text-wrapper';
+
+  const wordsWrapper = document.createElement('span');
+  wordsWrapper.id = 'words';
+  wordsWrapper.innerText =
     score === 10
       ? 'Perfect'
       : score >= 7
@@ -340,11 +347,13 @@ function renderScore(score) {
 
   // show score
   const divScore = document.createElement('div');
-  divScore.className = 'p-3 m-3 border border-dark rounded-4';
+  divScore.className = 'p-3 m-3 mb-5';
+  divScore.id = 'divScore';
   const finalScoreMsg = document.createElement('h2');
-  finalScoreMsg.innerText = score.toString().concat('/10');
+  finalScoreMsg.innerText = 'Your score : '.concat(score.toString().concat('/10'));
 
   const divButtons = document.createElement('div');
+  divButtons.id = 'divButtons';
   divButtons.className = 'row justify-content-around';
 
   const button1 = document.createElement('button');
@@ -354,6 +363,8 @@ function renderScore(score) {
   button1.innerText = 'Retry';
   button2.innerText = 'Return to HomePage';
 
+  textWrapper.appendChild(wordsWrapper);
+  scoreMsg.appendChild(textWrapper);
   divScoreMsg.appendChild(scoreMsg);
   divScore.appendChild(finalScoreMsg);
   divButtons.appendChild(button1);
@@ -374,7 +385,7 @@ function renderScore(score) {
     Navigate('/');
   });
 
-  animationMessageAnswer(score);
+  animationScorePage();
 }
 
 // code taken from the site https://www.w3schools.com/js/js_random.asp
@@ -594,12 +605,12 @@ async function animationBombQuiz() {
 }
 
 function animationQuizPage() {
-  const title = document.querySelector('.titleQuiz #letters');
+  const title = document.querySelector('.quizh1 #letters');
   title.innerHTML = title.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
   anime({
-    targets: '.titleQuiz .letter',
-    translateY: [100, 0],
+    targets: '.quizh1 .letter',
+    translateY: [200, 0],
     duration: 750,
     easing: 'easeOutExpo',
     delay: (el, i) => 50 * i,
@@ -665,6 +676,36 @@ function animationNextRight() {
     targets: div,
     translateX: [2000, 0],
     easing: 'easeInOutExpo',
+  });
+}
+
+function animationScorePage(){
+
+  const message = document.querySelector('.quizh1 #words');
+  message.innerHTML = message.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+  
+  const score = document.getElementById('divScore');
+  const buttons = document.getElementById('divButtons');
+
+  const animation = anime.timeline({
+    easing: 'easeOutExpo',
+    duration: 500
+  });
+  
+  animation.add({
+    targets: '.quizh1 .letter',
+    translateY: [-200, 0],
+    delay: (el, i) => 50 * i,
+  });
+
+  animation.add({
+    targets: score,
+    translateX: [2000,0]
+  });
+
+  animation.add({
+    targets: buttons,
+    translateX: [-2000,0]
   });
 }
 
