@@ -24,7 +24,7 @@ function goToQuizButton() {
 }
 function renderHomePage(Allquiz) {
   const bomb = bombDisplay();
-  const menuTableAsString = getMenuTableAsString(Allquiz);
+  const menuTableAsString = getQuizDivseAsString(Allquiz);
   const main = document.querySelector('main');
 
   // home
@@ -120,30 +120,30 @@ async function searchBar() {
     console.error('HomePage::error: ', err);
   }
 }
-function getMenuTableAsString(Allquiz) {
-  const menuTableLines = getAllTableLinesAsString(Allquiz);
-  const menuTable = addLinesToTableHeadersAndGet(menuTableLines);
-  return menuTable;
+function getQuizDivseAsString(Allquiz) {
+  const DivsQuizzes = getAllDivsLinesAsString(Allquiz);
+  const QuizzesSection = addLinesToSectionGet(DivsQuizzes);
+  return QuizzesSection;
 }
-function addLinesToTableHeadersAndGet(tableLines) {
-  const menuTable = `
+function addLinesToSectionGet(divsLines) {
+  const QuizzzesSection = `
   <section class="layout" id="homeLayout">
-     ${tableLines}
+     ${divsLines}
   </section>
   `;
-  return menuTable;
+  return QuizzzesSection;
 }
 
-function getAllTableLinesAsString(allQuiz) {
-  let quizzesTableLines = '';
+function getAllDivsLinesAsString(allQuiz) {
+  let quizzesDivsLines = '';
 
   allQuiz?.forEach((quiz) => {
-    quizzesTableLines += `<div class= "quizContainer" id="quiz_${quiz.id}">
+    quizzesDivsLines += `<div class= "quizContainer" id="quiz_${quiz.id}">
       <p>${quiz.quizName}</p>
     </div>`;
   });
 
-  return quizzesTableLines;
+  return quizzesDivsLines;
 }
 
 function attachOnClickEventsToRenderQuiz(allQuiz) {

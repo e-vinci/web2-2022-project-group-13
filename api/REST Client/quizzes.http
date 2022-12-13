@@ -8,8 +8,9 @@ GET {{baseUrl}}/quiz
 GET {{baseUrl}}/quiz/2
 
 ### Create a quiz
-POST {{baseUrl}}/addQuiz
+POST {{baseUrl}}/quiz/addQuiz
 Content-Type: application/json
+
 
 {
     "quizName":"Magic Green",

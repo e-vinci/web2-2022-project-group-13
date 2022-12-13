@@ -32,7 +32,7 @@ const defaultQuizzes = [
 ];
 
 async function addOneQuiz(quizName, difficulty, questions) {
-  const quizzes = parse(jsonDbPath, []);
+  const quizzes = parse(jsonDbPath, defaultQuizzes);
   const isVerified = false;
 
   const newQuiz = {
