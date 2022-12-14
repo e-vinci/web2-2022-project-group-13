@@ -56,7 +56,7 @@ function readAllQuizzes() {
   return quizzesVerified.reverse();
 }
 
-function readOneQuiz(id) {
+function readOneVerifiedQuiz(id) {
   const idQuiz = parseInt(id, 10);
   const quizzes = parse(jsonDbPath, defaultQuizzes);
   const quizVerified = [...quizzes].filter(
@@ -114,7 +114,7 @@ module.exports = {
   addOneQuiz,
   searchQuiz,
   readAllQuizzes,
-  readOneQuiz,
+  readOneVerifiedQuiz,
   readUnverifiedQuizzes,
   deleteQuiz,
   getQuiz,

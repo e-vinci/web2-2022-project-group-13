@@ -1,5 +1,5 @@
 const express = require('express');
-const { addOneQuiz, searchQuiz, readAllQuizzes, readOneQuiz } = require('../models/quiz');
+const { addOneQuiz, searchQuiz, readAllQuizzes, readOneVerifiedQuiz } = require('../models/quiz');
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/id/:id', (req, res) => {
-  const quizFound = readOneQuiz(req.params.id);
+  const quizFound = readOneVerifiedQuiz(req.params.id);
   return res.json(quizFound);
 });
 
