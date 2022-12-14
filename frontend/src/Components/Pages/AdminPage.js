@@ -3,21 +3,21 @@
 // import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
+import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
 
 let currentTab = 0;
 const AdminPage = async () => {
-  clearPage();
-  const response = await fetch('/api/admin');
-  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-  const quizUnverified = await response.json();
-  console.log(quizUnverified);
-  // const response2 = await fetch('/api/admin/all');
-  // if (!response2.ok) throw new Error(`fetch error : ${response2.status} : ${response2.statusText}`);
-  // const quizVerified = await response2.json();
-  renderAdminUI(quizUnverified);
-  // renderQuizList(quizUnverified);
-  // renderUnverifiedQuizList(quizUnverified);
-  // showTab(currentTab);
+  if (isAuthenticated() && getAuthenticatedUser().isAnAdmin === true) {
+    clearPage();
+
+    const response = await fetch('/api/admin');
+    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+    const quizUnverified = await response.json();
+
+    renderAdminUI(quizUnverified);
+  } else {
+    Navigate('/');
+  }
 };
 
 async function getUnverifiedList() {
@@ -35,37 +35,44 @@ async function getVerifiedList() {
 }
 
 function renderAdminUI(quizDefault) {
-  // let quizUnverified = await getUnverifiedList();
-  // getVerifiedList();
-  // let quizVerified = await getVerifiedList();
+
   let quizList = quizDefault;
+
   const main = document.querySelector('main');
 
   const wrapper = document.createElement('div');
-  wrapper.style = 'padding: 25px 10%; background-color: lightgrey;';
-  // wrapper.className = 'vh-100';
-  wrapper.classList.add('container-fluid', 'vh-100');
+  wrapper.style = 'padding: 25px 10%;';
+  wrapper.classList.add('container-fluid', 'vh-100', 'wrapperAdmin');
 
   const row = document.createElement('div');
   row.classList.add('row');
 
+  // render button tab
   const leftTab = document.createElement('div');
-  leftTab.classList.add('col-2', 'p-0');
+  leftTab.classList.add('col-lg-2', 'col-md-4', 'p-0');
+  // render list tab
   const rightTab = document.createElement('div');
-  rightTab.classList.add('col-10', 'list-group', 'rightTab', 'list-group-flush');
+  rightTab.classList.add('col-lg-10', 'col-md-8', 'col-xs-12', 'list-group', 'rightTab');
 
   const btnGroup = document.createElement('div');
-  btnGroup.classList.add('btn-group-toggle', 'btn-group-vertical', 'w-100', 'text-center');
-  // btnGroup.dataset.toggle="buttons";
-  const aVerifier = document.createElement('button');
-  aVerifier.classList.add('btn', 'btn-primary', 'active');
-  aVerifier.textContent = 'à vérifier';
-  const tousLesQuiz = document.createElement('button');
-  tousLesQuiz.classList.add('btn', 'btn-primary');
-  tousLesQuiz.textContent = 'tous les quiz';
+  btnGroup.classList.add(
+    'btn-group-toggle',
+    'btn-group-vertical',
+    'w-100',
+    'text-center',
+    'list-group',
+    'list-group-flush',
+    'leftTab',
+  );
+  const toVerify = document.createElement('button');
+  toVerify.classList.add('btn', 'list-group-item', 'list-group-item-action', 'adminBtn', 'active');
+  toVerify.textContent = 'to verify';
+  const allQuiz = document.createElement('button');
+  allQuiz.classList.add('btn', 'list-group-item', 'list-group-item-action', 'adminBtn');
+  allQuiz.textContent = 'all quiz';
 
-  btnGroup.appendChild(aVerifier);
-  btnGroup.appendChild(tousLesQuiz);
+  btnGroup.appendChild(toVerify);
+  btnGroup.appendChild(allQuiz);
   leftTab.appendChild(btnGroup);
   row.appendChild(leftTab);
   row.appendChild(rightTab);
@@ -74,22 +81,27 @@ function renderAdminUI(quizDefault) {
 
   renderQuizList(quizList);
 
-  aVerifier.addEventListener('click', async () => {
+  // add active on button
+  toVerify.addEventListener('click', async () => {
     clearRightTab();
+
     const activeItem = document.querySelector('.active');
     activeItem.classList.remove('active');
-    aVerifier.classList.add('active');
+    toVerify.classList.add('active');
+
     quizList = await getUnverifiedList();
-    // quizList = quizUnverified;
+
     renderQuizList(quizList);
   });
-  tousLesQuiz.addEventListener('click', async () => {
+  allQuiz.addEventListener('click', async () => {
     clearRightTab();
+
     const activeItem = document.querySelector('.active');
     activeItem.classList.remove('active');
-    tousLesQuiz.classList.add('active');
+    allQuiz.classList.add('active');
+
     quizList = await getVerifiedList();
-    // quizList = quizVerified;
+
     renderQuizList(quizList);
   });
 }
@@ -97,23 +109,22 @@ function renderAdminUI(quizDefault) {
 function renderQuizList(quizList) {
   const rightTab = document.querySelector('.rightTab');
   quizList.forEach((element) => {
-    // element.isVerified = false;
-    const quizLink = document.createElement('a');
-    quizLink.classList.add('list-group-item', 'list-group-item-action');
-    quizLink.href = '';
+    const quizLink = document.createElement('div');
+    quizLink.classList.add('list-group-item', 'list-group-item-action', 'text-light', 'quizLink');
+    
+    // quiz id
     const pointer = parseInt(element.id);
+
     const btnRemove = document.createElement('button');
-    btnRemove.classList.add('btn', 'btn-danger', 'float-right', 'w-25');
+    btnRemove.classList.add('btn', 'btn-danger', 'float-right', 'w-25', 'btnRemove');
     btnRemove.textContent = 'remove';
 
-    console.log('pointer ' + pointer);
+    // delete event
     btnRemove.addEventListener('click', async (e) => {
-      // e.preventDefault();
-      // const pointer = element.id-1;
+      e.preventDefault();
       console.log('pointer event ' + pointer);
       const options = {
         method: 'DELETE',
-        // body: JSON.stringify(quiz),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -122,14 +133,18 @@ function renderQuizList(quizList) {
       if (!response.ok)
         throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
       console.log('delete ' + JSON.stringify(response.url));
-      Navigate('/admin');
+      Navigate('../admin');
     });
+
+    // render quiz tile
     const quizElement = document.createElement('div');
-    const quizElementTitle = document.createElement('p');
+    const quizElementTitle = document.createElement('a');
     quizElement.classList.add('d-flex', 'flex-row');
     quizElementTitle.textContent = element.quizName;
     quizElementTitle.classList.add('w-75', 'text-center', 'm-auto');
+    quizElementTitle.href = '';
 
+    // go on quiz page event
     quizElementTitle.addEventListener('click', async (e) => {
       e.preventDefault();
       clearPage();
@@ -137,7 +152,6 @@ function renderQuizList(quizList) {
       if (!response.ok)
         throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
       const quiz = await response.json();
-      // console.log('quiz clique ' + JSON.stringify(quiz[0].quizName));
       renderCreateQuizForm(quiz[0]);
       showTab(currentTab);
     });
@@ -146,72 +160,8 @@ function renderQuizList(quizList) {
     quizElement.appendChild(btnRemove);
     quizLink.appendChild(quizElement);
     rightTab.appendChild(quizLink);
-    console.log('question: ' + element.isVerified);
   });
-  console.log('quiz2 ' + JSON.stringify(quizList));
 }
-
-// function renderUnverifiedQuizList(quiz) {
-//   const main = document.querySelector('main');
-
-//   const wrapper = document.createElement('div');
-//   wrapper.style = 'padding: 25px 10%; background-color: lightgrey;';
-//   wrapper.classList.add('container-fluid', 'w-100');
-
-//   const row = document.createElement('div');
-//   row.classList.add('row');
-
-//   const leftTab = document.createElement('div');
-//   leftTab.classList.add('col-2', 'p-0');
-//   const rightTab = document.createElement('div');
-//   rightTab.classList.add('col-10', 'list-group');
-
-//   const btnGroup = document.createElement('div');
-//   btnGroup.classList.add('btn-group-toggle', 'btn-group-vertical', 'w-100', 'text-center');
-//   const aVerifier = document.createElement('button');
-//   aVerifier.classList.add('btn', 'btn-primary', 'active');
-//   aVerifier.textContent = 'à vérifier';
-//   const tousLesQuiz = document.createElement('button');
-//   tousLesQuiz.classList.add('btn', 'btn-primary');
-//   tousLesQuiz.textContent = 'tous les quiz';
-
-//   quiz.forEach((element) => {
-//     const quizLink = document.createElement('a');
-//     quizLink.href = '';
-//     const pointer = element.id;
-//     const btnRemove = document.createElement('button');
-//     btnRemove.classList.add('btn', 'btn-danger', 'float-right', 'w-25');
-//     btnRemove.textContent = 'remove';
-
-//     console.log('pointer ' + pointer);
-//     btnRemove.addEventListener('click', async () => {
-//       const pointer = element.id;
-//       await fetch(`/api/admin/remove/${pointer}`);
-//       console.log();
-//       Navigate('/admin');
-//     });
-//     const quizElement = document.createElement('div');
-//     const quizElementTitle = document.createElement('p');
-//     quizElement.classList.add('card', 'list-group-item', 'd-flex', 'flex-row');
-//     quizElementTitle.textContent = element.quizName;
-//     quizElementTitle.classList.add('w-75', 'text-center', 'm-auto');
-
-//     quizElement.appendChild(quizElementTitle);
-//     quizElement.appendChild(btnRemove);
-//     quizLink.appendChild(quizElement);
-//     rightTab.appendChild(quizLink);
-//     console.log('question: ' + element.isVerified);
-//   });
-//   console.log('quiz2 ' + JSON.stringify(quiz));
-
-//   btnGroup.appendChild(aVerifier);
-//   btnGroup.appendChild(tousLesQuiz);
-//   leftTab.appendChild(btnGroup);
-//   row.appendChild(leftTab);
-//   row.appendChild(rightTab);
-//   wrapper.appendChild(row);
-//   main.appendChild(wrapper);
-// }
 
 const clearRightTab = () => {
   const rightTab = document.querySelector('.rightTab');
@@ -242,12 +192,6 @@ const validateForm = () => {
   let valid = true;
 
   // eslint-disable-next-line
-  // for (let i = 0; i < y.length; i++) {
-  //   if (y[i].value === '') {
-  //     y[i].className += ' invalid';
-  //     valid = false;
-  //   }
-  // }
   if (valid) {
     document.getElementsByClassName('step')[currentTab].className += ' finish';
   }
@@ -292,6 +236,7 @@ function renderCreateQuizForm(quiz) {
   const form = document.createElement('form');
   form.className = 'p-3 bg-white';
   form.id = 'formulaire';
+  main.setAttribute('tabindex', '-1');
 
   const rowNameReturn = document.createElement('div');
   rowNameReturn.classList.add('row');
@@ -307,13 +252,9 @@ function renderCreateQuizForm(quiz) {
   nameInput.className = 'form-control';
   nameInput.id = 'quizName';
   nameInput.placeholder = quiz.quizName;
-  // nameInput.setAttribute('required', 'required');
-  // nameInput.setAttribute('disabled', '');
   nameHolder.appendChild(nameInput);
 
   form.appendChild(nameHolder);
-  // form.appendChild(returnWrapper);
-  // form.appendChild(rowNameReturn);
 
   const difficultySelectorWrapper = document.createElement('div');
   difficultySelectorWrapper.className = 'input-group pt-3';
@@ -444,11 +385,6 @@ function renderCreateQuizForm(quiz) {
     questionWrapper.appendChild(row2);
 
     form.appendChild(questionWrapper);
-    form.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-      }
-    });
 
     const step = document.createElement('span');
     step.className = 'step';
@@ -457,24 +393,30 @@ function renderCreateQuizForm(quiz) {
 
   const buttonsWrapper = document.createElement('div');
   buttonsWrapper.style = 'overflow:auto;';
-  buttonsWrapper.classList.add('d-flex', 'justify-content-between');
+  buttonsWrapper.classList.add(
+    'd-flex',
+    'justify-content-md-between',
+    'justify-content-center',
+    'mx-auto',
+    'flex-md-row',
+    'flex-column',
+  );
 
-  const returnWrapper = document.createElement('div');
-  returnWrapper.classList.add('float-left');
+  const returnWrapper = document.createElement('div', 'col-xs-12');
+  returnWrapper.classList.add('order-1', 'justify-content-center');
   const returnButton = document.createElement('button');
   returnButton.classList.add('btn', 'btn-secondary', 'align-self-center');
-  returnButton.textContent = 'retour sur Admin';
+  returnButton.textContent = 'Back to Admin page';
 
   returnButton.addEventListener('click', () => {
     Navigate('/admin');
   });
   returnWrapper.appendChild(returnButton);
   buttonsWrapper.appendChild(returnWrapper);
-  // rowNameReturn.appendChild(nameHolder);
-  // rowNameReturn.appendChild(returnWrapper);
+
 
   const buttons = document.createElement('div');
-  buttons.style = 'float:right;';
+  buttons.classList.add('order-2', 'justify-content-center');
   const prevButton = document.createElement('button');
   prevButton.type = 'button';
   prevButton.className = 'btn btn-success';
@@ -501,7 +443,7 @@ function renderCreateQuizForm(quiz) {
   submitButton.addEventListener('click', async () => {
     await validateQuiz(quizIndex);
   });
-  // submitButton.addEventListener('click', onSubmit);
+
   buttons.appendChild(prevButton);
   buttons.appendChild(nextButton);
   buttons.appendChild(submitButton);
@@ -517,6 +459,22 @@ function renderCreateQuizForm(quiz) {
     element.setAttribute('disabled', '');
   });
   console.log('all input ' + JSON.stringify(inputList));
+  
+  // switch tab on arrowkey press event
+  main.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        const prevBtn = document.getElementById('prevBtn');
+        if(prevBtn.style.display !== "none") {
+          nextPrev(-1);
+        }
+      }
+      if (e.key === 'ArrowRight') {
+        const nextBtn = document.getElementById('nextBtn');
+        if(nextBtn.style.display !== "none") {
+          nextPrev(1);
+        }
+      }
+    });
 }
 
 async function validateQuiz(quiz) {
