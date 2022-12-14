@@ -116,9 +116,9 @@ function renderRegisterForm() {
    <strong>ARTICLE 2: DATA RETENTION</strong><br>  
    We keep your personal data for as long as necessary for the fulfilment of the purposes set out herein, in compliance with the legislation in force. To know your rights to erasure, please consult the article 'Your rights'.<br>
    <strong>ARTICLE 3: SECURITY</strong><br>
-   The Company implements the appropriate technical and organizational measures, with regard to the nature of the data and the risks presented by the processing, to guarantee a high level of data security and, in particular, to prevent them from being distorted, damaged or accessed by unauthorized third parties."
+   The Company implements the appropriate technical and organizational measures, with regard to the nature of the data and the risks presented by the processing, to guarantee a high level of data security and, in particular, to prevent them from being distorted, damaged or accessed by unauthorized third parties.
    
-   To this end, md5 technology is used for the encryption of certain data, physical and logical data backup procedures are implemented and a protocol is used to secure access through data encryption (HTTPS)."
+   To this end, md5 technology is used for the encryption of certain data, physical and logical data backup procedures are implemented and a protocol is used to secure access through data encryption (HTTPS).
    
    The Company reserves the right to take legal action against any person who attempts to access personal information that does not belong to the Company.`
   rgpdDoc.addEventListener('click', () => {
