@@ -275,15 +275,17 @@ main {
 /********************************REGISTER PAGE -> RGPD****************************************/
 #rgpd{
   color: white; 
+  font-style: italic;
   margin-top : 10px;
 }
 #termOfUse p{
+  font-style: italic;
   margin-right: 25px;
   color :#fa9961;
+  text-decoration: underline;
 }
 #termOfUse p:hover{
   color :#fa9961;
-  text-decoration: underline;
   cursor: pointer;
 }
 /********************************END REGISTER PAGE -> RGPD****************************************/
