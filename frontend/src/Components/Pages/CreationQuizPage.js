@@ -82,7 +82,7 @@ function renderCreateQuizForm() {
   // wrapper.className = 'vh-100';
 
   const title = document.createElement('h2');
-  title.innerText = 'Crée ton propre quiz !';
+  title.innerText = 'Create your own quiz !';
   wrapper.appendChild(title);
 
   const form = document.createElement('form');
@@ -93,13 +93,13 @@ function renderCreateQuizForm() {
   nameHolder.className = 'form-group col-md-7';
   const nameLabel = document.createElement('label');
   nameLabel.htmlFor = 'quizName';
-  nameLabel.innerText = 'Nom du quiz :';
+  nameLabel.innerText = 'Quiz name :';
   nameHolder.appendChild(nameLabel);
   const nameInput = document.createElement('input');
   nameInput.type = 'text';
   nameInput.className = 'form-control';
   nameInput.id = 'quizName';
-  nameInput.placeholder = 'Nom du quiz';
+  nameInput.placeholder = 'quiz name';
   nameInput.setAttribute('required', 'required');
   nameHolder.appendChild(nameInput);
 
@@ -113,23 +113,23 @@ function renderCreateQuizForm() {
   const label = document.createElement('label');
   label.className = 'input-group-text';
   label.htmlFor = 'difficulty';
-  label.innerText = 'Difficulté : ';
+  label.innerText = 'Difficulty : ';
   labelWrapper.appendChild(label);
 
   const select = document.createElement('select');
   select.className = 'custom-select col-md-1';
   select.id = 'difficulty';
   const facile = document.createElement('option');
-  facile.value = 'facile';
-  facile.innerText = 'Facile';
+  facile.value = 'easy';
+  facile.innerText = 'Easy';
   select.appendChild(facile);
   const moyen = document.createElement('option');
-  moyen.value = 'moyen';
-  moyen.innerText = 'Moyen';
+  moyen.value = 'medium';
+  moyen.innerText = 'Medium';
   select.appendChild(moyen);
   const difficile = document.createElement('option');
-  difficile.value = 'difficile';
-  difficile.innerText = 'Difficile';
+  difficile.value = 'hard';
+  difficile.innerText = 'Hard';
   select.appendChild(difficile);
 
   difficultySelectorWrapper.appendChild(labelWrapper);
@@ -151,7 +151,7 @@ function renderCreateQuizForm() {
     intituleWrapper.className = 'form-group col-md-8';
     const intituleLabel = document.createElement('label');
     intituleLabel.htmlFor = 'intitule-'.concat(i);
-    intituleLabel.innerText = 'Intitulé de la question :';
+    intituleLabel.innerText = 'Title of the question :';
     intituleWrapper.appendChild(intituleLabel);
     const intituleInput = document.createElement('input');
     intituleInput.type = 'text';
@@ -168,13 +168,13 @@ function renderCreateQuizForm() {
     AnswerWrapper.className = 'form-group col-md-6';
     const AnswerLabel = document.createElement('label');
     AnswerLabel.htmlFor = 'bonneReponse-'.concat(i);
-    AnswerLabel.innerText = 'Bonne réponse :';
+    AnswerLabel.innerText = 'Good Answer :';
     AnswerWrapper.appendChild(AnswerLabel);
     const AnswerInput = document.createElement('input');
     AnswerInput.type = 'text';
     AnswerInput.className = 'form-control';
     AnswerInput.id = 'bonneReponse-'.concat(i);
-    AnswerInput.placeholder = 'Bonne réponse';
+    AnswerInput.placeholder = 'Good answer';
     AnswerWrapper.appendChild(AnswerInput);
     row1.appendChild(AnswerWrapper);
 
@@ -182,13 +182,13 @@ function renderCreateQuizForm() {
     BadAnswer1Wrapper.className = 'form-group col-md-6';
     const BadAnswer1Label = document.createElement('label');
     BadAnswer1Label.htmlFor = 'mauvaiseReponse1-'.concat(i);
-    BadAnswer1Label.innerText = 'Mauvaise réponse 1 :';
+    BadAnswer1Label.innerText = 'Bad answer 1 :';
     BadAnswer1Wrapper.appendChild(BadAnswer1Label);
     const BadAnswer1Input = document.createElement('input');
     BadAnswer1Input.type = 'text';
     BadAnswer1Input.className = 'form-control';
     BadAnswer1Input.id = 'mauvaiseReponse1-'.concat(i);
-    BadAnswer1Input.placeholder = 'Mauvaise réponse 1';
+    BadAnswer1Input.placeholder = 'Bad answer 1';
     BadAnswer1Wrapper.appendChild(BadAnswer1Input);
     row1.appendChild(BadAnswer1Wrapper);
 
@@ -201,13 +201,13 @@ function renderCreateQuizForm() {
     BadAnswer2Wrapper.className = 'form-group col-md-6';
     const BadAnswer2Label = document.createElement('label');
     BadAnswer2Label.htmlFor = 'mauvaiseReponse2-'.concat(i);
-    BadAnswer2Label.innerText = 'Mauvaise réponse 2 :';
+    BadAnswer2Label.innerText = 'Bad answer 2 :';
     BadAnswer2Wrapper.appendChild(BadAnswer2Label);
     const BadAnswer2Input = document.createElement('input');
     BadAnswer2Input.type = 'text';
     BadAnswer2Input.className = 'form-control mauvaiseReponse2';
     BadAnswer2Input.id = 'mauvaiseReponse2-'.concat(i);
-    BadAnswer2Input.placeholder = 'Mauvaise réponse 2';
+    BadAnswer2Input.placeholder = 'Bad answer 2';
     BadAnswer2Wrapper.appendChild(BadAnswer2Input);
     row2.appendChild(BadAnswer2Wrapper);
 
@@ -215,13 +215,13 @@ function renderCreateQuizForm() {
     BadAnswer3Wrapper.className = 'form-group col-md-6';
     const BadAnswer3Label = document.createElement('label');
     BadAnswer3Label.htmlFor = 'mauvaiseReponse3-'.concat(i);
-    BadAnswer3Label.innerText = 'Mauvaise réponse 3 :';
+    BadAnswer3Label.innerText = 'Bad answer 3 :';
     BadAnswer3Wrapper.appendChild(BadAnswer3Label);
     const BadAnswer3Input = document.createElement('input');
     BadAnswer3Input.type = 'text';
     BadAnswer3Input.className = 'form-control';
     BadAnswer3Input.id = 'mauvaiseReponse3-'.concat(i);
-    BadAnswer3Input.placeholder = 'Mauvaise réponse 3';
+    BadAnswer3Input.placeholder = 'Bad answer 3';
     BadAnswer3Wrapper.appendChild(BadAnswer3Input);
     row2.appendChild(BadAnswer3Wrapper);
 
@@ -245,18 +245,18 @@ function renderCreateQuizForm() {
   buttons.style = 'float:right;';
   const prevButton = document.createElement('button');
   prevButton.type = 'button';
-  prevButton.className = 'btn btn-success';
+  prevButton.className = 'btn purple';
   prevButton.id = 'prevBtn';
-  prevButton.innerText = 'Précédent';
+  prevButton.innerText = 'Previous';
   prevButton.style = 'margin-right: 10px;';
   prevButton.addEventListener('click', () => {
     nextPrev(-1);
   });
   const nextButton = document.createElement('button');
   nextButton.type = 'button';
-  nextButton.className = 'btn btn-success';
+  nextButton.className = 'btn purple';
   nextButton.id = 'nextBtn';
-  nextButton.innerText = 'Suivant';
+  nextButton.innerText = 'Next';
   nextButton.addEventListener('click', () => {
     nextPrev(1);
   });
