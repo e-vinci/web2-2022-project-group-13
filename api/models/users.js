@@ -15,6 +15,7 @@ const defaultUsers = [
     id: 1,
     username: 'admin',
     password: bcrypt.hashSync('admin', saltRounds),
+    isAdmin: true,
   },
 ];
 
@@ -31,9 +32,11 @@ async function login(username, password) {
     { expiresIn: lifetimeJwt }, // lifetime of the JWT (added to the JWT payload)
   );
 
+  const isAnAdmin = userFound.isAdmin;
   const authenticatedUser = {
     username,
     token,
+    isAnAdmin,
   };
 
   return authenticatedUser;
@@ -50,10 +53,14 @@ async function register(username, password) {
     jwtSecret, // secret used for the signature (signature part 3 of a JWT)
     { expiresIn: lifetimeJwt }, // lifetime of the JWT (added to the JWT payload)
   );
+  
+  const userFoundAfterRegistration = readOneUserFromUsername(username);
+  const isAnAdmin = userFoundAfterRegistration.isAdmin;
 
   const authenticatedUser = {
     username,
     token,
+    isAnAdmin,
   };
 
   return authenticatedUser;
@@ -76,6 +83,7 @@ async function createOneUser(username, password) {
     id: getNextId(),
     username,
     password: hashedPassword,
+    isAdmin: false,
   };
 
   users.push(createdUser);

@@ -289,3 +289,50 @@ main {
   cursor: pointer;
 }
 /********************************END REGISTER PAGE -> RGPD****************************************/
+/***************************************START ADMIN PAGE*****************************************/
+.rightTab {
+  padding-right: 0;
+  border-top-right-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+  border-bottom-left-radius: .5rem;
+  max-height: 95vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.rightTab::-webkit-scrollbar {
+  display: none;
+}
+.leftTab {
+  border-top-left-radius: .5rem;
+  border-bottom-left-radius: .5rem;
+}
+.wrapperAdmin,.quizLink{
+  background-color: rgb(25, 28, 37);
+}
+.quizLink {
+  height: 5rem;
+  padding: 1.25rem;
+  /* border: none; */
+}
+.quizLink:hover {
+  background-color: rgb(16, 19, 26);
+}
+.quizLink a {
+  color: white;
+}
+.quizLink:hover a {
+  color: #fa9961;
+}
+.adminBtn {
+  color: white;
+  /* border: none; */
+  border-color: rgb(16, 19, 26);
+  background-color: rgb(25, 28, 37);
+}
+.adminBtn.active, .adminBtn:hover {
+  color: #fa9961;
+  /* border: none; */
+  border-color: rgb(16, 19, 26);
+  background-color: rgb(16, 19, 26);
+}
+/*****************************************END ADMIN PAGE*****************************************/
