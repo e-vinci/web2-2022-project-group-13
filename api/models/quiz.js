@@ -1,5 +1,6 @@
 const path = require('node:path');
 const escape = require('escape-html');
+const translate = require('translate-google');
 const { parse, serialize } = require('../utils/json');
 
 const jsonDbPath = path.join(__dirname, '/../data/quiz.json');
@@ -13,9 +14,9 @@ const defaultQuizzes = [
      {question : "Who is the best friends of the human ?", falseAnswers : ["Monkey", "Cat", "Turtle"], goodAnswer : "Dog"},
      {question : "Which of these animals breath underwater ?", falseAnswers : ["Wolf", "Elephant", "Dog"], goodAnswer : "Anglerfish"},
      {question : "The cow belongs to which family ?", falseAnswers : ["Mammals", "Amphibians", "Reptiles"], goodAnswer : "Bovine"},
-     {question : "who is the smallest animals ?", falseAnswers : ["Wolf", "Elephant", "Dog"], goodAnswer : "Paedophryne amauensis Frog"},
+     {question : "Who is the smallest animals ?", falseAnswers : ["Wolf", "Elephant", "Dog"], goodAnswer : "Paedophryne amauensis Frog"},
      {question : "what's the average speed of a tiger ?", falseAnswers : ["100 – 130 km/h", "20 – 50 km/h", "120 – 160 km/h"], goodAnswer : "49 – 65 km/h"},
-     {question : "what can't dogs eat ?", falseAnswers : ["Chicken", "Fish", "Beef"], goodAnswer : "mushrooms"},
+     {question : "what can't dogs eat ?", falseAnswers : ["Chicken", "Fish", "Beef"], goodAnswer : "Mushrooms"},
      {question : "What's the favorite food of a bat ?", falseAnswers : ["Fruits", "Pollens", "Fishes"], goodAnswer : "Insects"},
      {question : "What height can jump a kangaroo ?", falseAnswers : ["4,2 feet", "5,3 feet", "3 feet"], goodAnswer : "6 feet"},
      {question : "Who is the smartest animals ?", falseAnswers : ["Rat", "Chimpanzees", "Dog"], goodAnswer : "Orangutans"},
@@ -24,7 +25,7 @@ const defaultQuizzes = [
   },
   {
     id : 2,
-    quizName : "Videos Games",
+    quizName : "Video Games",
     questions : [],
     difficulty : "Hard",
     isVerified : true
@@ -43,11 +44,13 @@ async function addOneQuiz(quizName, difficulty, questions) {
     isVerified,
   };
 
-  quizzes.push(newQuiz);
+  const translatedQuiz = await translate(newQuiz, {except: ['id','difficulty','isVerified']});
+
+  quizzes.push(translatedQuiz);
 
   serialize(jsonDbPath, quizzes);
 
-  return newQuiz;
+  return translatedQuiz;
 }
 
 function readAllQuizzes() {
@@ -67,13 +70,18 @@ function readOneVerifiedQuiz(id) {
 }
 
 async function searchQuiz(title) {
-  const QuizFilterBegins = escape(title);
+
+  const translatedTitle = await translate(title);
+  const TranslatedQuizFilterBegins = escape(translatedTitle);
+  const QuizFilterBegins = escape(title)
   let QuizzesNameBeginWith = null;
   const quizzes = parse(jsonDbPath, defaultQuizzes);
 
   if (QuizFilterBegins) {
     QuizzesNameBeginWith = [...quizzes].filter(
-      (quiz) => (quiz.quizName.toLowerCase()).includes(QuizFilterBegins.toLowerCase()) && quiz.isVerified === true,
+      (quiz) => (quiz.quizName.toLowerCase()).includes(TranslatedQuizFilterBegins.toLowerCase()) 
+      || (quiz.quizName.toLowerCase()).includes(QuizFilterBegins.toLowerCase()) 
+      && quiz.isVerified === true,
     );
   }
   const allQuizzesSearch = QuizzesNameBeginWith.reverse();
