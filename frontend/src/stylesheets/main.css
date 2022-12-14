@@ -271,3 +271,19 @@ main {
 }
 
 /********************************END ANIMATION QUIZ TITLE****************************************/
+
+/********************************REGISTER PAGE -> RGPD****************************************/
+#rgpd{
+  color: white; 
+  margin-top : 10px;
+}
+#termOfUse p{
+  margin-right: 25px;
+  color :#fa9961;
+}
+#termOfUse p:hover{
+  color :#fa9961;
+  text-decoration: underline;
+  cursor: pointer;
+}
+/********************************END REGISTER PAGE -> RGPD****************************************/
