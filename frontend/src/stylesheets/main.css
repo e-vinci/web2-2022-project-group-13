@@ -232,6 +232,10 @@ svg {
 #rememberme {
   position: absolute;
 }
+#rgpdBox{
+  position: absolute;
+  margin-top : 15px;
+}
 
 #labelForCheckbox {
   padding-left: 0.5%;
@@ -297,7 +301,7 @@ main {
 }
 #termOfUse p {
   font-style: italic;
-  margin-right: 25px;
+  margin-right: 50px;
   color: #fa9961;
   text-decoration: underline;
 }
