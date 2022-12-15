@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import { getRememberMe, setAuthenticatedUser, setRememberMe } from '../../utils/auths';
 import { clearPage } from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
@@ -91,7 +92,8 @@ function renderRegisterForm() {
   rgpdBox.type = 'checkbox';
   rgpdBox.className = 'form-check-input';
   rgpdBox.id = 'rgpdBox';
-  rgpdBox.onchange = () => {submit.disabled = !this.checked;};
+  
+  rgpdBox.onchange = function(){submit.disabled = !this.checked;};
 
   const checkRgpdLabel = document.createElement('label');
   checkRgpdLabel.id = 'labelForCheckbox';
@@ -148,6 +150,7 @@ function renderRegisterForm() {
 
   form.addEventListener('submit', onRegister);
 }
+
 
 function onCheckboxClicked(e) {
   setRememberMe(e.target.checked);
