@@ -79,7 +79,7 @@ function renderCreateQuizForm() {
 
   const wrapper = document.createElement('div');
   wrapper.style = 'padding: 25px 17% 25px; background-color: rgb(25, 28, 37);';
-  // wrapper.className = 'vh-100';
+  wrapper.className = 'vh-100';
 
   const title = document.createElement('h2');
   title.innerText = 'Create your own quiz !';
