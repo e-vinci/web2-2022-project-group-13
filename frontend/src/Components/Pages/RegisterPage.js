@@ -57,7 +57,9 @@ function renderRegisterForm() {
   submit.id = 'submitButton';
   submit.value = 'Register';
   submit.type = 'submit';
-  submit.className = 'btn btn-primary disabled';
+  submit.className = 'btn btn-primary';
+  submit.disabled = true;
+  
 
   // Create div wrapper for checkbox + his label
   const formCheckWrapper = document.createElement('div');
@@ -89,7 +91,7 @@ function renderRegisterForm() {
   rgpdBox.type = 'checkbox';
   rgpdBox.className = 'form-check-input';
   rgpdBox.id = 'rgpdBox';
-  rgpdBox.addEventListener('click', onCheckBoxRgpdClicked);
+  rgpdBox.onchange = () => {submit.disabled = !this.checked;};
 
   const checkRgpdLabel = document.createElement('label');
   checkRgpdLabel.id = 'labelForCheckbox';
@@ -149,18 +151,6 @@ function renderRegisterForm() {
 
 function onCheckboxClicked(e) {
   setRememberMe(e.target.checked);
-}
-
-function onCheckBoxRgpdClicked(e){
-  if (e.target.checked){
-    const RegisterButtonEnable = document.getElementById('submitButton');
-    RegisterButtonEnable.className = RegisterButtonEnable.className.replace('disabled', '');
-  }
-  else{
-    const RegisterButtonEnable = document.getElementById('submitButton');
-    RegisterButtonEnable.className += ' disabled';
-  }
-  
 }
 
 async function onRegister(e) {
