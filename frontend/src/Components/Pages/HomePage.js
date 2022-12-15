@@ -161,7 +161,15 @@ function attachOnClickEventsToRenderQuiz(allQuiz) {
   });
 }
 
-// bomb code inspired by Gabriele Corti : https://codepen.io/borntofrappe/pen/LwZRON
+
+/* **************************************************************************************
+*    Title: svg the bomb
+*    Author: Gabriele Corti
+*    Date: JULY 25, 2019
+*    Code version: ?
+*    Availability: https://codepen.io/borntofrappe/pen/LwZRON
+*
+************************************************************************************** */
 function bombDisplay() {
   const bombHtml = `
   <svg viewBox="-1 -1 40 120" width="110" height="110">
@@ -266,48 +274,6 @@ function bombDisplay() {
   return bombHtml;
 }
 
-// animation hover by Alex Chan : https://codepen.io/alexchantastic/pen/XgXbgz
-
-function animateButton(el, targetsX, scaleX, elasticityX) {
-  anime.remove(el);
-  anime({
-    targets: el,
-    scale: targetsX,
-
-    duration: scaleX,
-
-    elasticity: elasticityX,
-  });
-}
-
-function enterButton(el) {
-  animateButton(el, 1.1, 800, 400);
-}
-
-function leaveButton(el) {
-  animateButton(el, 1.0, 600, 300);
-}
-function animationQuizHoverHome() {
-  const quizzesContainer = document.getElementsByClassName('quizContainer');
-  for (let i = 0; i < quizzesContainer.length; i += 1) {
-    quizzesContainer[i].addEventListener(
-      'mouseenter',
-      (e) => {
-        enterButton(e.target);
-      },
-      false,
-    );
-
-    quizzesContainer[i].addEventListener(
-      'mouseleave',
-      (e) => {
-        leaveButton(e.target);
-      },
-      false,
-    );
-  }
-}
-
 function animationHome() {
   anime({
     targets: '.title-home',
@@ -392,5 +358,54 @@ function animationHome() {
     '-=250',
   );
 }
+
+/* **************************************************************************************
+*    Title: anime.js hover effect
+*    Author: Alex Chan
+*    Date: JUNE 9, 2017
+*    Code version: ?
+*    Availability: https://codepen.io/alexchantastic/pen/XgXbgz
+*
+************************************************************************************** */
+function animateButton(el, targetsX, scaleX, elasticityX) {
+  anime.remove(el);
+  anime({
+    targets: el,
+    scale: targetsX,
+
+    duration: scaleX,
+
+    elasticity: elasticityX,
+  });
+}
+
+function enterButton(el) {
+  animateButton(el, 1.1, 800, 400);
+}
+
+function leaveButton(el) {
+  animateButton(el, 1.0, 600, 300);
+}
+function animationQuizHoverHome() {
+  const quizzesContainer = document.getElementsByClassName('quizContainer');
+  for (let i = 0; i < quizzesContainer.length; i += 1) {
+    quizzesContainer[i].addEventListener(
+      'mouseenter',
+      (e) => {
+        enterButton(e.target);
+      },
+      false,
+    );
+
+    quizzesContainer[i].addEventListener(
+      'mouseleave',
+      (e) => {
+        leaveButton(e.target);
+      },
+      false,
+    );
+  }
+}
+
 
 export default HomePage;
