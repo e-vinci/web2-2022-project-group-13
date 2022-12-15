@@ -56,7 +56,7 @@ function renderQuizPage(quiz) {
   difficulty.innerText = 'Difficulty : '.concat(quiz.difficulty);
 
   const start = document.createElement('button');
-  start.className = 'btn purple';
+  start.className = 'btn orange';
   start.id = 'start';
   start.innerText = 'Start';
 
@@ -66,7 +66,7 @@ function renderQuizPage(quiz) {
   titleContainer.appendChild(difficulty);
   divQuiz.appendChild(titleContainer);
   divQuiz.appendChild(start);
-  
+
   banner.appendChild(divQuiz);
   main.appendChild(banner);
 
@@ -182,7 +182,7 @@ function renderQuestions(questions, indexArray, score) {
   const divNext = document.createElement('div');
   divNext.className = 'd-flex flex-row-reverse';
   const nextButton = document.createElement('button');
-  nextButton.className = 'btn purple disabled';
+  nextButton.className = 'btn orange disabled';
   nextButton.id = 'nextButton';
   nextButton.innerText = 'Next';
   divNext.appendChild(nextButton);
@@ -272,7 +272,6 @@ function renderQuestions(questions, indexArray, score) {
 
   // disable buttons after choosing and activate the next button for the next question
   function disableButtons(givenAnswer, goodAnswer) {
-
     arrayButtons.forEach((button) => {
       const buttonToDisable = button;
       buttonToDisable.removeEventListener('click', checkAnswer);
@@ -396,7 +395,7 @@ function getRndInteger(min, max) {
 function bombDisplay() {
   const buttonToQuiz = document.createElement('a');
   buttonToQuiz.id = 'refToQuiz';
-  buttonToQuiz.className = 'btn purple';
+  buttonToQuiz.className = 'btn orange';
   buttonToQuiz.textContent = 'Start';
   const bombHtml = `
   <svg viewBox="-1 -1 40 120" width="110" height="110">
@@ -679,19 +678,18 @@ function animationNextRight() {
   });
 }
 
-function animationScorePage(){
-
+function animationScorePage() {
   const message = document.querySelector('.quizh1 #words');
   message.innerHTML = message.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
-  
+
   const score = document.getElementById('divScore');
   const buttons = document.getElementById('divButtons');
 
   const animation = anime.timeline({
     easing: 'easeOutExpo',
-    duration: 500
+    duration: 500,
   });
-  
+
   animation.add({
     targets: '.quizh1 .letter',
     translateY: [-200, 0],
@@ -700,12 +698,12 @@ function animationScorePage(){
 
   animation.add({
     targets: score,
-    translateX: [2000,0]
+    translateX: [2000, 0],
   });
 
   animation.add({
     targets: buttons,
-    translateX: [-2000,0]
+    translateX: [-2000, 0],
   });
 }
 

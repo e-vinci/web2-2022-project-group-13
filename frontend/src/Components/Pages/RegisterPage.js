@@ -3,7 +3,7 @@ import { clearPage } from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
 import Navigate from '../Router/Navigate';
 
-const Swal = require('sweetalert2')
+const Swal = require('sweetalert2');
 
 const RegisterPage = () => {
   clearPage();
@@ -73,19 +73,18 @@ function renderRegisterForm() {
   rememberme.checked = remembered;
   rememberme.addEventListener('click', onCheckboxClicked);
 
-
   // Create label for the checkbox
   const checkLabel = document.createElement('label');
   checkLabel.id = 'labelForCheckbox';
   checkLabel.htmlFor = 'rememberme';
   checkLabel.className = 'form-check-label';
   checkLabel.textContent = 'Remember me';
-  
-  const rgpd = `<p id = "rgpd">
+
+  const rgpd = `<p id="rgpd">
   By registering, you confirm that you have read, understood and accept the <div id = "termOfUse"><p>
-  privacy policy<p></div>
-  </p>`
-  // Create paragraph for error message 
+  Privacy policy<p></div>
+  </p>`;
+  // Create paragraph for error message
   const errorMessage = document.createElement('p');
   errorMessage.id = 'errorMessage';
   errorMessage.innerHTML = '';
@@ -94,7 +93,7 @@ function renderRegisterForm() {
   formCheckWrapper.appendChild(rememberme);
   formCheckWrapper.appendChild(checkLabel);
   formCheckWrapper.innerHTML += rgpd;
-  
+
   // Appenchild all field from the form to the form
   form.appendChild(title);
   form.appendChild(username);
@@ -120,14 +119,13 @@ function renderRegisterForm() {
    
    To this end, md5 technology is used for the encryption of certain data, physical and logical data backup procedures are implemented and a protocol is used to secure access through data encryption (HTTPS).
    
-   The Company reserves the right to take legal action against any person who attempts to access personal information that does not belong to the Company.`
+   The Company reserves the right to take legal action against any person who attempts to access personal information that does not belong to the Company.`;
   rgpdDoc.addEventListener('click', () => {
     Swal.fire({
-      title: 'privacy policy',
-      html : textRgpd
-
-    })
-  })
+      title: 'Privacy policy',
+      html: textRgpd,
+    });
+  });
 
   form.addEventListener('submit', onRegister);
 }
