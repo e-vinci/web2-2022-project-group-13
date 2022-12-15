@@ -29,6 +29,24 @@ const defaultQuizzes = [
     questions : [],
     difficulty : "Hard",
     isVerified : true
+  },
+  {
+    id : 3,
+    quizName : "Super Smash Bros",
+    questions : 
+    [{question: "Who is the favorite character of the creator of the game series ?", falseAnswers : ["Mario","Link","Marth"], goodAnswer : "Kirby"},
+     {question: "Which game in the series introduced Roy as a playable character ?",falseAnswers : ["Super Smash Bros Brawl","Super Smash Bros For Wii U","Super Smash Bros Ultimate"],goodAnswer: "Super Smash Bros Melee"},
+     {question: "Which item gives you a Final Smash ?", falseAnswers : ["Assist Trophy","Master Ball","Super Star"],goodAnswer : "Smash Ball"},
+     {question: "Who is Master Hand's left hand counterpart ?", falseAnswers : ["Master Glove","Big Hand","Great Hand"], goodAnswer : "Crazy Hand"},
+     {question: "What franchise is Ness from ?", falseAnswers: ["Fire Emblem","StarBound","Mario"],goodAnswer : "EarthBound"},
+     {question: "What does Samus do in her Final Smash ?", falseAnswers: ["PK Starstorm","Triforce Slash","Blue Falcon"], goodAnswer: "Zero Laser"},
+     {question: "Which button(s) do you need to press to do a Falcon Punch with Captain Falcon ?",falseAnswers: ["Side B","UP Smash","Neutral Air"], goodAnswer:"Neutral B"},
+     {question: "Which game introduced the Final Smash ?",falseAnswers: ["Super Smash Bros","Super Smash Bros Melee","Super Smash Bros Ultimate"], goodAnswer:"Super Smash Bros Brawl"},
+     {question: "In which game can you use the Wavedash technique ?",falseAnswers: ["Super Smash Bros Brawl","Super Smash Bros Ultimate","Super Smash Bros For Wii U"], goodAnswer:"Super Smash Bros Melee"},
+     {question: "Which game got a 3DS port ?",falseAnswers: ["Super Smash Bros","Super Smash Bros Ultimate","Super Smash Bros Brawl"], goodAnswer:"Super Smash Bros For Wii U"}   
+    ],
+    difficulty : "Medium",
+    isVerified : true
   }
 ];
 

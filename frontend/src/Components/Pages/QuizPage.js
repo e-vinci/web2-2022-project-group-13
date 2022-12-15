@@ -77,8 +77,10 @@ function renderQuizPage(quiz) {
     const index = 0;
     const delay = 1500;
     animationTransition1();
+    // setTimeout for smooth animation and shuffle questions
     setTimeout(() => {
-      renderQuestions(quiz.questions, index, score);
+      const shuffledQuestions = quiz.questions.sort(() => Math.random() - 0.5);
+      renderQuestions(shuffledQuestions, index, score);
     }, delay);
   };
 
@@ -604,6 +606,7 @@ async function animationBombQuiz() {
   );
 }
 
+// code inspired from the site https://tobiasahlin.com/moving-letters/#6
 function animationQuizPage() {
   const title = document.querySelector('.quizh1 #letters');
   title.innerHTML = title.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
