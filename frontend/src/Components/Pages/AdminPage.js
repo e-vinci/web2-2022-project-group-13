@@ -1,6 +1,4 @@
 /* eslint-disable */
-
-// import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
 import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
