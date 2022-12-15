@@ -22,7 +22,7 @@ body {
   flex-direction: column;
 }
 
-footer {
+footer {  
   margin-top: -4.62%;
 }
 
@@ -356,6 +356,7 @@ main {
 }
 /*****************************************END ADMIN PAGE*****************************************/
 /* DISPLAY BOMB IN QUIZ PAGE **/
+@supports (display:flex){
 #bombDisplay{ 
   display: flex;
   flex-direction: column;
@@ -363,15 +364,14 @@ main {
   justify-content: center;
   height: 150px;
 }
-
-@media screen and (max-width: 1024px) {
+}
   #bombDisplay{ 
     display: flex;
     align-items: center;
    justify-content: center;
    height: 150px;
   }
-}
+
 
 
 .textOrange{
