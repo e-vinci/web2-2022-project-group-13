@@ -10,15 +10,6 @@ const saltRounds = 10;
 
 const jsonDbPath = path.join(__dirname, '/../data/users.json');
 
-const defaultUsers = [
-  {
-    id: 1,
-    username: 'admin',
-    password: bcrypt.hashSync('admin', saltRounds),
-    isAdmin: true,
-  },
-];
-
 async function login(username, password) {
   const userFound = readOneUserFromUsername(username);
   if (!userFound) return undefined;
@@ -53,7 +44,7 @@ async function register(username, password) {
     jwtSecret, // secret used for the signature (signature part 3 of a JWT)
     { expiresIn: lifetimeJwt }, // lifetime of the JWT (added to the JWT payload)
   );
-  
+
   const userFoundAfterRegistration = readOneUserFromUsername(username);
   const isAnAdmin = userFoundAfterRegistration.isAdmin;
 
@@ -67,7 +58,7 @@ async function register(username, password) {
 }
 
 function readOneUserFromUsername(username) {
-  const users = parse(jsonDbPath, defaultUsers);
+  const users = parse(jsonDbPath);
   const indexOfUserFound = users.findIndex((user) => user.username === username);
   if (indexOfUserFound < 0) return undefined;
 
@@ -75,7 +66,7 @@ function readOneUserFromUsername(username) {
 }
 
 async function createOneUser(username, password) {
-  const users = parse(jsonDbPath, defaultUsers);
+  const users = parse(jsonDbPath);
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -94,7 +85,7 @@ async function createOneUser(username, password) {
 }
 
 function getNextId() {
-  const users = parse(jsonDbPath, defaultUsers);
+  const users = parse(jsonDbPath);
   const lastItemIndex = users?.length !== 0 ? users.length - 1 : undefined;
   if (lastItemIndex === undefined) return 1;
   const lastId = users[lastItemIndex]?.id;

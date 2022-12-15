@@ -39,7 +39,7 @@ function renderHomePage(Allquiz) {
   // button href to quiz display
   const buttonToQuiz = document.createElement('a');
   buttonToQuiz.id = 'refToQuiz';
-  buttonToQuiz.className = 'btn purple';
+  buttonToQuiz.className = 'btn orange';
   buttonToQuiz.textContent = 'Start';
 
   titleHome.textContent = 'Time to Quiz !';
@@ -63,7 +63,7 @@ function renderHomePage(Allquiz) {
   divInputs.id = 'refQuiz';
   submitButton.id = 'buttonSearch';
   submitButton.type = 'submit';
-  submitButton.className = 'btn purple';
+  submitButton.className = 'btn orange';
   submitButton.textContent = 'Go';
   quizName.type = 'text';
   quizName.className = 'form-control';
@@ -99,7 +99,7 @@ function renderHomePage(Allquiz) {
   });
 
   // animations and buttons
-  
+
   goToQuizButton();
   animationQuizHoverHome();
   animationHome();

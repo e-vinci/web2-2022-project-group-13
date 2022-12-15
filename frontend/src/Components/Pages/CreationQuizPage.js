@@ -1,6 +1,6 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
+import { getAuthenticatedUser, isAuthenticated, isAdmin } from '../../utils/auths';
 
 let currentTab = 0;
 
@@ -78,15 +78,16 @@ function renderCreateQuizForm() {
   const main = document.querySelector('main');
 
   const wrapper = document.createElement('div');
-  wrapper.style = 'padding: 25px 17% 25px; background-color: lightgrey;';
-  // wrapper.className = 'vh-100';
+  wrapper.style = 'padding: 25px 17% 25px; background-color: rgb(25, 28, 37);';
+  wrapper.className = 'vh-100';
 
   const title = document.createElement('h2');
   title.innerText = 'Create your own quiz !';
+  title.style = "color: #fa9961;";
   wrapper.appendChild(title);
 
   const form = document.createElement('form');
-  form.className = 'p-3 bg-white';
+  form.className = 'p-3';
   form.id = 'formulaire';
 
   const nameHolder = document.createElement('div');
@@ -94,12 +95,14 @@ function renderCreateQuizForm() {
   const nameLabel = document.createElement('label');
   nameLabel.htmlFor = 'quizName';
   nameLabel.innerText = 'Quiz name :';
+  nameLabel.style = "color: #fa9961;";
   nameHolder.appendChild(nameLabel);
   const nameInput = document.createElement('input');
+  nameInput.style = "color: #fa9961;";
   nameInput.type = 'text';
   nameInput.className = 'form-control';
   nameInput.id = 'quizName';
-  nameInput.placeholder = 'quiz name';
+  nameInput.placeholder = 'Quiz name';
   nameInput.setAttribute('required', 'required');
   nameHolder.appendChild(nameInput);
 
@@ -111,6 +114,7 @@ function renderCreateQuizForm() {
   const labelWrapper = document.createElement('div');
   labelWrapper.className = 'input-group-prepend';
   const label = document.createElement('label');
+  label.style = "background-color: #fa9961;";
   label.className = 'input-group-text';
   label.htmlFor = 'difficulty';
   label.innerText = 'Difficulty : ';
@@ -144,6 +148,7 @@ function renderCreateQuizForm() {
     const questionWrapper = document.createElement('div');
     questionWrapper.className = 'tab p-4';
     const questionNumber = document.createElement('h5');
+    questionNumber.style = "color: #fa9961;";
     questionNumber.innerText = 'Question '.concat(i);
     questionWrapper.appendChild(questionNumber);
 
@@ -152,6 +157,7 @@ function renderCreateQuizForm() {
     const intituleLabel = document.createElement('label');
     intituleLabel.htmlFor = 'intitule-'.concat(i);
     intituleLabel.innerText = 'Title of the question :';
+    intituleLabel.style = "color: #fa9961;";
     intituleWrapper.appendChild(intituleLabel);
     const intituleInput = document.createElement('input');
     intituleInput.type = 'text';
@@ -169,6 +175,7 @@ function renderCreateQuizForm() {
     const AnswerLabel = document.createElement('label');
     AnswerLabel.htmlFor = 'bonneReponse-'.concat(i);
     AnswerLabel.innerText = 'Good Answer :';
+    AnswerLabel.style = "color: #fa9961;";
     AnswerWrapper.appendChild(AnswerLabel);
     const AnswerInput = document.createElement('input');
     AnswerInput.type = 'text';
@@ -183,6 +190,7 @@ function renderCreateQuizForm() {
     const BadAnswer1Label = document.createElement('label');
     BadAnswer1Label.htmlFor = 'mauvaiseReponse1-'.concat(i);
     BadAnswer1Label.innerText = 'Bad answer 1 :';
+    BadAnswer1Label.style = "color: #fa9961;";
     BadAnswer1Wrapper.appendChild(BadAnswer1Label);
     const BadAnswer1Input = document.createElement('input');
     BadAnswer1Input.type = 'text';
@@ -202,6 +210,7 @@ function renderCreateQuizForm() {
     const BadAnswer2Label = document.createElement('label');
     BadAnswer2Label.htmlFor = 'mauvaiseReponse2-'.concat(i);
     BadAnswer2Label.innerText = 'Bad answer 2 :';
+    BadAnswer2Label.style = "color: #fa9961;";
     BadAnswer2Wrapper.appendChild(BadAnswer2Label);
     const BadAnswer2Input = document.createElement('input');
     BadAnswer2Input.type = 'text';
@@ -216,6 +225,7 @@ function renderCreateQuizForm() {
     const BadAnswer3Label = document.createElement('label');
     BadAnswer3Label.htmlFor = 'mauvaiseReponse3-'.concat(i);
     BadAnswer3Label.innerText = 'Bad answer 3 :';
+    BadAnswer3Label.style = "color: #fa9961;";
     BadAnswer3Wrapper.appendChild(BadAnswer3Label);
     const BadAnswer3Input = document.createElement('input');
     BadAnswer3Input.type = 'text';
@@ -245,7 +255,7 @@ function renderCreateQuizForm() {
   buttons.style = 'float:right;';
   const prevButton = document.createElement('button');
   prevButton.type = 'button';
-  prevButton.className = 'btn purple';
+  prevButton.className = 'btn orange';
   prevButton.id = 'prevBtn';
   prevButton.innerText = 'Previous';
   prevButton.style = 'margin-right: 10px;';
@@ -254,7 +264,7 @@ function renderCreateQuizForm() {
   });
   const nextButton = document.createElement('button');
   nextButton.type = 'button';
-  nextButton.className = 'btn purple';
+  nextButton.className = 'btn orange';
   nextButton.id = 'nextBtn';
   nextButton.innerText = 'Next';
   nextButton.addEventListener('click', () => {
@@ -305,6 +315,7 @@ async function onSubmit(e) {
           document.getElementById('mauvaiseReponse2-'.concat(index)).value,
           document.getElementById('mauvaiseReponse3-'.concat(index)).value,
         ],
+        isVerified: isAdmin()
       };
       quiz.questions.push(question);
     }

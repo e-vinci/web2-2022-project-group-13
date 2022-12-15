@@ -28,6 +28,8 @@ const setAuthenticatedUser = (authenticatedUser) => {
 
 const isAuthenticated = () => currentUser !== undefined;
 
+const isAdmin = () => currentUser.isAnAdmin;
+
 const clearAuthenticatedUser = () => {
   localStorage.clear();
   sessionStorage.clear();
@@ -49,6 +51,7 @@ export {
   getAuthenticatedUser,
   setAuthenticatedUser,
   isAuthenticated,
+  isAdmin,
   clearAuthenticatedUser,
   getRememberMe,
   setRememberMe,
