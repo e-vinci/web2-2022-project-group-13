@@ -30,9 +30,12 @@ function renderHomePage(Allquiz) {
   // home
 
   const divHome = document.createElement('div');
-  const sectionHome = document.createElement('section');
-  sectionHome.className = 'container-fluid headline';
-  divHome.className = 'container-fluid banner';
+  const sectionHome = document.createElement('div');
+  const divQuizText = document.createElement('div');
+  divQuizText.className = 'p-5 mt-5';
+  
+  sectionHome.className = 'container-fluid text-center textOrange HeadTextHome p-4 vh-100';
+  divHome.className = 'banner';
   const titleHome = document.createElement('h2');
   const descriptionHome = document.createElement('h3');
 
@@ -45,10 +48,11 @@ function renderHomePage(Allquiz) {
   titleHome.textContent = 'Time to Quiz !';
   titleHome.className = 'title-home';
   descriptionHome.textContent = 'Have fun, learn and create your own quiz by registering.';
-  sectionHome.appendChild(titleHome);
-  sectionHome.innerHTML += bomb;
-  sectionHome.appendChild(descriptionHome);
-  sectionHome.appendChild(buttonToQuiz);
+  sectionHome.appendChild(divQuizText);
+  divQuizText.appendChild(titleHome);
+  divQuizText.innerHTML += bomb;
+  divQuizText.appendChild(descriptionHome);
+  divQuizText.appendChild(buttonToQuiz);
   divHome.appendChild(sectionHome);
 
   // creation input for search
@@ -99,7 +103,7 @@ function renderHomePage(Allquiz) {
   });
 
   // animations and buttons
-
+  
   goToQuizButton();
   animationQuizHoverHome();
   animationHome();
@@ -138,7 +142,7 @@ function getAllDivsLinesAsString(allQuiz) {
   let quizzesDivsLines = '';
 
   allQuiz?.forEach((quiz) => {
-    quizzesDivsLines += `<div class= "quizContainer text-center" id="quiz_${quiz.id}">
+    quizzesDivsLines += `<div class= "quizContainer" id="quiz_${quiz.id}">
       <p>${quiz.quizName}</p>
     </div>`;
   });
