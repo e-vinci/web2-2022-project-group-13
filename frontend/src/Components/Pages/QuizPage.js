@@ -395,6 +395,14 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/* **************************************************************************************
+*    Title: svg the bomb
+*    Author: Gabriele Corti
+*    Date: JULY 25, 2019
+*    Code version: ?
+*    Availability: https://codepen.io/borntofrappe/pen/LwZRON
+*
+************************************************************************************** */
 function bombDisplay() {
   const buttonToQuiz = document.createElement('a');
   buttonToQuiz.id = 'refToQuiz';
