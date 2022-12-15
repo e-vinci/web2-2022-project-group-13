@@ -8,6 +8,9 @@ GET {{baseUrl}}/quiz
 GET {{baseUrl}}/quiz/2
 
 ### Create a quiz
+GET {{baseUrl}}/quiz/search?quiz-name=Game
+
+### Create a quiz
 POST {{baseUrl}}/quiz/addQuiz
 Content-Type: application/json
 

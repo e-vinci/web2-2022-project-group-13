@@ -196,6 +196,7 @@ function renderQuestions(questions, indexArray, score) {
   divAnswers.appendChild(colAnswers2);
   answers.appendChild(divAnswers);
   answers.appendChild(divNext);
+  answers.appendChild(divBomb);
   divQuestionScore.appendChild(numberQuestion);
   divQuestionScore.appendChild(message);
   divQuestionScore.appendChild(showScore);
@@ -203,7 +204,7 @@ function renderQuestions(questions, indexArray, score) {
   divQuestion.appendChild(divQuestionScore);
   divQuestion.appendChild(divTitle);
   divQuestion.appendChild(answers);
-  divQuestion.appendChild(divBomb);
+  
   banner.appendChild(divQuestion);
   main.appendChild(banner);
 
@@ -397,10 +398,11 @@ function getRndInteger(min, max) {
 function bombDisplay() {
   const buttonToQuiz = document.createElement('a');
   buttonToQuiz.id = 'refToQuiz';
-  buttonToQuiz.className = 'btn orange';
+  buttonToQuiz.className = 'btn purple';
   buttonToQuiz.textContent = 'Start';
   const bombHtml = `
-  <svg viewBox="-1 -1 40 120" width="110" height="110">
+  <div id = "bombDisplay">
+  <svg viewBox="-1 -1 60 120" width="110" height="110">
         <path
             id="motion-path"
             fill="none"
@@ -487,7 +489,8 @@ function bombDisplay() {
             </g>
         </g>
     </svg>
-    <input type="range" min="0" max="100" value="0" id = "timerBomb" />
+      <input type="range" min="0" max="100" value="0" id = "timerBomb"/> 
+    </div>
   `;
   return bombHtml;
 }

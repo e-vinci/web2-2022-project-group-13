@@ -22,7 +22,7 @@ body {
   flex-direction: column;
 }
 
-footer {
+footer {  
   margin-top: -4.62%;
 }
 
@@ -62,12 +62,12 @@ footer {
   transform: translate(-50%, -50%);
 }
 
-.headline h2 {
+.HeadTextHome h2 {
   font-size: 60px;
   font-family: serif;
 }
 
-.headline h3 {
+.HeadTextHome h3 {
   width: 80%;
   margin: 20px auto 50px;
   font-weight: 100;
@@ -147,7 +147,6 @@ svg {
 }
 
 #timerBomb[type='range'] {
-  margin-top: 2.5rem;
   width: 300px;
   -webkit-appearance: none;
   height: 1rem;
@@ -356,3 +355,26 @@ main {
   background-color: rgb(16, 19, 26);
 }
 /*****************************************END ADMIN PAGE*****************************************/
+/* DISPLAY BOMB IN QUIZ PAGE **/
+@supports (display:flex){
+#bombDisplay{ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+}
+}
+  #bombDisplay{ 
+    display: flex;
+    align-items: center;
+   justify-content: center;
+   height: 150px;
+  }
+
+
+
+.textOrange{
+  color : #fa9961;
+  font-family: serif;
+}
