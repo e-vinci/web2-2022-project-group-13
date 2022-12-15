@@ -35,7 +35,6 @@ async function getVerifiedList() {
 }
 
 function renderAdminUI(quizDefault) {
-
   let quizList = quizDefault;
 
   const main = document.querySelector('main');
@@ -66,10 +65,10 @@ function renderAdminUI(quizDefault) {
   );
   const toVerify = document.createElement('button');
   toVerify.classList.add('btn', 'list-group-item', 'list-group-item-action', 'adminBtn', 'active');
-  toVerify.textContent = 'to verify';
+  toVerify.textContent = 'To verify';
   const allQuiz = document.createElement('button');
   allQuiz.classList.add('btn', 'list-group-item', 'list-group-item-action', 'adminBtn');
-  allQuiz.textContent = 'all quiz';
+  allQuiz.textContent = 'All quiz';
 
   btnGroup.appendChild(toVerify);
   btnGroup.appendChild(allQuiz);
@@ -111,7 +110,7 @@ function renderQuizList(quizList) {
   quizList.forEach((element) => {
     const quizLink = document.createElement('div');
     quizLink.classList.add('list-group-item', 'list-group-item-action', 'text-light', 'quizLink');
-    
+
     // quiz id
     const pointer = parseInt(element.id);
 
@@ -414,7 +413,6 @@ function renderCreateQuizForm(quiz) {
   returnWrapper.appendChild(returnButton);
   buttonsWrapper.appendChild(returnWrapper);
 
-
   const buttons = document.createElement('div');
   buttons.classList.add('order-2', 'justify-content-center');
   const prevButton = document.createElement('button');
@@ -459,22 +457,22 @@ function renderCreateQuizForm(quiz) {
     element.setAttribute('disabled', '');
   });
   console.log('all input ' + JSON.stringify(inputList));
-  
+
   // switch tab on arrowkey press event
   main.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
-        const prevBtn = document.getElementById('prevBtn');
-        if(prevBtn.style.display !== "none") {
-          nextPrev(-1);
-        }
+    if (e.key === 'ArrowLeft') {
+      const prevBtn = document.getElementById('prevBtn');
+      if (prevBtn.style.display !== 'none') {
+        nextPrev(-1);
       }
-      if (e.key === 'ArrowRight') {
-        const nextBtn = document.getElementById('nextBtn');
-        if(nextBtn.style.display !== "none") {
-          nextPrev(1);
-        }
+    }
+    if (e.key === 'ArrowRight') {
+      const nextBtn = document.getElementById('nextBtn');
+      if (nextBtn.style.display !== 'none') {
+        nextPrev(1);
       }
-    });
+    }
+  });
 }
 
 async function validateQuiz(quiz) {

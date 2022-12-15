@@ -65,22 +65,22 @@ function renderNavbar() {
               <li id="createQuizItem" class="nav-item">
               <a class="nav-link" href="/createQuiz" data-uri="/createQuiz">Create a Quiz</a>
               </li> 
+              <li class="nav-item adminPageBtn">
+              <a class="nav-link adminPage" href="#" data-uri="/admin">Admin Page</a>
+              </li> 
               <li id="logoutItem" class="nav-item">
               <a class="nav-link" href="/logout" data-uri="/logout">Logout</a>
               </li> 
               <li class="nav-item">
               <a class="nav-link disabled" href="#">${authenticatedUser?.username}</a>
-              </li>
-              <li class="nav-item adminPageBtn">
-              <a class="nav-link adminPage" href="#" data-uri="/admin">Admin Page</a>
-              </li>            
+              </li>           
             </ul>
           </div>
         </div>
       </nav>
   `;
   navbarWrapper.innerHTML = isAuthenticated() ? authNavBar : anonymousNavBar;
-  if(authenticatedUser?.isAnAdmin===false){
+  if (authenticatedUser?.isAnAdmin === false) {
     const adminPageBtn = document.querySelector('.adminPageBtn');
     adminPageBtn.classList.add('d-none');
   }

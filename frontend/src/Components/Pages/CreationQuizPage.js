@@ -255,7 +255,7 @@ function renderCreateQuizForm() {
   buttons.style = 'float:right;';
   const prevButton = document.createElement('button');
   prevButton.type = 'button';
-  prevButton.className = 'btn purple';
+  prevButton.className = 'btn orange';
   prevButton.id = 'prevBtn';
   prevButton.innerText = 'Previous';
   prevButton.style = 'margin-right: 10px;';
@@ -264,7 +264,7 @@ function renderCreateQuizForm() {
   });
   const nextButton = document.createElement('button');
   nextButton.type = 'button';
-  nextButton.className = 'btn purple';
+  nextButton.className = 'btn orange';
   nextButton.id = 'nextBtn';
   nextButton.innerText = 'Next';
   nextButton.addEventListener('click', () => {

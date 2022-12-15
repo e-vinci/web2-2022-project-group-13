@@ -16,6 +16,16 @@ input.invalid {
   background-color: #ffdddd;
 }
 
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: -4.62%;
+}
+
 .step {
   height: 15px;
   width: 15px;
@@ -64,14 +74,22 @@ input.invalid {
   line-height: 25px;
 }
 
-.purple {
+.orange {
   width: 100px;
   background-color: #fa9961;
   border: 1px solid #fa9961;
 }
-.purple:hover {
+.orange:hover {
   border: 1px solid #fa9961;
 }
+
+/************************CREATE QUIZ*****************************/
+
+#wrapperlightgrey {
+  min-height: 90vh;
+}
+
+/************************END CREATE QUIZ*****************************/
 
 /************************DISPLAY QUIZ*****************************/
 .layout {
@@ -115,7 +133,7 @@ input.invalid {
 }
 
 #homeLayout {
-  margin-bottom: 2%;
+  margin-bottom: 6.62%;
 }
 
 /************************END HOME*****************************/
@@ -273,28 +291,28 @@ main {
 /********************************END ANIMATION QUIZ TITLE****************************************/
 
 /********************************REGISTER PAGE -> RGPD****************************************/
-#rgpd{
-  color: white; 
+#rgpd {
+  color: white;
   font-style: italic;
-  margin-top : 10px;
+  margin-top: 10px;
 }
-#termOfUse p{
+#termOfUse p {
   font-style: italic;
   margin-right: 25px;
-  color :#fa9961;
+  color: #fa9961;
   text-decoration: underline;
 }
-#termOfUse p:hover{
-  color :#fa9961;
+#termOfUse p:hover {
+  color: #fa9961;
   cursor: pointer;
 }
 /********************************END REGISTER PAGE -> RGPD****************************************/
 /***************************************START ADMIN PAGE*****************************************/
 .rightTab {
   padding-right: 0;
-  border-top-right-radius: .5rem;
-  border-bottom-right-radius: .5rem;
-  border-bottom-left-radius: .5rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   max-height: 95vh;
   overflow-y: scroll;
   scrollbar-width: none;
@@ -303,10 +321,11 @@ main {
   display: none;
 }
 .leftTab {
-  border-top-left-radius: .5rem;
-  border-bottom-left-radius: .5rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
 }
-.wrapperAdmin,.quizLink{
+.wrapperAdmin,
+.quizLink {
   background-color: rgb(25, 28, 37);
 }
 .quizLink {
@@ -329,7 +348,8 @@ main {
   border-color: rgb(16, 19, 26);
   background-color: rgb(25, 28, 37);
 }
-.adminBtn.active, .adminBtn:hover {
+.adminBtn.active,
+.adminBtn:hover {
   color: #fa9961;
   /* border: none; */
   border-color: rgb(16, 19, 26);

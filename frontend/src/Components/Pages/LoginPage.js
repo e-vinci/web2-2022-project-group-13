@@ -19,14 +19,14 @@ function renderLoginForm() {
   // Creat global div
   const formDiv = document.createElement('div');
   formDiv.id = 'formDiv';
-  
+
   // Create title
   const title = document.createElement('h1');
   title.innerHTML = 'Login';
   title.id = 'titleForm';
   title.className = 'text-center';
 
-  // Create input for username 
+  // Create input for username
   const username = document.createElement('input');
   username.type = 'text';
   username.id = 'username';

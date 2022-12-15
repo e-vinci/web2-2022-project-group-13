@@ -27,7 +27,7 @@ router.post('/addQuiz', async (req, res) => {
   return res.json(newQuiz);
 });
 
-router.get('/search',async (req, res) => {
+router.get('/search', async (req, res) => {
   const titleSearch = req.query['quiz-name'];
   const newQuizzesSearch = await searchQuiz(titleSearch);
   if (!newQuizzesSearch) return res.sendStatus(409); // 409 Conflict
