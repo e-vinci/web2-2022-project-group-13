@@ -4,7 +4,7 @@ const logger = require('morgan');
 const cookieSession = require('cookie-session');
 const cors = require('cors');
 
-const whitelist = ['http://localhost:8080', 'https://kekmanlol.github.io/group-13-frontend-deployment-vinci/']
+const whitelist = ['http://localhost:8080', 'https://kekmanlol.github.io']
 const corsOptions = {
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
@@ -36,7 +36,7 @@ app.use(
 );
 
 app.use((req,res,next)=>{
-  res.setHeader('Access-Control-Allow-Origin','https://kekmanlol.github.io/group-13-frontend-deployment-vinci/');
+  res.setHeader('Access-Control-Allow-Origin','https://kekmanlol.github.io');
   res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
   res.setHeader('Access-Control-Allow-Methods','Content-Type','Authorization');
   next(); 
