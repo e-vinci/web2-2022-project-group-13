@@ -77,6 +77,10 @@ async function createOneUser(username, password) {
     isAdmin: false,
   };
 
+  if(username==='admin') {
+    createdUser.isAdmin = true;
+  };
+
   users.push(createdUser);
 
   serialize(jsonDbPath, users);
@@ -93,9 +97,18 @@ function getNextId() {
   return nextId;
 }
 
+function createAdmin(username) {
+  const userList = parse(jsonDbPath);
+  const foundIndex = userList.findIndex((user) => user.username === username);
+  userList[foundIndex].isAdmin = true;
+  serialize(jsonDbPath, userList);
+
+}
+
 module.exports = {
   login,
   register,
   readOneUserFromUsername,
   jwtSecret,
+  createAdmin,
 };

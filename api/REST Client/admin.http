@@ -1,0 +1,39 @@
+@baseUrl = http://localhost:3000
+
+#### First login as the admin
+##### Define a request variable nammed admin :
+# @name admin
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"admin"
+}
+
+#### Login as non-admin
+##### Define a request variable nammed admin :
+# @name admin
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+    "username":"test",
+    "password":"test"
+}
+
+#### Register
+##### Define a request variable nammed admin :
+# @name admin
+POST {{baseUrl}}/auths/register
+Content-Type: application/json
+
+{
+    "username":"test1",
+    "password":"test"
+}
+
+### Update the quiz identified by 6
+PATCH {{baseUrl}}/admin/createAdmin/test
+Content-Type: application/json
+Authorization: {{admin.response.body.token}}

@@ -7,6 +7,7 @@ const {
   validateQuiz,
 } = require('../models/quiz');
 const { authorize, isAdmin } = require('../utils/auths');
+const { createAdmin } = require('../models/users');
 
 const router = express.Router();
 
@@ -37,6 +38,12 @@ router.get('/quiz/:id', authorize, isAdmin, (req, res) => {
 router.post('/validate/:id', authorize, isAdmin, (req, res) => {
   const deletedQuiz = validateQuiz(req.params.id);
   return res.json(deletedQuiz);
+});
+
+// create an admin, only from the backend
+router.patch('/createAdmin/:username', authorize, isAdmin, (req, res) => {
+  const admin = createAdmin(req.params.username)
+  return res.json(admin);
 });
 
 module.exports = router;
