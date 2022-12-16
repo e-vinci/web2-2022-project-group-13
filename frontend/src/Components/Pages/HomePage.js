@@ -142,7 +142,7 @@ function getAllDivsLinesAsString(allQuiz) {
   let quizzesDivsLines = '';
 
   allQuiz?.forEach((quiz) => {
-    quizzesDivsLines += `<div class= "quizContainer" id="quiz_${quiz.id}">
+    quizzesDivsLines += `<div class= "quizContainer text-center" id="quiz_${quiz.id}">
       <p>${quiz.quizName}</p>
     </div>`;
   });
