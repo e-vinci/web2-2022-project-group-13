@@ -6,7 +6,7 @@ const cors = require('cors');
 
 
 const corsOptions = {
-  origin:['http://localhost:8080', 'https://kekmanlol.github.io']
+  origin:['http://localhost:8080', 'https://kekmanlol.github.io/group-13-frontend-deployment-vinci']
 }
 
 const authsRouter = require('./routes/auths');
@@ -30,7 +30,7 @@ app.use(
 );
 
 app.use((req,res,next)=>{
-  res.setHeader('Access-Control-Allow-Origin','https://kekmanlol.github.io');
+  res.setHeader('Access-Control-Allow-Origin','https://kekmanlol.github.io/group-13-frontend-deployment-vinci');
   res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
   res.setHeader('Access-Control-Allow-Methods','Content-Type','Authorization');
   next(); 
