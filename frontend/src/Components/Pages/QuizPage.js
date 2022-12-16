@@ -1,6 +1,5 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-nested-ternary */
-// import anime from 'animejs/lib/anime.es';
 import anime from 'animejs';
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
@@ -390,7 +389,14 @@ function renderScore(score) {
   animationScorePage();
 }
 
-// code taken from the site https://www.w3schools.com/js/js_random.asp
+/* **************************************************************************************
+*    Title: A Proper Random Function
+*    Author: W3Schools
+*    Date: /
+*    Code version: /
+*    Availability: https://www.w3schools.com/js/js_random.asp
+*
+************************************************************************************** */
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -616,7 +622,14 @@ async function animationBombQuiz() {
   );
 }
 
-// code inspired from the site https://tobiasahlin.com/moving-letters/#6
+/* **************************************************************************************
+*    Title: Moving Letters
+*    Author: TOBIAS AHLIN
+*    Date: /
+*    Code version: /
+*    Availability: https://tobiasahlin.com/moving-letters/#6
+*
+************************************************************************************** */
 function animationQuizPage() {
   const title = document.querySelector('.quizh1 #letters');
   title.innerHTML = title.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
