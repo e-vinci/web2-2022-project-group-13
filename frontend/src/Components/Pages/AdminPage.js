@@ -8,7 +8,15 @@ const AdminPage = async () => {
   if (isAuthenticated() && getAuthenticatedUser().isAnAdmin === true) {
     clearPage();
 
-    const response = await fetch('/api/admin');
+    const authenticatedUser = getAuthenticatedUser();
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: authenticatedUser.token,
+      },
+    };
+    const response = await fetch('/api/admin', options);
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     const quizUnverified = await response.json();
 
@@ -19,14 +27,30 @@ const AdminPage = async () => {
 };
 
 async function getUnverifiedList() {
-  const response = await fetch('/api/admin');
+  const authenticatedUser = getAuthenticatedUser();
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authenticatedUser.token,
+    },
+  };
+  const response = await fetch('/api/admin', options);
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
   const quizUnverified = await response.json();
   return quizUnverified;
 }
 
 async function getVerifiedList() {
-  const response2 = await fetch('/api/admin/all');
+  const authenticatedUser = getAuthenticatedUser();
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authenticatedUser.token,
+    },
+  };
+  const response2 = await fetch('/api/admin/all', options);
   if (!response2.ok) throw new Error(`fetch error : ${response2.status} : ${response2.statusText}`);
   const quizVerified = await response2.json();
   return quizVerified;
@@ -119,11 +143,13 @@ function renderQuizList(quizList) {
     // delete event
     btnRemove.addEventListener('click', async (e) => {
       e.preventDefault();
+      const authenticatedUser = getAuthenticatedUser();
       console.log('pointer event ' + pointer);
       const options = {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: authenticatedUser.token,
         },
       };
       const response = await fetch(`/api/admin/remove/${pointer}`, options);
@@ -145,7 +171,16 @@ function renderQuizList(quizList) {
     quizElementTitle.addEventListener('click', async (e) => {
       e.preventDefault();
       clearPage();
-      const response = await fetch(`/api/admin/quiz/${pointer}`);
+
+      const authenticatedUser = getAuthenticatedUser();
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: authenticatedUser.token,
+        },
+      };
+      const response = await fetch(`/api/admin/quiz/${pointer}`, options);
       if (!response.ok)
         throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
       const quiz = await response.json();
@@ -228,7 +263,7 @@ function renderCreateQuizForm(quiz) {
 
   const title = document.createElement('h2');
   title.innerText = 'Checking this quiz';
-  title.style.color = "#fa9961";
+  title.style.color = '#fa9961';
   wrapper.appendChild(title);
 
   const form = document.createElement('form');
@@ -244,14 +279,14 @@ function renderCreateQuizForm(quiz) {
   const nameLabel = document.createElement('label');
   nameLabel.htmlFor = 'quizName';
   nameLabel.innerText = 'Quiz name :';
-  nameLabel.style.color = "#fa9961";
+  nameLabel.style.color = '#fa9961';
   nameHolder.appendChild(nameLabel);
   const nameInput = document.createElement('input');
   nameInput.type = 'text';
   nameInput.className = 'form-control';
   nameInput.id = 'quizName';
   nameInput.placeholder = quiz.quizName;
-  nameInput.style.color = "#fa9961";
+  nameInput.style.color = '#fa9961';
   nameHolder.appendChild(nameInput);
 
   form.appendChild(nameHolder);
@@ -262,7 +297,7 @@ function renderCreateQuizForm(quiz) {
   const labelWrapper = document.createElement('div');
   labelWrapper.className = 'input-group-prepend';
   const label = document.createElement('label');
-  label.style.backgroundColor = "#fa9961";
+  label.style.backgroundColor = '#fa9961';
   label.className = 'input-group-text';
   label.htmlFor = 'difficulty';
   label.innerText = 'Difficulty : ';
@@ -302,7 +337,7 @@ function renderCreateQuizForm(quiz) {
     const questionWrapper = document.createElement('div');
     questionWrapper.className = 'tab p-4';
     const questionNumber = document.createElement('h5');
-    questionNumber.style = "color: #fa9961;";
+    questionNumber.style = 'color: #fa9961;';
     questionNumber.innerText = 'Question '.concat(element.number);
     questionWrapper.appendChild(questionNumber);
 
@@ -311,7 +346,7 @@ function renderCreateQuizForm(quiz) {
     const intituleLabel = document.createElement('label');
     intituleLabel.htmlFor = 'intitule-'.concat(element.number);
     intituleLabel.innerText = 'Title of the question :';
-    intituleLabel.style = "color: #fa9961;";
+    intituleLabel.style = 'color: #fa9961;';
     intituleWrapper.appendChild(intituleLabel);
     const intituleInput = document.createElement('input');
     intituleInput.type = 'text';
@@ -329,7 +364,7 @@ function renderCreateQuizForm(quiz) {
     const AnswerLabel = document.createElement('label');
     AnswerLabel.htmlFor = 'bonneReponse-'.concat(element.number);
     AnswerLabel.innerText = 'Good Answer :';
-    AnswerLabel.style = "color: #fa9961;";
+    AnswerLabel.style = 'color: #fa9961;';
     AnswerWrapper.appendChild(AnswerLabel);
     const AnswerInput = document.createElement('input');
     AnswerInput.type = 'text';
@@ -344,7 +379,7 @@ function renderCreateQuizForm(quiz) {
     const BadAnswer1Label = document.createElement('label');
     BadAnswer1Label.htmlFor = 'mauvaiseReponse1-'.concat(element.number);
     BadAnswer1Label.innerText = 'Bad Answer 1 :';
-    BadAnswer1Label.style = "color: #fa9961;";
+    BadAnswer1Label.style = 'color: #fa9961;';
     BadAnswer1Wrapper.appendChild(BadAnswer1Label);
     const BadAnswer1Input = document.createElement('input');
     BadAnswer1Input.type = 'text';
@@ -364,7 +399,7 @@ function renderCreateQuizForm(quiz) {
     const BadAnswer2Label = document.createElement('label');
     BadAnswer2Label.htmlFor = 'mauvaiseReponse2-'.concat(element.number);
     BadAnswer2Label.innerText = 'Bad Answer 2 :';
-    BadAnswer2Label.style = "color: #fa9961;";
+    BadAnswer2Label.style = 'color: #fa9961;';
     BadAnswer2Wrapper.appendChild(BadAnswer2Label);
     const BadAnswer2Input = document.createElement('input');
     BadAnswer2Input.type = 'text';
@@ -379,7 +414,7 @@ function renderCreateQuizForm(quiz) {
     const BadAnswer3Label = document.createElement('label');
     BadAnswer3Label.htmlFor = 'mauvaiseReponse3-'.concat(element.number);
     BadAnswer3Label.innerText = 'Bad Answer 3 :';
-    BadAnswer3Label.style = "color: #fa9961;";
+    BadAnswer3Label.style = 'color: #fa9961;';
     BadAnswer3Wrapper.appendChild(BadAnswer3Label);
     const BadAnswer3Input = document.createElement('input');
     BadAnswer3Input.type = 'text';
@@ -429,14 +464,14 @@ function renderCreateQuizForm(quiz) {
   prevButton.id = 'prevBtn';
   prevButton.innerText = 'Previous';
   prevButton.style = 'margin-right: 10px;';
-  prevButton.style.color = "white";
+  prevButton.style.color = 'white';
   prevButton.addEventListener('click', () => {
     nextPrev(-1);
   });
   const nextButton = document.createElement('button');
   nextButton.type = 'button';
   nextButton.className = 'btn orange';
-  nextButton.style.color = "white";
+  nextButton.style.color = 'white';
   nextButton.id = 'nextBtn';
   nextButton.innerText = 'Next';
   nextButton.addEventListener('click', () => {
@@ -486,11 +521,13 @@ function renderCreateQuizForm(quiz) {
 }
 
 async function validateQuiz(quiz) {
+  const authenticatedUser = getAuthenticatedUser();
   const options = {
     method: 'POST',
     // body: JSON.stringify(quiz),
     headers: {
       'Content-Type': 'application/json',
+      Authorization: authenticatedUser.token,
     },
   };
   const response = await fetch(`/api/admin/validate/${quiz}`, options);

@@ -329,11 +329,13 @@ async function onSubmit(e) {
       quiz.questions.push(question);
     }
 
+    const authenticatedUser = getAuthenticatedUser();
     const options = {
       method: 'POST',
       body: JSON.stringify(quiz),
       headers: {
         'Content-Type': 'application/json',
+        Authorization: authenticatedUser.token,
       },
     };
 

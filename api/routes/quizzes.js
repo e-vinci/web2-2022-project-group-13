@@ -1,5 +1,6 @@
 const express = require('express');
 const { addOneQuiz, searchQuiz, readAllQuizzes, readOneVerifiedQuiz } = require('../models/quiz');
+const { authorize } = require('../utils/auths');
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.get('/id/:id', (req, res) => {
   return res.json(quizFound);
 });
 
-router.post('/addQuiz', async (req, res) => {
+router.post('/addQuiz', authorize, async (req, res) => {
   const quizName = req?.body?.quizName?.length !== 0 ? req.body.quizName : undefined;
   const difficulty = req?.body?.difficulty?.length !== 0 ? req.body.difficulty : undefined;
   const questions = req?.body?.questions?.length !== 0 ? req.body.questions : undefined;

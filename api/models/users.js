@@ -97,4 +97,5 @@ module.exports = {
   login,
   register,
   readOneUserFromUsername,
+  jwtSecret,
 };
