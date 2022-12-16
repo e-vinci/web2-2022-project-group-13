@@ -1,5 +1,6 @@
 const path = require('node:path');
 const escape = require('escape-html');
+// eslint-disable-next-line import/no-unresolved
 const translate = require('translate-google');
 const { parse, serialize } = require('../utils/json');
 
@@ -136,6 +137,72 @@ const defaultQuizzes = [
     difficulty: 'Medium',
     isVerified: true,
   },
+  {
+    id: 4,
+    quizName: 'Football',
+    questions: [
+      {
+        question: 'Which club has won the most Champions League titles?',
+        falseAnswers: ['Barcelona', 'Manchester United', 'Juventus'],
+        goodAnswer: 'Real Madrid',
+      },
+      {
+        question: 'Which player scored the fastest hat-trick in the Premier League.',
+        falseAnswers: [
+          'Robert Lewandowski',
+          'Kylian Mbappé',
+          'Lionel Messi',
+        ],
+        goodAnswer: 'Sadio Mané',
+      },
+      {
+        question: 'Which team won the first Premier League.',
+        falseAnswers: ['Arsenal', 'Manchester City', 'Real Madrid'],
+        goodAnswer: 'Manchester United',
+      },
+      {
+        question: "Which country has won the most World Cup ?",
+        falseAnswers: ['Spain', 'Italia', 'England'],
+        goodAnswer: 'Brazil',
+      },
+      {
+        question: 'Where is playing Antonio Rudiger?',
+        falseAnswers: ['Chelsea', 'Dortmund', 'Bayern Munich'],
+        goodAnswer: 'Real Madrid',
+      },
+      {
+        question: 'Messi has won a record number of Ballon d Or awards - how many? ',
+        falseAnswers: ['5', '4', '6'],
+        goodAnswer: '7',
+      },
+      {
+        question: 'Ronaldo is synonymous with the No.7, but what other number did he wear at Real Madrid?',
+        falseAnswers: ['14', '10', '11'],
+        goodAnswer: '9',
+      },
+      {
+        question: 'Which Portuguese island off the coast of Africa, which also shares its name with a cake, is Ronaldo from?',
+        falseAnswers: ['Canary Islands', 'Tenerife', 'Cape Verde'],
+        goodAnswer: 'Madeira',
+      },
+      {
+        question: 'Which score happened in semi-final of the world cup 2014?',
+        falseAnswers: [
+          'France 4 - 0 Croatia',
+          'Netherlands 6 - 2 Argentina',
+          'Brazil 5 - 1 Netherlands',
+        ],
+        goodAnswer: 'Brazil 1 - 7 Germany',
+      },
+      {
+        question: 'Where is playing Robert Lewandowski?',
+        falseAnswers: ['Bayern Munich', 'Manchester City', 'Dortmund'],
+        goodAnswer: 'Barcelona',
+      },
+    ],
+    difficulty: 'Medium',
+    isVerified: true,
+  }
 ];
 
 async function addOneQuiz(quizName, difficulty, questions) {
