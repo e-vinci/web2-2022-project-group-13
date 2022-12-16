@@ -266,12 +266,14 @@ function renderCreateQuizForm() {
   prevButton.id = 'prevBtn';
   prevButton.innerText = 'Previous';
   prevButton.style = 'margin-right: 10px;';
+  prevButton.style.color = "white";
   prevButton.addEventListener('click', () => {
     nextPrev(-1);
   });
   const nextButton = document.createElement('button');
   nextButton.type = 'button';
   nextButton.className = 'btn orange';
+  nextButton.style.color = "white";
   nextButton.id = 'nextBtn';
   nextButton.innerText = 'Next';
   nextButton.addEventListener('click', () => {
@@ -281,7 +283,7 @@ function renderCreateQuizForm() {
   submitButton.type = 'submit';
   submitButton.className = 'btn btn-success';
   submitButton.id = 'submitBtn';
-  submitButton.innerText = 'Publier';
+  submitButton.innerText = 'Post';
   submitButton.addEventListener('click', onSubmit);
   submitButton.addEventListener('click', onSubmit);
   buttons.appendChild(prevButton);
