@@ -1,6 +1,5 @@
 const path = require('node:path');
 const escape = require('escape-html');
-// eslint-disable-next-line import/no-unresolved
 const translate = require('translate-google');
 const { parse, serialize } = require('../utils/json');
 
@@ -229,13 +228,11 @@ async function addOneQuiz(quizName, difficulty, questions, isVerified) {
     isVerified,
   };
 
-  const translatedQuiz = await translate(newQuiz, { except: ['id', 'difficulty', 'isVerified'] });
-
-  quizzes.push(translatedQuiz);
+  quizzes.push(newQuiz);
 
   serialize(jsonDbPath, quizzes);
 
-  return translatedQuiz;
+  return newQuiz;
 }
 
 function readAllQuizzes() {
