@@ -218,9 +218,8 @@ const defaultQuizzes = [
   }
 ];
 
-async function addOneQuiz(quizName, difficulty, questions) {
+async function addOneQuiz(quizName, difficulty, questions, isVerified) {
   const quizzes = parse(jsonDbPath, defaultQuizzes);
-  const isVerified = false;
 
   const newQuiz = {
     id: quizzes.length + 1,
