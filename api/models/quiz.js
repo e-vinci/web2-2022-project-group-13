@@ -12,51 +12,61 @@ const defaultQuizzes = [
     difficulty: 'Medium',
     questions: [
       {
+        number: 1,
         question: 'Who is the tallest animals ?',
         falseAnswers: ['Wolf', 'Elephant', 'Dog'],
         goodAnswer: 'Giraffe',
       },
       {
+        number: 2,
         question: 'Who is the best friends of the human ?',
         falseAnswers: ['Monkey', 'Cat', 'Turtle'],
         goodAnswer: 'Dog',
       },
       {
+        number: 3,
         question: 'Which of these animals breath underwater ?',
         falseAnswers: ['Wolf', 'Elephant', 'Dog'],
         goodAnswer: 'Anglerfish',
       },
       {
+        number: 4,
         question: 'The cow belongs to which family ?',
         falseAnswers: ['Mammals', 'Amphibians', 'Reptiles'],
         goodAnswer: 'Bovine',
       },
       {
+        number: 5,
         question: 'Who is the smallest animals ?',
         falseAnswers: ['Wolf', 'Elephant', 'Dog'],
         goodAnswer: 'Paedophryne amauensis Frog',
       },
       {
+        number: 6,
         question: "what's the average speed of a tiger ?",
         falseAnswers: ['100 – 130 km/h', '20 – 50 km/h', '120 – 160 km/h'],
         goodAnswer: '49 – 65 km/h',
       },
       {
+        number: 7,
         question: "what can't dogs eat ?",
         falseAnswers: ['Chicken', 'Fish', 'Beef'],
         goodAnswer: 'Mushrooms',
       },
       {
+        number: 8,
         question: "What's the favorite food of a bat ?",
         falseAnswers: ['Fruits', 'Pollens', 'Fishes'],
         goodAnswer: 'Insects',
       },
       {
+        number: 9,
         question: 'What height can jump a kangaroo ?',
         falseAnswers: ['4,2 feet', '5,3 feet', '3 feet'],
         goodAnswer: '6 feet',
       },
       {
+        number: 10,
         question: 'Who is the smartest animals ?',
         falseAnswers: ['Rat', 'Chimpanzees', 'Dog'],
         goodAnswer: 'Orangutans',
@@ -69,11 +79,13 @@ const defaultQuizzes = [
     quizName: 'Super Smash Bros',
     questions: [
       {
+        number: 1,
         question: 'Who is the favorite character of the creator of the game series ?',
         falseAnswers: ['Mario', 'Link', 'Marth'],
         goodAnswer: 'Kirby',
       },
       {
+        number: 2,
         question: 'Which game in the series introduced Roy as a playable character ?',
         falseAnswers: [
           'Super Smash Bros Brawl',
@@ -83,36 +95,43 @@ const defaultQuizzes = [
         goodAnswer: 'Super Smash Bros Melee',
       },
       {
+        number: 3,
         question: 'Which item gives you a Final Smash ?',
         falseAnswers: ['Assist Trophy', 'Master Ball', 'Super Star'],
         goodAnswer: 'Smash Ball',
       },
       {
+        number: 4,
         question: "Who is Master Hand's left hand counterpart ?",
         falseAnswers: ['Master Glove', 'Big Hand', 'Great Hand'],
         goodAnswer: 'Crazy Hand',
       },
       {
+        number: 5,
         question: 'What franchise is Ness from ?',
         falseAnswers: ['Fire Emblem', 'StarBound', 'Mario'],
         goodAnswer: 'EarthBound',
       },
       {
+        number: 6,
         question: 'What does Samus do in her Final Smash ?',
         falseAnswers: ['PK Starstorm', 'Triforce Slash', 'Blue Falcon'],
         goodAnswer: 'Zero Laser',
       },
       {
+        number: 7,
         question: 'Which button(s) do you need to press to do a Falcon Punch with Captain Falcon ?',
         falseAnswers: ['Side B', 'UP Smash', 'Neutral Air'],
         goodAnswer: 'Neutral B',
       },
       {
+        number: 8,
         question: 'Which game introduced the Final Smash ?',
         falseAnswers: ['Super Smash Bros', 'Super Smash Bros Melee', 'Super Smash Bros Ultimate'],
         goodAnswer: 'Super Smash Bros Brawl',
       },
       {
+        number: 9,
         question: 'In which game can you use the Wavedash technique ?',
         falseAnswers: [
           'Super Smash Bros Brawl',
@@ -122,6 +141,7 @@ const defaultQuizzes = [
         goodAnswer: 'Super Smash Bros Melee',
       },
       {
+        number: 10,
         question: 'Which game got a 3DS port ?',
         falseAnswers: ['Super Smash Bros', 'Super Smash Bros Ultimate', 'Super Smash Bros Brawl'],
         goodAnswer: 'Super Smash Bros For Wii U',

@@ -307,10 +307,10 @@ async function onSubmit(e) {
     const difficulty = document.getElementById('difficulty').value;
     const questionsList = document.getElementsByClassName('tab');
     const quiz = {
-      creatorUsername: getAuthenticatedUser.username,
       quizName,
       difficulty,
       questions: [],
+      isVerified: isAdmin()
     };
 
     // eslint-disable-next-line
@@ -323,8 +323,7 @@ async function onSubmit(e) {
           document.getElementById('mauvaiseReponse1-'.concat(index)).value,
           document.getElementById('mauvaiseReponse2-'.concat(index)).value,
           document.getElementById('mauvaiseReponse3-'.concat(index)).value,
-        ],
-        isVerified: isAdmin()
+        ]
       };
       quiz.questions.push(question);
     }
