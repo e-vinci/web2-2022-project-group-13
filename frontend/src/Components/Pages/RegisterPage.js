@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import { getRememberMe, setAuthenticatedUser, setRememberMe } from '../../utils/auths';
 import { clearPage } from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
@@ -58,6 +59,8 @@ function renderRegisterForm() {
   submit.value = 'Register';
   submit.type = 'submit';
   submit.className = 'btn btn-primary';
+  submit.disabled = true;
+  
 
   // Create div wrapper for checkbox + his label
   const formCheckWrapper = document.createElement('div');
@@ -80,10 +83,26 @@ function renderRegisterForm() {
   checkLabel.className = 'form-check-label';
   checkLabel.textContent = 'Remember me';
 
-  const rgpd = `<p id="rgpd">
+  // create rgpdBox
+  const divRpgdWrapper = document.createElement('div');
+  divRpgdWrapper.className = 'mb-3 form-check';
+  divRpgdWrapper.id = 'checkBoxWrapper';
+  
+  const rgpdBox = document.createElement('input');
+  rgpdBox.type = 'checkbox';
+  rgpdBox.className = 'form-check-input';
+  rgpdBox.id = 'rgpdBox';
+  
+  rgpdBox.onchange = function(){submit.disabled = !this.checked;};
+
+  const checkRgpdLabel = document.createElement('label');
+  checkRgpdLabel.id = 'labelForCheckbox';
+  checkRgpdLabel.className = 'form-check-label';
+  checkRgpdLabel.innerHTML += `<p id="rgpd">
   By registering, you confirm that you have read, understood and accept the <div id = "termOfUse"><p>
   Privacy policy<p></div>
   </p>`;
+
   // Create paragraph for error message
   const errorMessage = document.createElement('p');
   errorMessage.id = 'errorMessage';
@@ -92,7 +111,9 @@ function renderRegisterForm() {
   // Appenchild remember me + his label to the wrapper
   formCheckWrapper.appendChild(rememberme);
   formCheckWrapper.appendChild(checkLabel);
-  formCheckWrapper.innerHTML += rgpd;
+  divRpgdWrapper.appendChild(rgpdBox);
+  divRpgdWrapper.appendChild(checkRgpdLabel);
+  formCheckWrapper.appendChild(divRpgdWrapper);
 
   // Appenchild all field from the form to the form
   form.appendChild(title);
@@ -129,6 +150,7 @@ function renderRegisterForm() {
 
   form.addEventListener('submit', onRegister);
 }
+
 
 function onCheckboxClicked(e) {
   setRememberMe(e.target.checked);
