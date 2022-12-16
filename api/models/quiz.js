@@ -66,13 +66,6 @@ const defaultQuizzes = [
   },
   {
     id: 2,
-    quizName: 'Video Games',
-    questions: [],
-    difficulty: 'Hard',
-    isVerified: true,
-  },
-  {
-    id: 3,
     quizName: 'Super Smash Bros',
     questions: [
       {
@@ -138,7 +131,7 @@ const defaultQuizzes = [
     isVerified: true,
   },
   {
-    id: 4,
+    id: 3,
     quizName: 'Football',
     questions: [
       {
