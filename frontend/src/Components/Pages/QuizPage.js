@@ -389,13 +389,12 @@ function renderScore(score) {
   animationScorePage();
 }
 
-// code taken from the site https://www.w3schools.com/js/js_random.asp
 /* **************************************************************************************
 *    Title: A Proper Random Function
-*    Author: TOBIAS AHLIN
+*    Author: W3Schools
 *    Date: /
 *    Code version: /
-*    Availability: https://tobiasahlin.com/moving-letters/#6
+*    Availability: https://www.w3schools.com/js/js_random.asp
 *
 ************************************************************************************** */
 function getRndInteger(min, max) {
