@@ -7,6 +7,7 @@ let currentTab = 0;
 const CreationQuizPage = () => {
   if (isAuthenticated()) {
     clearPage();
+    currentTab = 0;
     renderCreateQuizForm();
     showTab(currentTab);
   } else Navigate('/login');

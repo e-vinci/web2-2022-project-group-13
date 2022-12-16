@@ -7,7 +7,7 @@ let currentTab = 0;
 const AdminPage = async () => {
   if (isAuthenticated() && getAuthenticatedUser().isAnAdmin === true) {
     clearPage();
-
+    currentTab = 0;
     const authenticatedUser = getAuthenticatedUser();
     const options = {
       method: 'GET',
@@ -269,7 +269,7 @@ function renderCreateQuizForm(quiz) {
   const form = document.createElement('form');
   form.className = 'p-3';
   form.id = 'formulaire';
-  main.setAttribute('tabindex', '-1');
+  wrapper.setAttribute('tabindex', '-1');
 
   const rowNameReturn = document.createElement('div');
   rowNameReturn.classList.add('row');
@@ -504,7 +504,7 @@ function renderCreateQuizForm(quiz) {
   console.log('all input ' + JSON.stringify(inputList));
 
   // switch tab on arrowkey press event
-  main.addEventListener('keydown', (e) => {
+  wrapper.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
       const prevBtn = document.getElementById('prevBtn');
       if (prevBtn.style.display !== 'none') {
