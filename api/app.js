@@ -6,7 +6,9 @@ const cors = require('cors');
 
 
 const corsOptions = {
-  origin:['http://localhost:8080', 'https://kekmanlol.github.io/group-13-frontend-deployment-vinci']
+  origin: ['http://localhost:8080', 
+  'https://kekmanlol.github.io/group-13-frontend-deployment-vinci'
+  ] 
 }
 
 const authsRouter = require('./routes/auths');
