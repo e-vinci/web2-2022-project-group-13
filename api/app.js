@@ -4,15 +4,9 @@ const logger = require('morgan');
 const cookieSession = require('cookie-session');
 const cors = require('cors');
 
-const whitelist = ['http://localhost:8080', 'https://kekmanlol.github.io']
+
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error())
-    }
-  }
+  origin:['http://localhost:8080', 'https://kekmanlol.github.io']
 }
 
 const authsRouter = require('./routes/auths');
