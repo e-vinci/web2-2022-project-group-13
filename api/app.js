@@ -4,15 +4,15 @@ const logger = require('morgan');
 const cookieSession = require('cookie-session');
 const cors = require('cors');
 
-const allowlist = ['http://localhost:8080', 'https://kekmanlol.github.io/group-13-frontend-deployment-vinci']
-const corsOptionsDelegate = function (req, callback) {
-  let corsOptions;
-  if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false } // disable CORS for this request
+const whitelist = ['http://localhost:8080', 'https://kekmanlol.github.io/group-13-frontend-deployment-vinci/']
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error())
+    }
   }
-  callback(null, corsOptions) // callback expects two parameters: error and options
 }
 
 const authsRouter = require('./routes/auths');
@@ -40,8 +40,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/auths', cors(corsOptionsDelegate), authsRouter);
-app.use('/quiz', cors(corsOptionsDelegate), quizzesRouter);
-app.use('/admin', cors(corsOptionsDelegate),adminRouter);
+app.use('/auths', cors(corsOptions), authsRouter);
+app.use('/quiz', cors(corsOptions), quizzesRouter);
+app.use('/admin', cors(corsOptions),adminRouter);
 
 module.exports = app;
