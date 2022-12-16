@@ -2,10 +2,16 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cookieSession = require('cookie-session');
+const cors = require('cors');
+
+const corsOptions = {
+  origin: 'http://localhost:8080',
+};
 
 const authsRouter = require('./routes/auths');
 const quizzesRouter = require('./routes/quizzes');
 const adminRouter = require('./routes/admin');
+
 
 const app = express();
 
@@ -27,8 +33,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/auths', authsRouter);
-app.use('/quiz', quizzesRouter);
-app.use('/admin', adminRouter);
+app.use('/auths', cors(corsOptions), authsRouter);
+app.use('/quiz', cors(corsOptions), quizzesRouter);
+app.use('/admin', cors(corsOptions), adminRouter);
 
 module.exports = app;
