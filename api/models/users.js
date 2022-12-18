@@ -77,10 +77,6 @@ async function createOneUser(username, password) {
     isAdmin: false,
   };
 
-  if(username==='admin') {
-    createdUser.isAdmin = true;
-  };
-
   users.push(createdUser);
 
   serialize(jsonDbPath, users);
