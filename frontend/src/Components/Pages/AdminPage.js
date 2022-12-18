@@ -156,7 +156,8 @@ function renderQuizList(quizList) {
       if (!response.ok)
         throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
       console.log('delete ' + JSON.stringify(response.url));
-      Navigate('../admin');
+      // /admin works on deployed but not in local, ../admin work in local but not on deployed
+      Navigate('/admin');
     });
 
     // render quiz tile
