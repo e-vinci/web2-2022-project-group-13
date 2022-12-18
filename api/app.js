@@ -30,7 +30,12 @@ app.use(
     },
   }),
 );
-
+app.use((req,res,next)=>{
+  res.setHeader('Access-Control-Allow-Origin','https://kekmanlol.github.io/group-13-frontend-deployment-vinci');
+  res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
+  res.setHeader('Access-Control-Allow-Methods','Content-Type','Authorization');
+  next(); 
+})
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
