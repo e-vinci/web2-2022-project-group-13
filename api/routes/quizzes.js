@@ -20,7 +20,7 @@ router.post('/addQuiz', authorize, async (req, res) => {
   const questions = req?.body?.questions?.length !== 0 ? req.body.questions : undefined;
   const isVerified = req?.body?.isVerified?.length !== 0 ? req.body.isVerified : undefined;
 
-  if (!quizName || !difficulty || !questions || !isVerified) return res.sendStatus(400); // 400 Bad Request
+  if (!quizName || !difficulty || !questions || isVerified === undefined) return res.sendStatus(400); // 400 Bad Request
 
   const newQuiz = await addOneQuiz(quizName, difficulty, questions, isVerified);
 

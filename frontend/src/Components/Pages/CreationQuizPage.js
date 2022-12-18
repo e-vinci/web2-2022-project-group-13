@@ -106,7 +106,6 @@ function renderCreateQuizForm() {
   nameLabel.style = "color: #fa9961;";
   nameHolder.appendChild(nameLabel);
   const nameInput = document.createElement('input');
-  nameInput.style = "color: #fa9961;";
   nameInput.type = 'text';
   nameInput.className = 'form-control';
   nameInput.id = 'quizName';
@@ -284,7 +283,7 @@ function renderCreateQuizForm() {
   submitButton.type = 'submit';
   submitButton.className = 'btn btn-success';
   submitButton.id = 'submitBtn';
-  submitButton.innerText = 'Post';
+  submitButton.innerText = 'Submit';
   submitButton.addEventListener('click', onSubmit);
   submitButton.addEventListener('click', onSubmit);
   buttons.appendChild(prevButton);
@@ -308,6 +307,7 @@ async function onSubmit(e) {
     const difficulty = document.getElementById('difficulty').value;
     const questionsList = document.getElementsByClassName('tab');
     const quiz = {
+      creatorUsername: getAuthenticatedUser.username,
       quizName,
       difficulty,
       questions: [],
