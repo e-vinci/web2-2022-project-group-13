@@ -64,7 +64,7 @@ footer {
 
 .HeadTextHome h2 {
   font-size: 60px;
-  font-family: serif;
+  font-family: 'muli', serif;
 }
 
 .HeadTextHome h3 {
@@ -72,12 +72,14 @@ footer {
   margin: 20px auto 50px;
   font-weight: 100;
   line-height: 25px;
+  font-family: 'muli', serif;
 }
 
 .orange {
   width: 100px;
   background-color: #fa9961;
   border: 1px solid #fa9961;
+  font-family: 'muli', serif;
 }
 .orange:hover {
   border: 1px solid #fa9961;

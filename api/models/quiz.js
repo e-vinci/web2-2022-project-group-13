@@ -1,5 +1,6 @@
 const path = require('node:path');
 const escape = require('escape-html');
+// eslint-disable-next-line import/no-unresolved
 const translate = require('translate-google');
 const { parse, serialize } = require('../utils/json');
 
@@ -42,13 +43,13 @@ const defaultQuizzes = [
       },
       {
         number: 6,
-        question: "what's the average speed of a tiger ?",
+        question: "What's the average speed of a tiger ?",
         falseAnswers: ['100 – 130 km/h', '20 – 50 km/h', '120 – 160 km/h'],
         goodAnswer: '49 – 65 km/h',
       },
       {
         number: 7,
-        question: "what can't dogs eat ?",
+        question: "What can't dogs eat ?",
         falseAnswers: ['Chicken', 'Fish', 'Beef'],
         goodAnswer: 'Mushrooms',
       },

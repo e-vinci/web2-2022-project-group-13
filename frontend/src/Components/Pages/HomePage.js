@@ -9,7 +9,8 @@ const HomePage = async () => {
     const response = await fetch('/api/quiz');
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
-    renderHomePage(quizzes);
+    renderHomePage();
+    renderQuizzesHomePage(quizzes)
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('HomePage::error: ', err);
@@ -22,39 +23,13 @@ function goToQuizButton() {
     document.getElementById('quizName').scrollIntoView();
   });
 }
-function renderHomePage(Allquiz) {
-  const bomb = bombDisplay();
-  const menuTableAsString = getQuizDivseAsString(Allquiz);
+/**
+ * render all quizzes with input search
+ * @param {Response} AllQuiz 
+ */
+function renderQuizzesHomePage(AllQuiz){
+  const QuizDivsAsString = getQuizDivseAsString(AllQuiz);
   const main = document.querySelector('main');
-
-  // home
-
-  const divHome = document.createElement('div');
-  const sectionHome = document.createElement('div');
-  const divQuizText = document.createElement('div');
-  divQuizText.className = 'p-5 mt-5';
-  
-  sectionHome.className = 'container-fluid text-center textOrange HeadTextHome p-4 vh-100';
-  divHome.className = 'banner';
-  const titleHome = document.createElement('h2');
-  const descriptionHome = document.createElement('h3');
-
-  // button href to quiz display
-  const buttonToQuiz = document.createElement('a');
-  buttonToQuiz.id = 'refToQuiz';
-  buttonToQuiz.className = 'btn orange';
-  buttonToQuiz.textContent = 'Start';
-
-  titleHome.textContent = 'Time to Quiz !';
-  titleHome.className = 'title-home';
-  descriptionHome.textContent = 'Have fun, learn and create your own quiz by registering.';
-  sectionHome.appendChild(divQuizText);
-  divQuizText.appendChild(titleHome);
-  divQuizText.innerHTML += bomb;
-  divQuizText.appendChild(descriptionHome);
-  divQuizText.appendChild(buttonToQuiz);
-  divHome.appendChild(sectionHome);
-
   // creation input for search
   const quizName = document.createElement('input');
 
@@ -81,10 +56,8 @@ function renderHomePage(Allquiz) {
   divInputs.appendChild(quizName);
   divInputs.appendChild(submitButton);
   divCenter.appendChild(divInputs);
-  main.appendChild(divHome);
   main.appendChild(divCenter);
-
-  main.innerHTML += menuTableAsString;
+  main.innerHTML += QuizDivsAsString;
 
   // event listening for search
 
@@ -102,12 +75,53 @@ function renderHomePage(Allquiz) {
     document.getElementById('quizName').scrollIntoView();
   });
 
-  // animations and buttons
-  
-  goToQuizButton();
+  // animation and events
+
   animationQuizHoverHome();
-  animationHome();
   attachOnClickEventsToRenderQuiz(quizzes);
+  goToQuizButton();
+  animationHome();
+}
+
+function renderHomePage() {
+  const bomb = bombDisplay();
+  const main = document.querySelector('main');
+
+  // home
+
+  const divHome = document.createElement('div');
+  const sectionHome = document.createElement('div');
+  const divQuizText = document.createElement('div');
+  divQuizText.className = 'p-5 mt-5';
+  
+  sectionHome.className = 'container-fluid text-center textOrange HeadTextHome p-4 vh-100';
+  divHome.className = 'banner';
+  const titleHome = document.createElement('h2');
+  const descriptionHome = document.createElement('h3');
+
+  // button href to quiz display
+  const buttonToQuiz = document.createElement('a');
+  buttonToQuiz.id = 'refToQuiz';
+  buttonToQuiz.className = 'btn orange';
+  buttonToQuiz.textContent = 'Start';
+
+  titleHome.textContent = 'Time to Quiz !';
+  titleHome.className = 'title-home';
+  descriptionHome.textContent = 'Have fun, learn and create your own quiz by registering.';
+
+  // dom add
+
+  sectionHome.appendChild(divQuizText);
+  divQuizText.appendChild(titleHome);
+  divQuizText.innerHTML += bomb;
+  divQuizText.appendChild(descriptionHome);
+  divQuizText.appendChild(buttonToQuiz);
+  divHome.appendChild(sectionHome);
+  main.appendChild(divHome);
+
+  // animations and events
+  
+ 
 }
 
 async function searchBar() {
@@ -117,7 +131,8 @@ async function searchBar() {
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     quizzes = await response.json();
     clearPage();
-    renderHomePage(quizzes);
+    renderHomePage();
+    renderQuizzesHomePage(quizzes);
     attachOnClickEventsToRenderQuiz(quizzes);
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -172,7 +187,7 @@ function attachOnClickEventsToRenderQuiz(allQuiz) {
 ************************************************************************************** */
 function bombDisplay() {
   const bombHtml = `
-  <svg viewBox="-1 -1 40 120" width="110" height="110">
+  <svg viewBox="0 0 40 120" width="61" height="50">
         <path
             id="motion-path"
             fill="none"
@@ -249,7 +264,7 @@ function bombDisplay() {
                     </g>
                 </g>
             </g>
-            <g transform="rotate(20) translate(41 56)"><!-- translate to modify the transform origin and scale the bomb from its center -->
+            <g transform="rotate(20) translate(40 56)"><!-- translate to modify the transform origin and scale the bomb from its center -->
                 <!-- scale the #bomb group -->
                 <g
                     id="bomb"
@@ -273,7 +288,14 @@ function bombDisplay() {
   `;
   return bombHtml;
 }
-
+/* **************************************************************************************
+*    Title: svg the bomb
+*    Author: Gabriele Corti
+*    Date: JULY 25, 2019
+*    Code version: ?
+*    Availability: https://codepen.io/borntofrappe/pen/LwZRON
+*
+************************************************************************************** */
 function animationHome() {
   anime({
     targets: '.title-home',
