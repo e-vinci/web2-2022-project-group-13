@@ -32,8 +32,3 @@ Content-Type: application/json
     "username":"test1",
     "password":"test"
 }
-
-### Update the quiz identified by 6
-PATCH {{baseUrl}}/admin/createAdmin/test
-Content-Type: application/json
-Authorization: {{admin.response.body.token}}
