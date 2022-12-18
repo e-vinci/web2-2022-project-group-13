@@ -93,18 +93,10 @@ function getNextId() {
   return nextId;
 }
 
-function createAdmin(username) {
-  const userList = parse(jsonDbPath);
-  const foundIndex = userList.findIndex((user) => user.username === username);
-  userList[foundIndex].isAdmin = true;
-  serialize(jsonDbPath, userList);
-
-}
 
 module.exports = {
   login,
   register,
   readOneUserFromUsername,
   jwtSecret,
-  createAdmin,
 };
