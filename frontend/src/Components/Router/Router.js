@@ -1,4 +1,20 @@
-import routes from './routes';
+import HomePage from '../Pages/HomePage';
+import RegisterPage from '../Pages/RegisterPage';
+import LoginPage from '../Pages/LoginPage';
+import CreateQuizPage from '../Pages/CreationQuizPage';
+import QuizPage from '../Pages/QuizPage';
+import AdminPage from '../Pages/AdminPage';
+import Logout from '../Logout/Logout';
+
+const routes = {
+  '/': HomePage,
+  '/login': LoginPage,
+  '/register': RegisterPage,
+  '/createQuiz': CreateQuizPage,
+  '/quizPage': QuizPage,
+  '/admin': AdminPage,
+  '/logout': Logout,
+};
 
 const Router = () => {
   onFrontendLoad();
@@ -7,18 +23,19 @@ const Router = () => {
 };
 
 function onNavBarClick() {
-  const navItems = document.querySelectorAll('.nav-link');
+  const navbarWrapper = document.querySelector('#navbarWrapper');
 
-  navItems.forEach((item) => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      const uri = e.target?.dataset?.uri;
+  navbarWrapper.addEventListener('click', (e) => {
+    e.preventDefault();
+    const navBarItemClicked = e.target;
+    const uri = navBarItemClicked?.dataset?.uri;
+    if (uri) {
       const componentToRender = routes[uri];
       if (!componentToRender) throw Error(`The ${uri} ressource does not exist.`);
 
       componentToRender();
       window.history.pushState({}, '', uri);
-    });
+    }
   });
 }
 

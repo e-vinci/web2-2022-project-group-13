@@ -1,0 +1,98 @@
+######### NORMAL OPERATION  ###########
+
+### Read all quizzes with File variable
+@baseUrl = http://localhost:3000
+GET {{baseUrl}}/quiz
+
+### Read quiz identified by 2
+GET {{baseUrl}}/quiz/2
+
+### Create a quiz
+GET {{baseUrl}}/quiz/search?quiz-name=Game
+
+### Create a quiz
+POST {{baseUrl}}/quiz/addQuiz
+Content-Type: application/json
+
+
+{
+    "quizName":"Magic Green",
+    "difficulty":"moyen",
+    "questions":[
+        {
+        "number" : 1,
+        "question" : "Oui ?",
+        "goodAnswer" : "BR",
+        "badAnswer1" : "MR1",
+        "badAnswer2" : "MR2",
+        "badAnswer3" : "MR3"
+        },
+        {
+        "number" : 2,
+        "question" : "Oui ?",
+        "goodAnswer" : "BR",
+        "badAnswer1" : "MR1",
+        "badAnswer2" : "MR2",
+        "badAnswer3" : "MR3"
+        },
+        {
+        "number" : 3,
+        "question" : "Oui ?",
+        "goodAnswer" : "BR",
+        "badAnswer1" : "MR1",
+        "badAnswer2" : "MR2",
+        "badAnswer3" : "MR3"
+        }
+    ],
+    "isVerified": true
+}
+
+### Delete quiz identified by 2
+DELETE {{baseUrl}}/quiz/2
+
+### Update the quiz identified by 6
+PATCH {{baseUrl}}/quiz/6
+Content-Type: application/json
+
+{
+    "title":"Magic Green 2"
+}
+
+######### ERROR OPERATION  ###########
+
+### Read quiz which does not exists
+GET {{baseUrl}}/quiz/100
+
+### Create a quiz which lacks a property
+POST {{baseUrl}}/quiz
+Content-Type: application/json
+
+{
+    "content":"Epinards, Brocolis, Olives vertes, Basilic"
+}
+
+### Create a quiz without info for a property
+POST {{baseUrl}}/quiz
+Content-Type: application/json
+
+{
+    "title":"",
+    "content":"Epinards, Brocolis, Olives vertes, Basilic"
+}
+
+### Update for a quiz which does not exist
+PUT {{baseUrl}}/quiz/200
+Content-Type: application/json
+
+{
+    "title":"Magic Green 2"
+}
+
+### Update for a quiz which does not provide any info for a property
+PUT {{baseUrl}}/quiz/1
+Content-Type: application/json
+
+{
+    "title":"Magic Green 2",
+    "content":""
+}
