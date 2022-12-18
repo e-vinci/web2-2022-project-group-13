@@ -200,6 +200,15 @@ const clearRightTab = () => {
   rightTab.innerHTML = '';
 };
 
+/* **************************************************************************************
+*    Title: Form Wizard - Multi Step Form
+*    Author: W3schools
+*    Date: /
+*    Code version: /
+*    Availability: https://www.w3schools.com/howto/howto_js_form_steps.asp
+*
+************************************************************************************** */
+// début
 function showTab(n) {
   const x = document.getElementsByClassName('tab');
   x[n].style.display = 'block';

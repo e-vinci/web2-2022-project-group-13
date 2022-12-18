@@ -160,11 +160,7 @@ const defaultQuizzes = [
       },
       {
         question: 'Which player scored the fastest hat-trick in the Premier League.',
-        falseAnswers: [
-          'Robert Lewandowski',
-          'Kylian Mbappé',
-          'Lionel Messi',
-        ],
+        falseAnswers: ['Robert Lewandowski', 'Kylian Mbappé', 'Lionel Messi'],
         goodAnswer: 'Sadio Mané',
       },
       {
@@ -173,7 +169,7 @@ const defaultQuizzes = [
         goodAnswer: 'Manchester United',
       },
       {
-        question: "Which country has won the most World Cup ?",
+        question: 'Which country has won the most World Cup ?',
         falseAnswers: ['Spain', 'Italia', 'England'],
         goodAnswer: 'Brazil',
       },
@@ -188,12 +184,14 @@ const defaultQuizzes = [
         goodAnswer: '7',
       },
       {
-        question: 'Ronaldo is synonymous with the No.7, but what other number did he wear at Real Madrid?',
+        question:
+          'Ronaldo is synonymous with the No.7, but what other number did he wear at Real Madrid?',
         falseAnswers: ['14', '10', '11'],
         goodAnswer: '9',
       },
       {
-        question: 'Which Portuguese island off the coast of Africa, which also shares its name with a cake, is Ronaldo from?',
+        question:
+          'Which Portuguese island off the coast of Africa, which also shares its name with a cake, is Ronaldo from?',
         falseAnswers: ['Canary Islands', 'Tenerife', 'Cape Verde'],
         goodAnswer: 'Madeira',
       },
@@ -214,7 +212,80 @@ const defaultQuizzes = [
     ],
     difficulty: 'Medium',
     isVerified: true,
-  }
+  },
+  {
+    id: 4,
+    quizName: 'Anime',
+    difficulty: 'Hard',
+    questions: [
+      {
+        number: 1,
+        question: 'Violet Evergarden: How old was Violet in the 2nd movie?',
+        falseAnswers: ['20', '15', '17'],
+        goodAnswer: '18',
+      },
+      {
+        number: 2,
+        question: "Violet Evergarden: What's the name of Ann's mother?",
+        falseAnswers: ['Lara', 'Diana', 'Sara'],
+        goodAnswer: 'Clara',
+      },
+      {
+        number: 3,
+        question: 'Horimiya: Who is Kyousuke?',
+        falseAnswers: ["Remi's boyfriend", "Sakura's crush", "Motoko's brother"],
+        goodAnswer: "Kyouko's father",
+      },
+      {
+        number: 4,
+        question: "Vivy Fluorite Eye's Song: When did the war between human and AI happened?",
+        falseAnswers: ['2100', '2061', '2160'],
+        goodAnswer: '2161',
+      },
+      {
+        number: 5,
+        question:
+          "Boku no Hero Academia: What's the name of all might's final attack against all for one",
+        falseAnswers: ['DETROIT SMASH', 'TEXAS SMASH', 'PLUS ULTRA'],
+        goodAnswer: 'UNITED STATES OF SMASH!',
+      },
+      {
+        number: 6,
+        question: 'Shadow Garden: I AM ...',
+        falseAnswers: ['MATTJESTIC', 'Fantastic', 'the bone of my sword'],
+        goodAnswer: 'ATOMIC',
+      },
+      {
+        number: 7,
+        question: '86: What is Lena afraid of?',
+        falseAnswers: ['Snake', 'Pig', 'Darkness'],
+        goodAnswer: 'Ghost',
+      },
+      {
+        number: 8,
+        question: "Paripi Koumei: What's the name of the song in the 1st episode?",
+        falseAnswers: ['UNDERWORLD', 'Be Crazy For Me', 'Shooting Star'],
+        goodAnswer: "I'm still alive today",
+      },
+      {
+        number: 9,
+        question: 'Runway de Waratte: Which modeling agency is Chiyuki affiliated with?',
+        falseAnswers: [
+          "Blanche Neige",
+          "Snow White",
+          "Mille Feuille",
+        ],
+        goodAnswer: "Mille Neige",
+      },
+      {
+        number: 10,
+        question: "White Album 2: Where was 'Todokanai Koi' played for the first time?",
+        falseAnswers: ["Karaoke", "Music classroom", "Street"],
+        goodAnswer: "School Festival",
+      },
+    ],
+    isVerified: true,
+  },
 ];
 
 async function addOneQuiz(quizName, difficulty, questions, isVerified) {
